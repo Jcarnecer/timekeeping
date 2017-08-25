@@ -1,0 +1,48 @@
+@import 'bootstrap';
+@import 'custom-variables';
+
+body {
+    background-color: $gray-custom;
+}
+
+nav {
+    a.nav-link {
+        &:hover {
+            background-color: blue;    
+        }
+    }   
+}
+
+.navbar-custom-bg {
+    background-color: #e3f2fd;
+}
+
+#sidebar {
+    width: 210px;
+    height: 100%;
+    position: fixed;
+    background: #424a5d;
+    overflow: scroll;
+
+    ul, li {
+        list-style: none;
+        // padding: 10px;
+    }
+
+    a {
+        display: block;
+        padding: 15px 30px 15px 30px;
+
+        &:hover {
+            background-color: white;
+        }
+    }
+
+    ul.sub {
+        li {
+            // text-indent: 30px;
+            padding-left: 30px;
+        }
+    }
+    
+}
