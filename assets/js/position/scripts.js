@@ -4,7 +4,7 @@ function fetch_positions() {
         type: "POST",
         success: function(data) {
             $("#positiondata").html(data);
-            $("#tk-tbl").DataTable();
+            $("#tktbl").DataTable();
         }
     })
 }

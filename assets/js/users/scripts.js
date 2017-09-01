@@ -4,7 +4,7 @@ function fetch_users() {
         type: "POST",
         success: function(data) {
             $("#userdata").html(data);
-            $("#tk-tbl").DataTable();
+            $("#tktbl").DataTable();
         }
     })
 }

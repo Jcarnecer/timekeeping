@@ -17,14 +17,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" type="text/css" href="assets/css/styles.css" >
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-select.min.css" >
 		<link rel="stylesheet" href="assets/datatables/jquery.dataTables.min.css" >
+		<script src="assets/datatables/jquery.dataTables.min.js"></script>
 		<script src="assets/js/bootstrap-notify.min.js"></script>
 		<script src="assets/js/bs_notify.js"></script>
 		<script src="assets/js/bootstrap-select.min.js"></script>
-		<script>
-			$(document).ready(function(){
-				$('#tk-tbl').DataTable();
-			});
-		</script>
+		
 		<?php $segment =  $this->uri->segment(1);
 		if($segment == 'users'){ ?>
 			<script src="assets/js/error-message.js"></script>
@@ -37,6 +34,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script src="assets/js/position/scripts.js"></script>
 			<script>
 				fetch_positions();
+			</script>
+		<?php }elseif($segment == 'profile'){ ?>
+			<script src="assets/js/error-message.js"></script>
+			<script src="assets/js/profile/scripts.js"></script>
+			<script>
+				fetch_user_info();
 			</script>
 		<?php } ?>
     </head>

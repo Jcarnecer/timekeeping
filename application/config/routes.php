@@ -61,7 +61,9 @@ $route['get/position']  = 'position/get_position';
 $route['add/position']  = 'position/add_position';
 $route['edit/position']  = 'position/edit_position';
 
+//login
+$route['auth/login']    = 'login/auth';
 
-$route['default_controller'] = 'dashboard';
+$route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

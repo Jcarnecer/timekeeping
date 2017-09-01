@@ -25,6 +25,22 @@ $config =
                 ],
             ],
         ],
+
+    'login_validate'
+        =>	[
+                [
+                    'field'		=> 	'email',
+                    'label'   	=> 	'Email address',
+                    'rules'   	=> 	'required|valid_email'
+                ],
+    
+                [
+                      'field'		=> 	'password',
+                      'label'   	=> 	'Password',
+                      'rules'  	=> 	'required',
+                ],
+            ],
+
     'add_position_validate'
     =>  [
             [
@@ -41,5 +57,36 @@ $config =
                 'label'    =>    'Position privileges',
                 'rules'    =>    'required',
             ],
-        ]
+        ],
+    'edit_info_validate'
+        =>	[
+                [
+                      'field'		=> 	'email',
+                      'label'   	=> 	'Email address',
+                      'rules'   	=> 	'required|valid_email',
+                      'errors'  	=>	[
+                                          'valid'   		=>	'You have entered invalid format for %s',
+                                     ],
+                ],
+    
+                [
+                      'field'   	=>	'fname',
+                      'label'   	=> 	'First Name',
+                      'rules'   	=> 	'required|regex_match[/^([A-z-]|\s)+$/]',
+                      'errors'	=> 	[
+                                          'regex_match' 	=>	'Remove special characters in %s'
+                                      ],
+                  
+                ],
+    
+                [
+                      'field'   	=>	'lname',
+                      'label'   	=> 	'Last Name',
+                      'rules'   	=> 	'required|regex_match[/^([A-z-]|\s)+$/]',
+                      'errors'	=> 	[
+                                          'regex_match' 	=> 	'Remove special characters in %s'
+                                      ],
+                  
+                ],
+            ],
 ];

@@ -5,7 +5,7 @@
     </button>
         <br><hr>
         <div class="table-responsive">
-            <table class="table table-bordered" id="tk-tbl">
+            <table class="table table-bordered" id="tktbl">
                 <thead>
                     <tr>
                         <th>ID</th>
