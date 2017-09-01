@@ -21,8 +21,25 @@ $config =
                 'label'    =>    'Email address',
                 'rules'    =>    'required|is_unique[users.email]|valid_email',
                 'error'    =>    [
-                                    'is_unique'    =>    'This email is already taken.'
-                                 ]
-            ]
+                                    'is_unique'    =>    '%s is already taken.'
+                ],
+            ],
+        ],
+    'add_position_validate'
+    =>  [
+            [
+                'field'    =>    'position',
+                'label'    =>    'Position',
+                'rules'    =>    'required|is_unique[position.name]|regex_match[/^([a-zA-Z0-9@.,_]|\s)+$/]',
+                'errors'    =>    [
+                                    'is_unique'     =>    '%s is already taken',
+                                    'regex_match'    =>    'Invalid Character for %s'
+                                 ],
+            ],
+            [
+                'field'    =>    'privileges[]',
+                'label'    =>    'Position privileges',
+                'rules'    =>    'required',
+            ],
         ]
 ];

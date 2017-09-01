@@ -13,7 +13,7 @@ class MY_Controller	extends CI_Controller
             redirect('login');
         }
     }
-
+	
     private function with_session() {
     	if($this->session->userdata('logged_in')) {
             redirect('dashboard');

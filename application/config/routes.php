@@ -56,6 +56,12 @@ $route['get/users'] = 'users/get_users';
 $route['activate/user'] = 'users/activate';
 $route['deactivate/user'] = 'users/deactivate';
 
+//position controller
+$route['get/position']  = 'position/get_position';
+$route['add/position']  = 'position/add_position';
+$route['edit/position']  = 'position/edit_position';
+
+
 $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

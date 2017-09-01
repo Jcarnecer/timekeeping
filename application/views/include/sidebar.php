@@ -25,6 +25,13 @@
 		</a>
 	</li>
 
+	<li class="">
+		<a class="" href="position">
+			<i class="fa fa-sitemap"></i>
+			<span>Position Management</span>
+		</a>
+	</li>
+
 	<!-- <li class="sub-menu">
 		<a data-toggle="collapse" href="#UIElementsSub" aria-expanded="false" aria-controls="UIElementsSub" >
 			<i class="fa fa-desktop"></i>

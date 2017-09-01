@@ -50,7 +50,7 @@ class Users extends MY_Controller
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		$users = $this->Crud_model->fetch('users');
+		$users = $this->Crud_model->fetch('users','','','',$order_by);
 		$x = 1;
 		if(!$users == NULL){
 			foreach($users as $row): 
@@ -73,9 +73,9 @@ class Users extends MY_Controller
 				<td>
 					
 					<div class="dropdown show">
-						<a class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Action
-						</a>
+						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 						<?php if($row->status == 1){ ?>
 							<a class="dropdown-item deactivate-user" data-toggle="modal" data-name="<?= $row->firstname.' '.$row->lastname ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#u-d-modal" title="Deactivate" >Deactivate</a>
