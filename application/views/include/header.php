@@ -23,12 +23,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="assets/js/bootstrap-select.min.js"></script>
 		
 		<?php $segment =  $this->uri->segment(1);
+			  $segment2 =  $this->uri->segment(2);
+
+
 		if($segment == 'users'){ ?>
 			<script src="assets/js/error-message.js"></script>
 			<script src="assets/js/users/scripts.js"></script>
 			<script>
 				fetch_users();
 			</script>
+			
 		<?php }elseif($segment == 'position'){ ?>
 			<script src="assets/js/error-message.js"></script>
 			<script src="assets/js/position/scripts.js"></script>
@@ -39,7 +43,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script src="assets/js/error-message.js"></script>
 			<script src="assets/js/profile/scripts.js"></script>
 			<script>
-				fetch_user_info();
+				fetch_profile();
+			</script>
+		<?php }elseif($segment == 'shift'){ ?>
+			<script src="assets/js/error-message.js"></script>
+			<script src="assets/js/shift/scripts.js"></script>
+			<script>
+				fetch_shift();
 			</script>
 		<?php } ?>
     </head>

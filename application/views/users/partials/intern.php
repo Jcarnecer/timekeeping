@@ -6,11 +6,16 @@
                             <div class="card-block text-center">
                             <h2>Edit Profile Picture</h2>
                             <hr>
-                                <a data-toggle="modal" href="#profile-picture-modal"><img height="200" id="prof_pic"></a>
+                                <a data-toggle="modal" href="#intern-picture-modal"><img height="200" id="prof_pic"></a>
                                 <hr>
-
-                                <!-- <a class="btn btn-info waves-effect" href="<?= base_url().'employee/request_shift/'.$this->session->id?>">Shift</a> -->
-                                <a class="btn btn-info waves-effect" href="login/logout"><i class="fa fa-sign-out m-r-10"></i>Logout</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-block text-center">
+                            <h2>REMAINING HOURS</h2>
+                            <hr>
+                                
+                            <h1 id="remaining"></h1>
                             </div>
                         </div>
                     </div>
@@ -19,7 +24,8 @@
                             <div class="card-block text-center">
                                 <h2>Edit Information</h2>
                                 <hr>
-                                <form id="change-profile-form" method="post">
+                                <form id="intern-info-form" method="post">
+                                  <input type="hidden" name="id" value="<?= $this->uri->segment(3) ?>">
                                   <div class="form-group">
                                     <label>First Name</label>
                                     <!-- <input type="text" name="fname" value="<?= $this->user->info('firstname') ?>" class="form-control"> -->
@@ -51,34 +57,49 @@
                         <div class="card">
                             <div class="card-block text-center">
                               <div id="success-message"></div>
-                                <h2>Edit Password</h2>
+                                <h2>Other Information</h2>
                                 <hr>
-                                <form id="change-pass-form" method="post">
+                                <form id="intern-other-info-form" method="post">
                                   <div class="form-group">
-                                    <label>Old Password</label>
-                                    <input type="password" name="opassword" class="form-control">
-                                    <div class="text-danger" id="old_err"></div>
+                                    <input type="hidden" id="id" name="id" value="<?= $this->uri->segment(3) ?>">
+                                    <label>School</label>
+                                    <input type="text" name="school" id="school" class="form-control">
+                                    <div class="text-danger" id="school_err"></div>
                                   </div>
                                   <div class="form-group">
-                                    <label>New Password</label>
-                                    <input type="password" name="npassword" class="form-control">
-                                    <div class="text-danger" id="new_err"></div>
+                                    <label>Number of Hours</label>
+                                    <input type="text" name="no_of_hrs" id="no-of-hrs" class="form-control">
+                                    <div class="text-danger" id="no_of_hrs_err"></div>
                                   </div>
                                   <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" name="cpassword" class="form-control">
-                                    <div class="text-danger" id="confirm_err"></div>
+                                    <label>Course</label>
+                                    <input type="text" name="course" id="course" class="form-control">
+                                    <div class="text-danger" id="course_err"></div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label>Birthday</label>
+                                    <input type="text" name="bday" id="bday" class="form-control">
+                                    <div class="text-danger" id="bday_err"></div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label>Year (School Year)</label>
+                                    <input type="text" name="year" id="year" class="form-control">
+                                    <div class="text-danger" id="year_err"></div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="text" name="start_date" id="start-date" class="form-control">
+                                    <div class="text-danger" id="start_date_err"></div>
                                   </div>
                                   <div class="form-group">
                                   <hr>
                                     <button type="Submit" class="btn btn-info"><i class="fa fa-save m-r-10"></i>Submit</button>
                                   </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
 
     </div>
 </div>
-<?php $this->load->view('profile/partials/picture_modal') ?>
+<?php $this->load->view('users/partials/intern_picture') ?>

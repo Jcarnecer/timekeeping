@@ -39,7 +39,20 @@ class Users extends MY_Controller
 				'status'			=> 0, // not activated 
 				'verified_email' 	=> 0, // for email confirmation 
 			];
-			$this->Crud_model->insert('users',$insert);
+			$get_rowid = $this->Crud_model->last_inserted_row('users',$insert);
+
+			if($this->input->post('pos') == 2 || $this->input->post('pos')==3){
+				$insert_employee = [
+					'user_id'	=>    $get_rowid->id
+				];
+				$this->Crud_model->insert('employee',$insert_employee);
+			}elseif($this->input->post('pos')==4) {
+				$insert_intern = [
+					'user_id'	=> 	  $get_rowid->id
+				];
+				$this->Crud_model->insert('intern',$insert_intern);
+			}
+
 			$success = [
 				'success' => 1,
 				'name'	=> clean_data(ucwords($this->input->post('fname'))) .' '. clean_data(ucwords($this->input->post('lname'))),
@@ -50,7 +63,8 @@ class Users extends MY_Controller
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		$users = $this->Crud_model->fetch('users','','','',$order_by);
+		$where = ['position_id >' => '1']; //not include admin
+		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
 		if(!$users == NULL){
 			foreach($users as $row): 
@@ -82,7 +96,7 @@ class Users extends MY_Controller
 						<?php }else{ ?>
 							<a class="dropdown-item activate-user" data-toggle="modal" data-name="<?= $row->firstname.' '.$row->lastname ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#u-a-modal" title="Activate" >Activate</a>
 						<?php } ?>
-							<a class="dropdown-item" href="" title="View">Details</a>
+							<a class="dropdown-item user_details" href="users/details/<?= secret_url('encrypt',$row->id) ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" id="user_details">Details</a>
 						</div>
 					</div>
 				</td>
@@ -124,5 +138,181 @@ class Users extends MY_Controller
 		];
 		echo json_encode($success);
 	}
-    
+
+
+	public function details($id) {
+		$decrypt_id = secret_url('decrypt',$id);
+		$where = ['id' => $decrypt_id];
+		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture';
+
+		$this->detail_id = $id;
+		//get position
+		$user = $this->Crud_model->fetch_tag_row($tag,'users',$where);
+		$position_where = ['id' => $user->position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
+		
+		if($position->name == 'Intern') {
+			$where = ['intern.user_id' => $decrypt_id];
+			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,intern.id,intern.user_id,school,birthday,no_of_hrs,course,year,start_date,remaining';
+			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
+			
+		}else{
+			$where = ['employee.user_id' => $decrypt_id];
+			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,
+					employee.id,employee.user_id,sss_no,tin_no,phil_health,start_date';
+			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'employee','users.id = employee.user_id','inner'); //join
+		}
+		
+		parent::mainpage('users/details',
+			[
+				'title'	=> $user->firstname .' '. $user->lastname,
+				'pos'	=> $position,
+				'id'	=> $id
+			]
+		);
+	}
+
+	public function get_details($id) {
+		$decrypt_id = secret_url('decrypt',$id);
+		$where = ['id' => $decrypt_id];
+		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture';
+
+		$this->detail_id = $id;
+		//get position
+		$user = $this->Crud_model->fetch_tag_row($tag,'users',$where);
+		$position_where = ['id' => $user->position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
+		
+		if($position->name == 'Intern') {
+			$where = ['intern.user_id' => $decrypt_id];
+			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,intern.id,intern.user_id,school,birthday,no_of_hrs,course,year,start_date,remaining';
+			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
+			
+		}else{
+			$where = ['employee.user_id' => $decrypt_id];
+			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,
+					employee.id,employee.user_id,sss_no,tin_no,phil_health,start_date';
+			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'employee','users.id = employee.user_id','inner'); //join
+		}
+		echo json_encode($user);
+	}
+	
+	public function change_intern_picture() {
+		$config = array(
+            'upload_path'   => 'assets/uploads',
+            'allowed_types' => 'jpg|gif|png|jpeg',
+            'max_size'		=> '2040',
+            'encrypt_name' 	=> TRUE //encrypt filename
+        );
+
+        $this->load->library('upload', $config);
+
+		$this->form_validation->set_rules('profile_pic','Profile picture','callback_handleimage');
+
+		if($this->form_validation->run() == FALSE) {
+			echo json_encode(validation_errors());
+		}else{
+			$update = [
+				'profile_picture' => $this->upload->data('file_name'),
+			];
+			$id = $this->input->post('id');
+			$decrypt_id = secret_url('decrypt',$id);
+			$where = array('id' => $decrypt_id);
+			$this->Crud_model->update('users',$update,$where);
+			echo json_encode("success");
+		}
+	}
+
+	public function change_employee_picture() {
+		$config = array(
+            'upload_path'   => 'assets/uploads',
+            'allowed_types' => 'jpg|gif|png|jpeg',
+            'max_size'		=> '2040',
+            'encrypt_name' 	=> TRUE //encrypt filename
+        );
+
+        $this->load->library('upload', $config);
+
+		$this->form_validation->set_rules('profile_pic','Profile picture','callback_handleimage');
+
+		if($this->form_validation->run() == FALSE) {
+			echo json_encode(validation_errors());
+		}else{
+			$update = [
+				'profile_picture' => $this->upload->data('file_name'),
+			];
+			$id = $this->input->post('id');
+			$decrypt_id = secret_url('decrypt',$id);
+			$where = array('id' => $decrypt_id);
+			$this->Crud_model->update('users',$update,$where);
+			echo json_encode("success");
+		}
+	}
+
+	function handleimage(){
+        if (isset($_FILES['profile_pic']) && !empty($_FILES['profile_pic']['name'])):
+            if ($this->upload->do_upload('profile_pic')):
+                return true;
+            else:
+            	$this->form_validation->set_message('handleimage', $this->upload->display_errors());
+                return false;
+            endif;
+        else:
+          // throw an error because nothing was uploaded
+          $this->form_validation->set_message('handleimage', "You must upload an image!");
+          return false;
+        endif;
+	}
+	
+	public function update_intern_info() {
+		if($this->form_validation->run('edit_info_validate') == FALSE) {
+			$error = [
+				'e_error'	=> form_error('email'),
+				'f_error'	=> form_error('fname'),
+				'l_error'	=> form_error('lname')
+			];
+
+			echo json_encode($error);
+		}else{
+			$profile = [
+				'firstname' => clean_data(ucwords($this->input->post('fname'))),
+				'lastname' => clean_data(ucwords($this->input->post('lname'))),
+				'email' => clean_data($this->input->post('email')),
+			];
+			$id = $this->input->post('id');
+			$decrypt_id = secret_url('decrypt',$id);
+			$where = array('id' => $decrypt_id);
+			$this->Crud_model->update('users',$profile,$where);
+			echo json_encode("success");
+		}
+	}
+
+	public function update_intern_other_info() {
+		if($this->form_validation->run('intern_other_info_validate') == FALSE) {
+			$error = [
+				'school_error'	=> form_error('school'),
+				'no_of_hrs_error'	=> form_error('no_of_hrs'),
+				'course_error'	=> form_error('course'),
+				'bday_error'	=> form_error('bday'),
+				'year_error'	=> form_error('year'),
+				'start_date_error'	=> form_error('start_date'),
+			];
+
+			echo json_encode($error);
+		}else{
+			$other_info = [
+				'school' => clean_data(ucwords($this->input->post('school'))),
+				'no_of_hrs' => clean_data($this->input->post('no_of_hrs')),
+				'course' => clean_data(ucwords($this->input->post('course'))),
+				'birthday' => clean_data($this->input->post('bday')),
+				'year' => clean_data($this->input->post('year')),
+				'start_date' => clean_data($this->input->post('start_date')),
+			];
+			$id = $this->input->post('id');
+			$decrypt_id = secret_url('decrypt',$id);
+			$where = array('user_id' => $decrypt_id);
+			$this->Crud_model->update('intern',$other_info,$where);
+			echo json_encode("success");
+		}
+	}
 }

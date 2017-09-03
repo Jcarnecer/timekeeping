@@ -1,4 +1,4 @@
-function fetch_user_info() {
+function fetch_profile() {
     $.ajax({
         url: base_url + "profile/get_user",
         type: "POST",
@@ -22,7 +22,7 @@ $(document).ready(function(){
             {
                 var result = JSON.parse(data);
                 if(result === "success"){
-                    fetch_user_info();
+                    fetch_profile();
                     bs_notify("<strong> Successfully Change Your Profile.</strong>","success","top","right");
                     $(".text-danger").html("");
             
@@ -56,8 +56,9 @@ $(document).ready(function(){
                 if(result === "success"){
                     $("#profile-picture-modal").modal('hide');
                     $("#error-message-picture").hide();
+                    $("#profile_pic").val("");
                     bs_notify("<strong> Successfully Change Your Profile Picture.</strong>","success","top","right");
-                    fetch_user_info();
+                    fetch_profile();
                 }
                 else{
                     error_message("#error-message-picture",result);

@@ -47,38 +47,5 @@
                             </div>
                         </div>
                     </div>
-                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                        <div class="card">
-                            <div class="card-block text-center">
-                              <div id="success-message"></div>
-                                <h2>Edit Password</h2>
-                                <hr>
-                                <form id="change-pass-form" method="post">
-                                  <div class="form-group">
-                                    <label>Old Password</label>
-                                    <input type="password" name="opassword" class="form-control">
-                                    <div class="text-danger" id="old_err"></div>
-                                  </div>
-                                  <div class="form-group">
-                                    <label>New Password</label>
-                                    <input type="password" name="npassword" class="form-control">
-                                    <div class="text-danger" id="new_err"></div>
-                                  </div>
-                                  <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input type="password" name="cpassword" class="form-control">
-                                    <div class="text-danger" id="confirm_err"></div>
-                                  </div>
-                                  <div class="form-group">
-                                  <hr>
-                                    <button type="Submit" class="btn btn-info"><i class="fa fa-save m-r-10"></i>Submit</button>
-                                  </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-
     </div>
 </div>
-<?php $this->load->view('profile/partials/picture_modal') ?>

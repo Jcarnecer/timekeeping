@@ -36,8 +36,7 @@ class Login extends MY_Controller
                             'profile_picture'   => $get_user->profile_picture,
                             // 'shift' => $get_user->original_shift
                         ];
-                        $this->authenticate->login_user('logged_in',$user_session);
-                        
+                        $this->authenticate->login_user('user_logged_in',$user_session);
                         echo json_encode("success");
                     }elseif($get_user->status == 0){
                         echo json_encode("Your account is inactive. Contact our human resource department regarding this problem.");
@@ -55,7 +54,8 @@ class Login extends MY_Controller
     }
 
     public function logout() {
-        $this->authenticate->logout_user('logged_in');
+        // $this->authenticate->logout_user('logged_in');
+        $this->session->sess_destroy();
         redirect('');
     }
 

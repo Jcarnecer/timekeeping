@@ -35,9 +35,9 @@ $config =
                 ],
     
                 [
-                      'field'		=> 	'password',
-                      'label'   	=> 	'Password',
-                      'rules'  	=> 	'required',
+                    'field'		=> 	'password',
+                    'label'   	=> 	'Password',
+                    'rules'  	=> 	'required',
                 ],
             ],
 
@@ -87,6 +87,44 @@ $config =
                                           'regex_match' 	=> 	'Remove special characters in %s'
                                       ],
                   
+                ],
+            ],
+    'intern_other_info_validate'
+        =>	[
+                [
+                    'field'		=> 	'school',
+                    'label'   	=> 	'School',
+                    'rules'   	=> 	'required'
+                ],
+
+                [
+                    'field'		=> 	'no_of_hrs',
+                    'label'   	=> 	'Number of hours',
+                    'rules'   	=> 	'required|numeric'
+                ],
+
+                [
+                    'field'		=> 	'course',
+                    'label'   	=> 	'Course',
+                    'rules'   	=> 	'required'
+                ],
+
+                [
+                    'field'		=> 	'bday',
+                    'label'   	=> 	'Birthday',
+                    'rules'   	=> 	'required'
+                ],
+
+                [
+                    'field'		=> 	'year',
+                    'label'   	=> 	'Year (School Year)',
+                    'rules'   	=> 	'required'
+                ],
+
+                [
+                    'field'		=> 	'start_date',
+                    'label'   	=> 	'Start date',
+                    'rules'   	=> 	'required'
                 ],
             ],
 ];

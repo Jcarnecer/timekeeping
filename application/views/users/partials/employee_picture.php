@@ -1,6 +1,6 @@
 
 <!-- Modal -->
-<div id="profile-picture-modal" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
+<div id="employee-picture-modal" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -9,8 +9,9 @@
         <h4 class="modal-title">Profile Picture</h4>
       </div>
       <div class="modal-body">
-        <form id="change-picture-form" method="post">
+        <form id="employee-picture-form" method="post">
           <div id="error-message-picture"></div>
+          <input type="hidden" value="<?= $this->uri->segment(3) ?>" name="id" id="id">
           <label>Select Profile Picture</label>
           <input type="file" id="profile_pic" class="form-control" name="profile_pic">
       </div>

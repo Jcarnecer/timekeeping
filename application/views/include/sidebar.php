@@ -1,3 +1,13 @@
+<?php
+      $position = $this->user->info('position_id');
+      $where = array('id' => $position);
+      $users_position = $this->Crud_model->fetch_tag_row('*','position',$where);
+      $privilege = $users_position->privileges;
+      $menu = $this->Crud_model->fetch('menu');
+      $submenu = $this->Crud_model->fetch('sub_menu');
+      $explode = explode(',',$privilege);
+
+?>
 <div id="sidebar">
 <!-- sidebar menu start-->
 <!-- <button class="btn btn-default toggle-button" type="button" >
@@ -11,8 +21,36 @@
 </div>
 <a class="logo" href="#">Navbar</a>
 <ul class="sidebar-menu">
+		<?php foreach($menu as $row){
+			if(in_array($row->id,$explode)){
+				if($row->with_sub == 1){ ?>
+				<li class="sub-menu">
+					<a data-toggle="collapse" href="#UIElementsSub" aria-expanded="false" aria-controls="UIElementsSub" >
+						<i class="<?= $row->icon ?>"></i>
+						<span><?= $row->name ?></span>
+					</a>
+					<ul class="sub collapse" id="UIElementsSub">
+						
+						<!-- <li><a  href="panels.html">Panels</a></li> -->
+						<?php foreach($submenu as $sub){ ?>
+							<li><a href="<?= base_url($sub->url) ?>"><?= $sub->sub ?></a></li>
+						<?php } ?>
+					</ul>
+				</li>
+
+		<?php }else{ ?>
+				<li class="">
+					<a class="" href="<?= base_url($row->url) ?>">
+						<i class="<?= $row->icon ?>"></i>
+						<span><?= $row->name ?></span>
+					</a>
+				</li>
+		<?php }
 		
-	<li class="">
+			}
+
+        }?>
+	<!-- <li class="">
 		<a class="" href="#">
 			<i class="fa fa-dashboard"></i>
 			<span>Dashboard</span>
@@ -32,6 +70,13 @@
 		</a>
 	</li>
 
+	<li class="">
+		<a class="" href="shift">
+			<i class="fa fa-sitemap"></i>
+			<span>Manage Shift</span>
+		</a>
+	</li> -->
+
 	<!-- <li class="sub-menu">
 		<a data-toggle="collapse" href="#UIElementsSub" aria-expanded="false" aria-controls="UIElementsSub" >
 			<i class="fa fa-desktop"></i>
@@ -43,7 +88,7 @@
 			<li><a  href="expense/classification">Classification</a></li>
 			<!-- <li><a  href="panels.html">Panels</a></li> -->
 		</ul>
-	</li> -->
+	</li>
 	<!-- <li class="">
 		<a class="" href="<?= base_url('users/logout'); ?>">
 			<i class="fa fa-dashboard"></i>

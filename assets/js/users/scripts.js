@@ -9,6 +9,31 @@ function fetch_users() {
     })
 }
 
+function fetch_details() {
+    var id = $("#detail_id").val();
+    $.ajax({
+        url: base_url + "users/get_details/" + id,
+        type: "POST",
+        success: function(data) {
+            var result = JSON.parse(data);
+            $("#firstname").val(result.firstname);
+            $("#lastname").val(result.lastname);
+            $("#email").val(result.email);
+            $("#prof_pic").attr('src','assets/uploads/'+result.profile_picture);
+            $("#school").val(result.school);
+            $("#no-of-hrs").val(result.no_of_hrs);
+            $("#course").val(result.course);
+            $("#bday").val(result.birthday);
+            $("#year").val(result.year);
+            $("#start-date").val(result.start_date);
+            $("#tin").val(result.tin_no);
+            $("#sss").val(result.sss_no);
+            $("#phil-health").val(result.phil_health);
+            $("#remaining").html(result.remaining);
+        }
+    })
+}
+
 $(document).ready(function(){
     $("#add-user-form").on('submit',function(e){
         $.ajax({
@@ -92,4 +117,138 @@ $(document).ready(function(){
         })
         e.preventDefault();
     }) 
+})
+
+function fetch_user_info() {
+    $.ajax({
+        url: base_url + "profile/get_user",
+        type: "POST",
+        success: function(data) {
+            var result = JSON.parse(data);
+            $("#firstname").val(result.firstname);
+            $("#lastname").val(result.lastname);
+            $("#email").val(result.email);
+            $('#prof_pic').attr('src','assets/uploads/'+result.profile_picture);
+        }
+    })
+}
+
+
+$(document).ready(function(){
+    $("#intern-picture-form").on('submit',function(e){
+        var form = new FormData(document.getElementById("intern-picture-form"));
+        $.ajax({
+            url: base_url + 'users/change_intern_picture',
+            data: form,
+            type: "POST",
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            success: function(data)
+            {
+                var result = JSON.parse(data);
+                if(result === "success"){
+                    $("#intern-picture-modal").modal('hide');
+                    $("#error-message-picture").hide();
+                    $("#profile_pic").val("");
+                    bs_notify("<strong> Successfully Change Your Profile Picture.</strong>","success","top","right");
+                    fetch_details();
+                }
+                else{
+                    error_message("#error-message-picture",result);
+                }
+            },
+            error: function(data)
+            {
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            },
+        })
+      e.preventDefault();
+    });
+});
+
+$(document).ready(function(){
+    $("#employee-picture-form").on('submit',function(e){
+        var form = new FormData(document.getElementById("employee-picture-form"));
+        $.ajax({
+            url: base_url + 'users/change_intern_picture',
+            data: form,
+            type: "POST",
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            success: function(data)
+            {
+                var result = JSON.parse(data);
+                if(result === "success"){
+                    $("#employee-picture-modal").modal('hide');
+                    $("#error-message-picture").hide();
+                    $("#profile_pic").val("");
+                    bs_notify("<strong> Successfully Change Your Profile Picture.</strong>","success","top","right");
+                    fetch_details();
+                }
+                else{
+                    error_message("#error-message-picture",result);
+                }
+            },
+            error: function(data)
+            {
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            },
+        })
+      e.preventDefault();
+    });
+});
+
+$(document).ready(function() {
+    $("#intern-info-form").on('submit',function(e){
+        $.ajax({
+            url: base_url + "users/update_intern_info",
+            type: "POST",
+            data: $("#intern-info-form").serialize(),
+            success:function(data) {
+                var result = JSON.parse(data);
+                if(result === 'success') {
+                    $(".text-danger").html("");
+                    bs_notify("<strong>Successfully Updated Your Information</strong>","success","top","right");
+                    fetch_details();
+                }else{
+                    perfield_error_message("#fname_err",result.f_error);
+                    perfield_error_message("#lname_err",result.l_error);
+                    perfield_error_message("#email_err",result.e_error);
+                }
+            },
+            error: function(data){
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            }
+        })
+        e.preventDefault();
+    })
+})
+
+$(document).ready(function() {
+    $("#intern-other-info-form").on('submit',function(e){
+        $.ajax({
+            url: base_url + "users/update_intern_other_info",
+            type: "POST",
+            data: $("#intern-other-info-form").serialize(),
+            success:function(data) {
+                var result = JSON.parse(data);
+                if(result === 'success') {
+                    $(".text-danger").html("");
+                    bs_notify("<strong>Successfully Updated Your Information</strong>","success","top","right");
+                    fetch_details();
+                }else{
+                    perfield_error_message("#school_err",result.school_error);
+                    perfield_error_message("#no_of_hrs_err",result.no_of_hrs_error);
+                    perfield_error_message("#course_err",result.course_error);
+                    perfield_error_message("#bday_err",result.bday_error);
+                    perfield_error_message("#year_err",result.year_error);
+                    perfield_error_message("#start_date_err",result.start_date_error);
+                }
+            },
+            error: function(data){
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            }
+        })
+        e.preventDefault();
+    })
 })
