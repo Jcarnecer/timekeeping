@@ -24,7 +24,7 @@ class MY_Controller	extends CI_Controller
     }
 
 	function mainpage($location,$data=array()) {
-		// $this->no_session();
+		$this->no_session();
 		$this->load->view('include/header',$data);
 		$this->load->view('include/sidebar');
 		$this->load->view('include/topbar');

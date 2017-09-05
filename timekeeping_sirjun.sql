@@ -131,7 +131,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'Dashboard','fa fa-dashboard',1,'2017-08-21 14:10:21','2017-09-02 10:03:46','dashboard',NULL),(2,'User Management','fa fa-users',1,'2017-08-21 14:10:21','2017-09-02 10:03:58','users',NULL),(3,'Attendance','fa fa-calendar',1,'2017-08-21 14:10:21','2017-09-02 10:04:06','',NULL),(4,'Management Shift','fa fa-clock',1,'2017-08-21 14:10:21','2017-09-02 10:07:33','',1),(5,'Position Management','fa fa-sitemap',1,'2017-08-21 14:10:21','2017-09-02 10:04:25','position',NULL);
+INSERT INTO `menu` VALUES (1,'Dashboard','fa fa-dashboard',1,'2017-08-21 14:10:21','2017-09-02 10:03:46','dashboard',NULL),(2,'User Management','fa fa-users',1,'2017-08-21 14:10:21','2017-09-02 10:03:58','users',NULL),(3,'Attendance','fa fa-calendar',1,'2017-08-21 14:10:21','2017-09-05 02:57:45','attendance',NULL),(4,'Management Shift','fa fa-clock',1,'2017-08-21 14:10:21','2017-09-02 10:07:33','',1),(5,'Position Management','fa fa-sitemap',1,'2017-08-21 14:10:21','2017-09-02 10:04:25','position',NULL);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,4 +314,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-04  1:05:39
+-- Dump completed on 2017-09-05 10:58:26
