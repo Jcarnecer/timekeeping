@@ -16,8 +16,6 @@ class User {
         $userinfo = $this->CI->Crud_model->fetch_tag_row('*','users',$where);
         if(!$userinfo == NULL) {
             return $userinfo->$col; 
-        }else{
-            echo "Opps! Something went Wrong!";
         }
     }
 }
