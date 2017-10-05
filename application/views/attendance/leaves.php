@@ -28,8 +28,6 @@
 
 <div class="table-responsive" id="leave-data">
     
-        
-        
-       
+      
   </div>
 </div>

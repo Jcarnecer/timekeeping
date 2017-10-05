@@ -22,19 +22,6 @@
 
 </center>
 
-<div class="table-responsive">
-    <table class="table table-bordered" id="timesheet-table">
-        <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time in</th>
-              <th>Time out</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-        </thead>
-        <tbody id="timesheet">
-
-        </tbody>
-    </table>
+<div class="table-responsive" id="timesheet">
+    
   </div>

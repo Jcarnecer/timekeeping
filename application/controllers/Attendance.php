@@ -169,12 +169,9 @@ class Attendance extends MY_Controller {
 
     public function get_timesheet(){
         $order_by = "id desc";
-        // $where = ['user_id' => $this->user->info('id'),'status'=>'4 hourse'];
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
         $where_in = ['name' => 'status', 'values' => ['4 hours', '8 hours', 'Work From Home']];
-        // $where = " ";
-        // $where_in = ['4 hours', '8 hours', 'Work From Home'];
         $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by, $where_in); ?>
         <table class="table table-bordered" id="timesheet-table">
           <thead>
@@ -231,31 +228,30 @@ class Attendance extends MY_Controller {
     public function get_leave() {
         $order_by = "id desc";
         $user_id = $this->user->info('id');
-        $where = "user_id = $user_id and status = 'Sick Leave' AND status = 'Vacation Leave'";
-        $timesheet = $this->Crud_model->fetch_tag('*','record',$where,'','',$order_by);
+        $where = ['user_id' => $user_id];
+        $where_in = ['name' => 'status', 'values' => ['Sick Leave', 'Vacation Leave']];
+        $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by, $where_in); 
         if(!$timesheet == NULL){ ?>
         <table class="table table-bordered" id="leave-table">
             <thead>
             <tr>
               <th>Date</th>
               <th>Status</th>
-              <!-- <th>Action</th> -->
             </tr>
             </thead>
             <tbody>
-
         <?php  foreach ($timesheet as $row):
         ?>
             <tr>
                 <td><?= $row->date?></td>
                 <td><?= $row->status?></td>
             </tr>
-            <?php endforeach;
-        } ?>
-         </tbody>
+            <?php endforeach; ?>
+            </tbody>
         </table>
-
-    <?php
+        <?php    } 
+         
+    
     }
 }
 ?>
