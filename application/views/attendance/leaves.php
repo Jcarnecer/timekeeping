@@ -26,18 +26,10 @@
   </div>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-bordered" id="leave-table">
-        <thead>
-            <tr>
-              <th>Date</th>
-              <th>Status</th>
-              <!-- <th>Action</th> -->
-            </tr>
-        </thead>
-        <tbody id="leave-data">
-
-        </tbody>
-    </table>
+<div class="table-responsive" id="leave-data">
+    
+        
+        
+       
   </div>
 </div>

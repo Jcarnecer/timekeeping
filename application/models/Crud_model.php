@@ -1,7 +1,7 @@
 <?php
 class Crud_model extends CI_Model{
 	
-	public function fetch($table,$where="",$limit="",$offset="",$order=""){
+	public function fetch($table,$where="",$limit="",$offset="",$order="",$where_in= false){
 		if (!empty($where)) {
 			$this->db->where($where);	
 		}
@@ -16,6 +16,12 @@ class Crud_model extends CI_Model{
 			$this->db->order_by($order); 
 		}
 
+		if($where_in)
+		{
+			$this->db->where_in($where_in['name'], $where_in['values']);
+		}
+	
+
 		$query = $this->db->get($table);
 		if ($query->num_rows() > 0) {
 			return $query->result();
@@ -25,9 +31,12 @@ class Crud_model extends CI_Model{
 	}
 	
 
-	public function fetch_tag($tag,$table,$where="",$limit="",$offset="",$order=""){
+	public function fetch_tag($tag,$table,$where="",$where_in="",$limit="",$offset="",$order=""){
 		if (!empty($where)) {
 			$this->db->where($where);	
+		}
+		if (!empty($where_in)) {
+			$this->db->or_where_in($where);	
 		}
 		if (!empty($limit)) {
 			if (!empty($offset)) {
@@ -54,6 +63,7 @@ class Crud_model extends CI_Model{
 		if (!empty($where)) {
 			$this->db->where($where);	
 		}
+		
 		if (!empty($limit)) {
 			if (!empty($offset)) {
 				$this->db->limit($limit, $offset);

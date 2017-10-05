@@ -14,7 +14,7 @@
 
       <form id="timesheet_halfday" class ="form-timesheet" method="post">
         <input type="hidden" name="userid" id="userid" value="<?=$this->user->info('id');?>">
-        <input type="hidden" name="eight" value="2">
+        <input type="hidden" name="four" value="2">
         <input type="submit" class="btn btn-custom" id="four" value="4 HOURS">
       </form>
 
@@ -24,7 +24,7 @@
         <input type="submit" class="btn btn-custom" name="eight" value="8 HOURS">
       </form>
 
-      <form id="timesheet_SL" class ="form-timesheet" method="post">
+      <!-- <form id="timesheet_SL" class ="form-timesheet" method="post">
         <input type="hidden" name="userid" value="<?=$this->user->info('id');?>">
         <input type="hidden" name="sick" value="3">
         <input type="submit" class="btn btn-custom" name="sick" value="SICK LEAVE">
@@ -35,7 +35,7 @@
         <input type="hidden" name="vacation" value="4">
         <input type="submit" class="btn btn-custom" name="vacation" value="VACATION LEAVE">
       </form>
-      
+       -->
       <form id="timesheet_WFH" class ="form-timesheet" method="post">
         <input type="hidden" name="userid" value="<?=$this->user->info('id');?>">
         <input type="hidden" name="wfh" value="5">
@@ -46,20 +46,19 @@
     </div>
   </div>
 
-  <div class="table-responsive">
-      <table class="table table-bordered" id="timesheet-table">
+  <div class="table-responsive" id="timesheet">
+      <!-- <table class="table table-bordered" id="timesheet-table">
           <thead>
               <tr>
                 <th>Date</th>
                 <th>Time in</th>
                 <th>Time out</th>
                 <th>Status</th>
-                <!-- <th>Action</th> -->
               </tr>
           </thead>
-          <tbody id="timesheet">
+          <tbody >
 
           </tbody>
-      </table>
+      </table> -->
     </div>
 </div>

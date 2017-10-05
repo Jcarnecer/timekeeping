@@ -28,7 +28,6 @@ class Attendance extends MY_Controller {
                     'now' => $now,
                 ]
             );
-
         }
 
         elseif($this->user->info('position_id') == '4'){
@@ -170,13 +169,17 @@ class Attendance extends MY_Controller {
 
     public function get_timesheet(){
         $order_by = "id desc";
-        // $where = ['user_id' => $this->user->info('id')];
+        // $where = ['user_id' => $this->user->info('id'),'status'=>'4 hourse'];
         $user_id = $this->user->info('id');
-        $where = "user_id = $user_id and status = '4 hours' OR status = '8 hours' OR status = 'Work From Home' ";
-        $timesheet = $this->Crud_model->fetch('record',$where,'','',$order_by); ?>
+        $where = ['user_id' => $user_id];
+        $where_in = ['name' => 'status', 'values' => ['4 hours', '8 hours', 'Work From Home']];
+        // $where = " ";
+        // $where_in = ['4 hours', '8 hours', 'Work From Home'];
+        $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by, $where_in); ?>
         <table class="table table-bordered" id="timesheet-table">
           <thead>
               <tr>
+                <th>NAME</th>
                 <th>Date</th>
                 <th>Time in</th>
                 <th>Time out</th>
@@ -189,6 +192,7 @@ class Attendance extends MY_Controller {
         foreach ($timesheet as $row):
         ?>
             <tr>
+                <td><?= $row->user_id ?></td>
                 <td><?= $row->date?></td>
                 <td><?= $row->time_in?></td>
                 <td><?= $row->time_out?></td>
@@ -227,17 +231,31 @@ class Attendance extends MY_Controller {
     public function get_leave() {
         $order_by = "id desc";
         $user_id = $this->user->info('id');
-        $where = "user_id = $user_id and status = 'Sick Leave' OR status = 'Vacation Leave'";
+        $where = "user_id = $user_id and status = 'Sick Leave' AND status = 'Vacation Leave'";
         $timesheet = $this->Crud_model->fetch_tag('*','record',$where,'','',$order_by);
-        if(!$timesheet == NULL){
-            foreach ($timesheet as $row):
+        if(!$timesheet == NULL){ ?>
+        <table class="table table-bordered" id="leave-table">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Status</th>
+              <!-- <th>Action</th> -->
+            </tr>
+            </thead>
+            <tbody>
+
+        <?php  foreach ($timesheet as $row):
         ?>
             <tr>
                 <td><?= $row->date?></td>
                 <td><?= $row->status?></td>
             </tr>
             <?php endforeach;
-        }
+        } ?>
+         </tbody>
+        </table>
+
+    <?php
     }
 }
 ?>

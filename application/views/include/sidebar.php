@@ -54,7 +54,7 @@
 		<?php }
 			}
 
-        }?>=
+        }?>
 		<!--<ul class="sub collapse" id="expense">
 			<li><a  href="expense/reimbursement">Reimbursement</a></li>
 			<li><a  href="expense/request">Request</a></li>
