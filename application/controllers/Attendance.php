@@ -269,53 +269,53 @@ class Attendance extends MY_Controller {
 
     //Overtime
     public function add_overtime(){
-      $now = new DateTime();
-      $now->setTimezone(new DateTimezone('Asia/Manila'));
-      $start = $this->input->post('start');
-      $end = $this->input->post('end');
-      $diff = $end-$start;
+        $now = new DateTime();
+        $now->setTimezone(new DateTimezone('Asia/Manila'));
+        $start = $this->input->post('start');
+        $end = $this->input->post('end');
+        $diff = $end-$start;
 
-      $insert=[
-        'user_id' => clean_data(ucwords($this->input->post('user_id'))),
-        'reason' => clean_data(ucwords($this->input->post('reason'))),
-        'start' => clean_data($start),
-        'end' => clean_data($end),
-        'overtime_date' => clean_data($this->input->post('overtime-date')),
-        'date_submitted' => clean_data($now->format('Y-m-d')),
-        'ot_hours' => clean_data($diff),
-        'status' => 0,
-      ];
-      $this->Crud_model->insert('record_overtime', $insert);
+        $insert=[
+            'user_id' => clean_data(ucwords($this->input->post('user_id'))),
+            'reason' => clean_data(ucwords($this->input->post('reason'))),
+            'start' => clean_data($start),
+            'end' => clean_data($end),
+            'overtime_date' => clean_data($this->input->post('overtime-date')),
+            'date_submitted' => clean_data($now->format('Y-m-d')),
+            'ot_hours' => clean_data($diff),
+            'status' => 0,
+        ];
+        $this->Crud_model->insert('record_overtime', $insert);
     }
 
     public function get_employee_overtime(){
-      $order_by = "id desc";
-      $user_id = $this->user->info('id');
-      $where = ['user_id' => $user_id];
-      $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by); ?>
-      <?php
-      if(!$overtime == NULL){
-          foreach ($overtime as $row) :
-      ?>
-          <tr>
-              <td><?php
-                  if($row->status == 0){
-                    echo "<p class='text-warning'>Pending</p>";
-                  }elseif($row->status == 1){
-                    echo "<p class='text-success'>Accepted</p>";
-                  }elseif($row->status == 2){
-                    echo "<p class='text-danger'>Rejected</p>";
-                  } ?>
-              </td>
-              <td><?= $row->overtime_date?></td>
-              <td><?= $row->start?></td>
-              <td><?= $row->end?></td>
-              <td><?= $row->reason?></td>
-              <td><?= $row->date_submitted?></td>
-              <td><?= $row->ot_hours?></td>
-          </tr>
-          <?php endforeach;
-      }
+        $order_by = "id desc";
+        $user_id = $this->user->info('id');
+        $where = ['user_id' => $user_id];
+        $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by); ?>
+        <?php
+        if(!$overtime == NULL){
+            foreach ($overtime as $row) :
+        ?>
+            <tr>
+                <td><?php
+                    if($row->status == 0){
+                        echo "<p class='text-warning'>Pending</p>";
+                    }elseif($row->status == 1){
+                        echo "<p class='text-success'>Accepted</p>";
+                    }elseif($row->status == 2){
+                        echo "<p class='text-danger'>Rejected</p>";
+                    } ?>
+                </td>
+                <td><?= $row->overtime_date?></td>
+                <td><?= $row->start?></td>
+                <td><?= $row->end?></td>
+                <td><?= $row->reason?></td>
+                <td><?= $row->date_submitted?></td>
+                <td><?= $row->ot_hours?></td>
+            </tr>
+            <?php endforeach;
+        }
     }
 }
 ?>
