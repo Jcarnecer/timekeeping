@@ -64,6 +64,19 @@ $route['edit/position']  = 'position/edit_position';
 //login
 $route['auth/login']    = 'login/auth';
 
+
+//Attendance
+$route['add/attendance'] = 'attendance/add_timesheet';
+$route['get/attendance'] = 'attendance/get_timesheet';
+$route['leaves'] = 'attendance/leaves';
+$route['calendar'] = 'attendance/calendar';
+$route['overtime'] = 'attendance/overtime';
+$route['get/emp_attendance'] = 'attendance/get_employee_attendance';
+$route['get/leave'] = 'attendance/get_leave';
+//$route['calendar']
+//$route['calendar']
+
+
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

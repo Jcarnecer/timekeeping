@@ -24,9 +24,9 @@
             <optgroup label="Current Privileges">
               <?php
               $x=1;
-              foreach($menu as $key){ ?>
+              foreach($menu as $key){if($x!=1){ ?>
               <option value="<?php echo $key->id?>"><?php echo $key->name; ?></option>
-              <?php  }?>
+              <?php  } $x+=1; }?>
             </optgroup>
           </select>
           </div> 

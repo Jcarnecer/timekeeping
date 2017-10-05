@@ -1,6 +1,4 @@
-
-<div class="container-fluid">
-    <div class="row">
+<div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card">
                             <div class="card-block text-center">
@@ -19,9 +17,10 @@
                             <div class="card-block text-center">
                                 <h2>Edit Information</h2>
                                 <hr>
-                                <form id="change-profile-form" method="post">
+                                <form id="employee-info-form" method="post">
                                   <div class="form-group">
                                     <label>First Name</label>
+                                    <input type="hidden" name="id" value="<?= $this->uri->segment(3) ?>">
                                     <!-- <input type="text" name="fname" value="<?= $this->user->info('firstname') ?>" class="form-control"> -->
                                     <input type="text" name="fname" id="firstname" class="form-control">
                                     <div class="text-danger" id="fname_err"></div>
@@ -53,9 +52,10 @@
                               <div id="success-message"></div>
                                 <h2>Other Information</h2>
                                 <hr>
-                                <form id="change-pass-form" method="post">
+                                <form id="employee-other-info-form" method="post">
                                   <div class="form-group">
                                     <label>SSS</label>
+                                    <input type="hidden" name="id" value="<?= $this->uri->segment(3) ?>">
                                     <input type="text" name="sss" id="sss" class="form-control">
                                     <div class="text-danger" id="sss_err"></div>
                                   </div>

@@ -11,9 +11,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<title><?= $title ?></title>
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/js/base_url.js"></script>
-		
 		<link rel="stylesheet" type="text/css" href="assets/css/flavored-reset-and-normalize.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" >
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" > -->
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" >
 		<link rel="stylesheet" type="text/css" href="assets/css/styles.css" >
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-select.min.css" >
 		<link rel="stylesheet" href="assets/datatables/jquery.dataTables.min.css" >
@@ -24,7 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		<?php $segment =  $this->uri->segment(1);
 			  $segment2 =  $this->uri->segment(2);
-
 
 		if($segment == 'users'){ ?>
 			<script src="assets/js/error-message.js"></script>
@@ -51,6 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script>
 				fetch_shift();
 			</script>
-		<?php } ?>
+		<?php }elseif ($segment == 'attendance' || 
+					   $segment == 'leaves' ||
+					   $segment == 'overtime') { ?>
+			<script src="assets/js/attendance/script.js"></script>
+	<?php } ?>
     </head>
     <body>

@@ -98,6 +98,12 @@ class Crud_model extends CI_Model{
 		}
 	}
 
+	public function test($user_id){
+		$sql = "select * from record where user_id = $user_id and status = 'Sick Leave' OR status = 'Vacation Leave'";
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
 	public function delete($table,$where=""){
 		if($where!=""){
 			$this->db->where($where);
@@ -173,5 +179,19 @@ class Crud_model extends CI_Model{
 		$this->db->join($join_table,$columns);
 		$query = $this->db->get();
 		return $query->row();
+	}
+
+	public function join_tag_result($tag,$table,$where="",$join_table,$columns,$order=""){
+		if (!empty($where)) {
+			$this->db->where($where);	
+		}
+		if (!empty($order)) {
+			$this->db->order_by($order); 
+		}
+		$this->db->select($tag);
+		$this->db->from($table);
+		$this->db->join($join_table,$columns);
+		$query = $this->db->get();
+		return $query->result();
 	}
 }

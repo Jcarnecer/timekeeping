@@ -24,6 +24,11 @@ $config =
                                     'is_unique'    =>    '%s is already taken.'
                 ],
             ],
+            [
+                'field'     =>   'start_date',
+                'label'     =>   'Start Date',
+                'rules'     =>   'required'
+            ]
         ],
 
     'login_validate'

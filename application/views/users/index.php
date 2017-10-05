@@ -1,5 +1,4 @@
-<div class="container">
-    <h3>Users Management</h3>
+<h3>Users Management</h3>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-users-modal">
         Add Users
     </button>
@@ -22,7 +21,9 @@
             </table>
         </div>
     </div>
-    <?php $this->load->view('users/partials/add_users_modal'); ?>
-    <?php $this->load->view('users/partials/activate_modal'); ?>
-    <?php $this->load->view('users/partials/deactivate_modal'); ?>
-
+    <?php 
+    $this->load->view('users/partials/add_users_modal'); 
+    $this->load->view('users/partials/activate_modal'); 
+    $this->load->view('users/partials/deactivate_modal'); 
+    $this->load->view('users/partials/reset_password');
+    ?>

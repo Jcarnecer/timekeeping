@@ -19,7 +19,8 @@ class Users extends MY_Controller
 				'lname_error'    =>    form_error('lname'),
 				'mname_error'	 =>    form_error('mname'),
 				'email_error'	 =>    form_error('emailadd'),
-				'pos_error'      =>    form_error('pos')
+				'pos_error'      =>    form_error('pos'),
+				'sd_error'	=>	   form_error('start_date')
 			];
 
 			echo json_encode($error);
@@ -36,34 +37,71 @@ class Users extends MY_Controller
 				'password'			=>   hash_password($generate_password),
 				'reg_key'			=> $generate_key,
 				'profile_picture'		=> 'no_image.jpg',
-				'status'			=> 0, // not activated 
-				'verified_email' 	=> 0, // for email confirmation 
+				'status'			=> 0, // account not activate
+				'verified_email' 	=> 0, // for email confirmation
+				'start_date'		=> clean_data($this->input->post('start_date'))
 			];
 			$get_rowid = $this->Crud_model->last_inserted_row('users',$insert);
 
-			if($this->input->post('pos') == 2 || $this->input->post('pos')==3){
+			if(clean_data($this->input->post('pos')) == 2 || clean_data($this->input->post('pos')==3)){
 				$insert_employee = [
 					'user_id'	=>    $get_rowid->id
 				];
 				$this->Crud_model->insert('employee',$insert_employee);
-			}elseif($this->input->post('pos')==4) {
+			}elseif(clean_data($this->input->post('pos')==4)) {
 				$insert_intern = [
-					'user_id'	=> 	  $get_rowid->id
+					'no_of_hrs'	=>  clean_data($this->input->post('num_hrs')),
+					'user_id'	=> 	  $get_rowid->id,
+					'remaining'	=>  clean_data($this->input->post('num_hrs'))
 				];
 				$this->Crud_model->insert('intern',$insert_intern);
 			}
+			
+			$config = array(
+				'smtp_timeout' => '4',
+				'charset' => 'utf-8',
+				'mailtype'=> 'html',
+			);
 
+			$this->load->initialize($config);
+
+			$from="paypal.emailverify@gmail.com";
+			$to = $this->input->post('emailadd');
+			$subject = "Account Activation";
+			$data = [	'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
+						'reg_key' => $insert['reg_key'],
+						'email'	=> $to,
+						'password'	=> $generate_password,
+						'verified_email'	=> $get_rowid->verified_email,
+					];
+			$message = $this->load->view('email/account_verify',$data,TRUE);
+			// echo $message;
+			$this->load->library('email');
+			$this->email->clear();
+			$this->email->from($from, 'Company Name');
+			$this->email->to($to);
+			$this->email->set_newline("\n");
+			$this->email->subject($subject);
+			$this->email->message($message);
+			$this->email->set_mailtype('html');
+			$this->email->send();
+			
 			$success = [
 				'success' => 1,
 				'name'	=> clean_data(ucwords($this->input->post('fname'))) .' '. clean_data(ucwords($this->input->post('lname'))),
 			];
+			
 			echo json_encode($success);
 		}
 	}
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		$where = ['position_id >' => '1']; //not include admin
+		if($this->user->info('position_id') == 1){
+			$where = NULL;
+		}else{
+			$where = ['position_id >' => '1']; //not include admin
+		}
 		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
 		if(!$users == NULL){
@@ -85,7 +123,6 @@ class Users extends MY_Controller
 					<?php } ?>
 				</td>
 				<td>
-					
 					<div class="dropdown show">
 						<button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Action
@@ -97,6 +134,8 @@ class Users extends MY_Controller
 							<a class="dropdown-item activate-user" data-toggle="modal" data-name="<?= $row->firstname.' '.$row->lastname ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#u-a-modal" title="Activate" >Activate</a>
 						<?php } ?>
 							<a class="dropdown-item user_details" href="users/details/<?= secret_url('encrypt',$row->id) ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" id="user_details">Details</a>
+							<hr>
+							<a class="dropdown-item reset-password" data-toggle="modal" data-email="<?= $row->email ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" data-name="<?= $row->firstname.' '.$row->lastname ?>" href="#reset-user-pass">Reset Password</a>
 						</div>
 					</div>
 				</td>
@@ -262,7 +301,7 @@ class Users extends MY_Controller
           $this->form_validation->set_message('handleimage', "You must upload an image!");
           return false;
         endif;
-	}
+	}	
 	
 	public function update_intern_info() {
 		if($this->form_validation->run('edit_info_validate') == FALSE) {
@@ -315,4 +354,42 @@ class Users extends MY_Controller
 			echo json_encode("success");
 		}
 	}
+
+	public function update_employee_info() {
+		if($this->form_validation->run('edit_info_validate') == FALSE) {
+			$error = [
+				'e_error'	=> form_error('email'),
+				'f_error'	=> form_error('fname'),
+				'l_error'	=> form_error('lname')
+			];
+
+			echo json_encode($error);
+		}else{
+			$profile = [
+				'firstname' => clean_data(ucwords($this->input->post('fname'))),
+				'lastname' => clean_data(ucwords($this->input->post('lname'))),
+				'email' => clean_data($this->input->post('email')),
+			];
+			$id = $this->input->post('id');
+			$decrypt_id = secret_url('decrypt',$id);
+			$where = array('id' => $decrypt_id);
+			$this->Crud_model->update('users',$profile,$where);
+			echo json_encode("success");
+		}
+	}
+
+	public function update_employee_other_info() {
+		$other_info = [
+			'sss_no' => clean_data($this->input->post('sss')),
+			'tin_no' => clean_data($this->input->post('tin')),
+			'phil_health' => clean_data($this->input->post('philhealth')),
+			'start_date' => clean_data($this->input->post('date_start')),
+		];
+		$id = $this->input->post('id');
+		$decrypt_id = secret_url('decrypt',$id);
+		$where = array('user_id' => $decrypt_id);
+		$this->Crud_model->update('employee',$other_info,$where);
+		echo json_encode("success");
+	}
+
 }

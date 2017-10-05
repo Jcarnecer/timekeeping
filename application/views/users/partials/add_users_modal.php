@@ -1,4 +1,6 @@
-<?php $pos = $this->Crud_model->fetch('position') ?>
+<?php 
+// $where = ['id !=' => 1];
+$pos = $this->Crud_model->fetch('position') ?>
 <!-- Modal -->
 <div class="modal fade" id="add-users-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
@@ -28,20 +30,40 @@
             <h5 class="text-danger email-error" ></h5>
 
             <label for="">Position</label>
-            <select name="pos" id="" class="form-control">
+            <select name="pos" id="position" class="form-control">
                 <?php foreach($pos as $row): ?>
-                <option value="<?= $row->id ?>"><?= $row->name ?></option>
+                <option id="<?= $row->id ?>" value="<?= $row->id ?>"><?= $row->name ?></option>
                 <?php endforeach;   ?>
             </select>
             <h5 class="text-danger pos-error"></h5>
-       
+            <label for="">Start Date</label>
+            <input type="text" name="start_date" class="form-control" placeholder="yyyy-mm-dd">
+            <h5 class="text-danger sd-error"></h5>
+
+            <div class="form-group" id="intern-no-hrs" style="display:none">
+              <label for="">Number of Hours</label>
+              <input type="text" name="num_hrs" class="form-control">
+            </div>
       </div>
       <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Save</button>
           </form>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $("#position").on('change',function(){
+      var pos_id = $("#position").val();
+      if(pos_id == 4){
+        $("#intern-no-hrs").css({"display":"block"});
+      }else{
+        $("#intern-no-hrs").css({"display":"none"});
+      }
+      // e.preventDefault();
+    })
+  })
+</script>

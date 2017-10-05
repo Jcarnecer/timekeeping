@@ -1,5 +1,4 @@
-<div class="container">
-    <h3>Shift Type</h3>
+<h3>Shift Type</h3>
         <br><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">

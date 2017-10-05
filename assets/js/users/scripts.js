@@ -34,6 +34,26 @@ function fetch_details() {
     })
 }
 
+$(document).on('click','.reset-password',function(){
+    var name = $(this).data('name');
+    var id = $(this).data('id');
+    var email = $(this).data('email');
+    $("#name").html(name);
+    $("#confirm-msg").html("Reset password instruction will be send to <br>"+email);
+    $("#id").val(id);
+    $("#email").val(email);
+})
+
+$(document).ready(function() {
+    $("#reset-password-form").on('submit',function(e){
+        $.ajax({
+            url: base_url + ""
+        })
+
+        e.preventDefault();
+    })
+})
+
 $(document).ready(function(){
     $("#add-user-form").on('submit',function(e){
         $.ajax({
@@ -45,11 +65,13 @@ $(document).ready(function(){
 
                 if(result.success === 1) {
                     $("input").val("");
-                    $(".fname-error").html("");
-                    $(".lname-error").html("");
-                    $(".mname-error").html("");
-                    $(".email-error").html("");
-                    $(".pos-error").html("");
+                    // $(".fname-error").html("");
+                    // $(".lname-error").html("");
+                    // $(".mname-error").html("");
+                    // $(".email-error").html("");
+                    // $(".pos-error").html("");
+
+                    $("h5").html("");
                     $("#add-users-modal").modal("hide");
                     bs_notify("<strong>Successfully added " +result.name + "</strong>","success","top","right");
                     fetch_users();
@@ -60,6 +82,7 @@ $(document).ready(function(){
                     $(".mname-error").html(result.mname_error);
                     $(".email-error").html(result.email_error);
                     $(".pos-error").html(result.pos_error);
+                    $(".sd-error").html(result.sd_error);
                 }
             }
         })
@@ -244,6 +267,52 @@ $(document).ready(function() {
                     perfield_error_message("#year_err",result.year_error);
                     perfield_error_message("#start_date_err",result.start_date_error);
                 }
+            },
+            error: function(data){
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            }
+        })
+        e.preventDefault();
+    })
+})
+
+$(document).ready(function() {
+    $("#employee-info-form").on('submit',function(e){
+        $.ajax({
+            url: base_url + "users/update_employee_info",
+            type: "POST",
+            data: $("#employee-info-form").serialize(),
+            success:function(data) {
+                var result = JSON.parse(data);
+                if(result === 'success') {
+                    $(".text-danger").html("");
+                    bs_notify("<strong>Successfully Updated Employee Information</strong>","success","top","right");
+                    fetch_details();
+                }else{
+                    perfield_error_message("#fname_err",result.f_error);
+                    perfield_error_message("#lname_err",result.l_error);
+                    perfield_error_message("#email_err",result.e_error);
+                }
+            },
+            error: function(data){
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            }
+        })
+        e.preventDefault();
+    })
+})
+
+$(document).ready(function() {
+    $("#employee-other-info-form").on('submit',function(e){
+        $.ajax({
+            url: base_url + "users/update_employee_other_info",
+            type: "POST",
+            data: $("#employee-other-info-form").serialize(),
+            success:function(data) {
+                var result = JSON.parse(data);
+                bs_notify("<strong>Successfully Updated Employee Information</strong>","success","top","right");
+                fetch_details();
+                
             },
             error: function(data){
                 alert('Opps! Something went wrong. please contact the administrator. ');

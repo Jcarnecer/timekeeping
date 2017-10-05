@@ -1,5 +1,4 @@
-<div class="container">
-    <h3>Position Management</h3>
+<h3>Position Management</h3>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-position-modal">
         Add Position
     </button>
