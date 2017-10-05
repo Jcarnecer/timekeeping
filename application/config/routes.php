@@ -70,9 +70,13 @@ $route['add/attendance'] = 'attendance/add_timesheet';
 $route['get/attendance'] = 'attendance/get_timesheet';
 $route['leaves'] = 'attendance/leaves';
 $route['calendar'] = 'attendance/calendar';
-$route['overtime'] = 'attendance/overtime';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';
 $route['get/leave'] = 'attendance/get_leave';
+//Overtime
+$route['overtime'] = 'attendance/overtime';
+$route['add/overtime'] = 'attendance/add_overtime';
+$route['get/emp_overtime'] = 'attendance/get_employee_overtime';
+
 //$route['calendar']
 //$route['calendar']
 
