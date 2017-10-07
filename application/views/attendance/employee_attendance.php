@@ -21,7 +21,6 @@
                 <th>Time in</th>
                 <th>Time out</th>
                 <th>Status</th>
-                <!-- <th>Action</th> -->
               </tr>
           </thead>
           <tbody id="employee-attendance">

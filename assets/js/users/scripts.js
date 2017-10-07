@@ -47,7 +47,17 @@ $(document).on('click','.reset-password',function(){
 $(document).ready(function() {
     $("#reset-password-form").on('submit',function(e){
         $.ajax({
-            url: base_url + ""
+            url: base_url + "reset/reset_user_password",
+            type: "POST",
+            data: $("#reset-password-form").serialize(),
+            success: function(data) {
+                var result = JSON.parse(data);
+                if(result.success === 1) {
+                    $("#reset-user-pass").modal('hide');
+                    bs_notify("<strong>Successfully send to  " +result.email + "</strong>","success","top","right");
+                }
+                
+            }
         })
 
         e.preventDefault();

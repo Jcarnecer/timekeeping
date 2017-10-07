@@ -50,6 +50,46 @@ function fetch_overtime() {
 	})
 }
 
+// function fetch_employee_overtime(){
+//   $.ajax({
+//     url: base_url + "get/emp_overtime",
+//     type: "POST",
+//     success: function(data){
+//       $("#employee-overtime").html(data);
+//       $("#employee-overtime-table").DataTable();
+//     }
+//   })
+// }
+function fetch_admin_overtime(){
+  $.ajax({
+    url: base_url + "get/admin_overtime",
+    type: "POST",
+    success: function(data){
+        $("#admin-overtime").html(data);
+        $("#admin-overtime-table").DataTable();
+    }
+  })
+}
+
+$(function(){
+$('[data-name="overtime-details"]').click(function(e){
+  var id = $(this).attr('data-id');
+  $.ajax({
+      url: base_url + "attendance/get_overtime_details/" + id,
+      method: "GET",
+      success: function(data){
+          var result = JSON.parse(data);
+            $("#overtime-date").html(result.overtime_date);
+            $("#start").html(result.start);
+            $("#end").html(result.end);
+            $("#reason").html(result.reason);
+      }
+		})
+		e.preventDefault();
+  })
+})
+
+
 $(document).ready(function(){
 	$(".form-timesheet").on('submit',function(e){
 		$.ajax({
@@ -105,7 +145,18 @@ $(document).ready(function(){
 	})
 })
 
+
+$(document).on('click','.activate-user',function(){
+    var id = $(this).data('id');
+    var name = $(this).data('name');
+    $(".modal-title").html("Activate "+name);
+    $("#u-a-id").val(id);
+    $("#u-a-name").val(name);
+    $("#activate-confirm-message").html("Are your sure you want to activate "+name+"?");
+})
 fetch_leave();
 fetch_overtime();
+// fetch_employee_overtime();
+fetch_admin_overtime();
 fetch_attendance();
 fetch_employee_attendance();
