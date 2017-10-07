@@ -75,6 +75,7 @@ $route['get/leave'] = 'attendance/get_leave';
 //Overtime
 $route['overtime'] = 'attendance/overtime';
 $route['add/overtime'] = 'attendance/add_overtime';
+$route['get/admin_overtime'] = 'attendance/get_admin_overtime';
 $route['get/emp_overtime'] = 'attendance/get_employee_overtime';
 
 //$route['calendar']

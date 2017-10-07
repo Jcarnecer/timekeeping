@@ -288,6 +288,48 @@ class Attendance extends MY_Controller {
       $this->Crud_model->insert('record_overtime', $insert);
     }
 
+    public function get_admin_overtime(){
+      $overtime = $this->Crud_model->join_user_overtime(); ?>
+      <?php
+      if(!$overtime == NULL){
+          foreach ($overtime as $row) :
+      ?>
+      <tr>
+        <td><?= $row->firstname?> <?= $row->lastname?></td>
+        <td><?= $row->date_submitted?></td>
+        <td>
+          <?php
+              if($row->status == 0){
+                echo "<p class='text-warning'>Pending</p>";
+              }elseif($row->status == 1){
+                echo "<p class='text-success'>Accepted</p>";
+              }elseif($row->status == 2){
+                echo "<p class='text-danger'>Rejected</p>";
+              } ?>
+        </td>
+        <td>
+          <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
+            <a class="dropdown-item" data-toggle="modal"  data-id="<?= secret_url('encrypt',$row->id) ?>" href="#reject-overtime-modal" title="Reject" >Reject</a>
+            <a class="dropdown-item" data-toggle="modal" id="details" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
+            <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
+          </div>
+        </td>
+      </tr>
+      <?php endforeach;
+      }
+    }
+
+    public function get_overtime_details($id){
+      $decrypt_id = secret_url('decrypt',$id);
+      $where = ['id' => $decrypt_id];
+      $overtime = $this->db->get_where('record_overtime',$where)->row();
+      print json_encode($overtime);
+    }
+
     public function get_employee_overtime(){
       $order_by = "id desc";
       $user_id = $this->user->info('id');
