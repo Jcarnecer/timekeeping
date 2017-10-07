@@ -4,42 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Attendance extends MY_Controller {
 
     public function index() {
-        //  $data = $this->session->userdata('user_logged_in');
-        $now = new DateTime();
-        $now->setTimezone(new DateTimezone('Asia/Manila'));
-        $date_now = $now->format('Y-m-d');
-        $time = $now->format('H:i:s');
-
-        if($this->user->info('position_id')  == '1' || $this->user->info('position_id')=='3'){
-            parent::mainpage('attendance/admin',
-                [
-                    'title' => 'Timesheet',
-                    'record'	=> $this->Crud_model->fetch('record'),
-                    'now' => $now,
-                ]
-            );
-        }
-
-
-        elseif($this->user->info('position_id') == '2'){
-            parent::mainpage('attendance/employee',
-                [
-                    'title' => 'Timesheet',
-                    'now' => $now,
-                ]
-            );
-        }
-
-        elseif($this->user->info('position_id') == '4'){
-            parent::mainpage('attendance/intern',
-                [
-                    'title' => 'Timesheet',
-                    'users'	=> $this->Crud_model->fetch('record'),
-                    'now' => $now,
-                ]
-            );
-        }
-
+        // print_r($this->user->info('position_id'));die;
+        
+        // $now = new DateTime();
+        // $now->setTimezone(new DateTimezone('Asia/Manila'));
+        // $date_now = $now->format('Y-m-d');
+        // $time = $now->format('H:i:s');
+        parent::mainpage('attendance/index',
+            [
+                'title' => 'Timesheet',
+                'record'	=> $this->Crud_model->fetch('record'),
+            ]
+        );
     }
 
     public function leaves(){
@@ -67,27 +43,15 @@ class Attendance extends MY_Controller {
     }
 
     public function overtime(){
-        if($this->user->info('position_id') == '1'){
-            parent::mainpage('attendance/overtime',
-                [
-                    'title' => 'Overtime',
-                ]
-            );
-        }
-        elseif($this->user->info('position_id') == '2'){
-            parent::mainpage('attendance/employee_overtime',
-                [
-                    'title' => 'Overtime',
-                ]
-            );
-        }
+        parent::mainpage('attendance/index',
+            [
+                'title' => 'Overtime',
+            ]
+        );
+        
     }
 
     public function add_timesheet(){
-      // print_r($this->input->post('userid'));
-      // print_r($this->input->post('time-in'));
-      // print_r($this->input->post('time-out'));
-      //  die;
         $now = new DateTime();
         $now->setTimezone(new DateTimezone('Asia/Manila'));
         $date_now = $now->format('Y-m-d');
@@ -105,7 +69,15 @@ class Attendance extends MY_Controller {
                 'time_out' => $time,
                 'status' => $status,
             ];
-            $this->Crud_model->insert('record',$insert);
+            $user_id = $this->user->info('id');
+            $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
+            $check_date = $this->Crud_model->fetch('record',$where);
+            if($check_date == TRUE){
+                echo json_encode("You already have attendance today");
+            }else{
+                $recent = $this->Crud_model->insert('record',$insert);
+                echo json_encode($insert);
+            }
 
         }elseif($this->input->post('eight')){
             $time =  date('H:i:s',strtotime('+8 hour',strtotime($time)));
@@ -117,7 +89,15 @@ class Attendance extends MY_Controller {
                 'time_out' => $time,
                 'status' => $status,
             ];
-            $this->Crud_model->insert('record',$insert);
+            $user_id = $this->user->info('id');
+            $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
+            $check_date = $this->Crud_model->fetch('record',$where);
+            if($check_date == TRUE){
+                echo json_encode("You already have attendance today");
+            }else{
+                $this->Crud_model->insert('record',$insert);
+                echo json_encode($insert);
+            }
 
         }elseif($this->input->post('sick')){
             $time = "";
@@ -129,7 +109,15 @@ class Attendance extends MY_Controller {
                 'time_out' => NULL,
                 'status' => $status,
             ];
-            $this->Crud_model->insert('record',$insert);
+            $user_id = $this->user->info('id');
+            $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
+            $check_date = $this->Crud_model->fetch('record',$where);
+            if($check_date == TRUE){
+                echo json_encode("You already have attendance today");
+            }else{
+                $this->Crud_model->insert('record',$insert);
+                echo json_encode($insert);
+            }
 
         }elseif($this->input->post('vacation')){
 
@@ -141,7 +129,15 @@ class Attendance extends MY_Controller {
                 'time_out' => NULL,
                 'status' => $status,
             ];
-            $this->Crud_model->insert('record',$insert);
+            $user_id = $this->user->info('id');
+            $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
+            $check_date = $this->Crud_model->fetch('record',$where);
+            if($check_date == TRUE){
+                echo json_encode("You already have attendance today");
+            }else{
+                $this->Crud_model->insert('record',$insert);
+                echo json_encode($insert);
+            }
 
         }elseif($this->input->post('wfh')){
             $time = date('H:i:s',strtotime('+8 hour',strtotime($time)));
@@ -153,7 +149,15 @@ class Attendance extends MY_Controller {
                 'time_out' => $time,
                 'status' => $status,
             ];
-            $this->Crud_model->insert('record',$insert);
+            $user_id = $this->user->info('id');
+            $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
+            $check_date = $this->Crud_model->fetch('record',$where);
+            if($check_date == TRUE){
+                echo json_encode("You already have attendance today");
+            }else{
+                $this->Crud_model->insert('record',$insert);
+                echo json_encode($insert);
+            }
         }elseif($this->input->post('time-in')){
             $insert =[
                 'user_id' => $id,
@@ -185,7 +189,6 @@ class Attendance extends MY_Controller {
         <table class="table table-bordered" id="timesheet-table">
           <thead>
               <tr>
-                <th>NAME</th>
                 <th>Date</th>
                 <th>Time in</th>
                 <th>Time out</th>
@@ -198,7 +201,6 @@ class Attendance extends MY_Controller {
         foreach ($timesheet as $row):
         ?>
             <tr>
-                <td><?= $row->user_id ?></td>
                 <td><?= $row->date?></td>
                 <td><?= $row->time_in?></td>
                 <td><?= $row->time_out?></td>
@@ -206,7 +208,6 @@ class Attendance extends MY_Controller {
                 <!-- <td><button class="btn btn-custom">Edit</button></td> -->
             </tr>
             <?php endforeach;
-
         }?>
 
         </tbody>
@@ -215,9 +216,8 @@ class Attendance extends MY_Controller {
     }
 
     public function get_employee_attendance() {
-        $order_by = "record.created_at desc";
-        // $timesheet = $this->Crud_model->fetch('record','','','',$order_by);
-        $timesheet = $this->Crud_model->join_tag_result('users.*,record.*','users','','record','users.id = record.user_id',$order_by);
+        $order_by = "lastname desc";
+        $timesheet = $this->Crud_model->join_tag_result('users.*,record.*,record.id AS rid,users.id AS uid','users','','record','users.id = record.user_id ',"inner",$order_by);
         // print_r($timesheet);die;
         if(!$timesheet == NULL){
             foreach ($timesheet as $row) :
@@ -235,31 +235,32 @@ class Attendance extends MY_Controller {
     }
 
     public function get_leave() {
-        $order_by = "id desc";
+        // $order_by = "id desc";
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
         $where_in = ['name' => 'status', 'values' => ['Sick Leave', 'Vacation Leave']];
-        $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by, $where_in); 
-        if(!$timesheet == NULL){ ?>
-        <table class="table table-bordered" id="leave-table">
-            <thead>
-            <tr>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-        <?php  foreach ($timesheet as $row):
+        $leave = $this->Crud_model->fetch('record',$where,"","","", $where_in); 
         ?>
-            <tr>
-                <td><?= $row->date?></td>
-                <td><?= $row->status?></td>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-        <?php    } 
-         
+            <table class="table table-bordered" id="leave-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                <tbody>
+            <?php 
+            if(!$leave == NULL){
+                foreach ($leave as $row):
+                ?>
+                    <tr>
+                        <td><?= $row->date?></td>
+                        <td><?= $row->status?></td>
+                    </tr>
+        <?php   endforeach; ?>
+                </tbody>
+                </table>
+    <?php   } 
     
     }
 
@@ -288,10 +289,23 @@ class Attendance extends MY_Controller {
         $order_by = "id desc";
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
-        $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by); ?>
-        <?php
-        if(!$overtime == NULL){
-            foreach ($overtime as $row) :
+        $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by); 
+         
+        if(!$overtime == NULL){ ?>
+            <table class="table table-bordered" id="employee-overtime-table">
+            <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Overtime Date</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Reason</th>
+                  <th>Date Submitted</th>
+                  <th>Overtime Hours</th>
+                </tr>
+            </thead>
+            <tbody >
+          <?php  foreach ($overtime as $row) :
         ?>
             <tr>
                 <td><?php
@@ -310,7 +324,11 @@ class Attendance extends MY_Controller {
                 <td><?= $row->date_submitted?></td>
                 <td><?= $row->ot_hours?></td>
             </tr>
-            <?php endforeach;
+            <?php endforeach; ?>
+             </tbody>
+             
+            </table>
+            <?php
         }
     }
 }

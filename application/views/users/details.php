@@ -2,8 +2,9 @@
 <?php 
     if($pos->name == 'Intern') { 
         $this->load->view('users/partials/intern');
-    }elseif($pos->name == 'Admin'){
-        $this->load->view('users/partials/admin');
+    // }elseif($pos->name == 'Admin'){
+    //     $this->load->view('users/partials/admin');
+    // }
     }else{
         $this->load->view('users/partials/employee');
     }

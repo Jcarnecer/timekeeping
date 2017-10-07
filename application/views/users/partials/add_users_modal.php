@@ -1,6 +1,7 @@
 <?php 
 // $where = ['id !=' => 1];
-$pos = $this->Crud_model->fetch('position') ?>
+$shift = $this->Crud_model->fetch('shift');
+$pos = $this->Crud_model->fetch('position'); ?>
 <!-- Modal -->
 <div class="modal fade" id="add-users-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
@@ -37,9 +38,14 @@ $pos = $this->Crud_model->fetch('position') ?>
             </select>
             <h5 class="text-danger pos-error"></h5>
             <label for="">Start Date</label>
-            <input type="text" name="start_date" class="form-control" placeholder="yyyy-mm-dd">
+            <input type="text" name="start_date" class="form-control" id="user-start-date" placeholder="yyyy-mm-dd">
             <h5 class="text-danger sd-error"></h5>
-
+            <label for="">Shift</label>
+            <select name="shift" id="shift" class="form-control">
+                <?php foreach($shift as $row): ?>
+                <option id="<?= $row->id ?>" value="<?= $row->id ?>"><?= $row->shift_type ?></option>
+                <?php endforeach;   ?>
+            </select>
             <div class="form-group" id="intern-no-hrs" style="display:none">
               <label for="">Number of Hours</label>
               <input type="text" name="num_hrs" class="form-control">

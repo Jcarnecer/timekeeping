@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends MY_Controller 
 {
     public function index() {
+        
         parent::loginpage('login/index',
             [
                 'title'=>'Login',
@@ -34,9 +35,9 @@ class Login extends MY_Controller
                             'lastname'  => $get_user->lastname,
                             'position' => $get_user->position_id,
                             'profile_picture'   => $get_user->profile_picture,
-                            // 'shift' => $get_user->original_shift
                         ];
-                        $this->session->set_userdata('user_logged_in',$user_session);
+                        $sess = $this->session->set_userdata('user_logged_in',$user_session);
+                        // $this->session->set_userdata($sess,'TRUE');
                         echo json_encode("success");
                     }elseif($get_user->status == 0){
                         echo json_encode("Your account is inactive. Contact our human resource department regarding this problem.");
@@ -49,12 +50,11 @@ class Login extends MY_Controller
                 
             }else{
                 echo json_encode("Invalid Credentials");
-            } 
+            }
         }
     }
 
     public function logout() {
-        // $this->authenticate->logout_user('logged_in');
         $this->session->sess_destroy();
         redirect('');
     }

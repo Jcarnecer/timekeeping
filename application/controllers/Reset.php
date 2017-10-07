@@ -4,14 +4,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Reset extends MY_Controller 
 {
 
-	public function password($key) {
+	public function password($key,$id) {
+        $decrypt_id = secret_url('decrypt',$id);
+        $where = array('id' => $decrypt_id);
+        $verify = $this->Crud_model->fetch_tag_row('reg_key,status,verified_email','users',$where);
+        if(!$verify == NULL){
+            if($verify->status == 1){
+                show_404();
+            }else{
+                parent::resetpage('reset/index',
+                [
+                    'key'	=> $key,
+                    'title'=> 'Company Name | Reset Password',
+                ]
+            );
+            }
+            
+        }else{
+            show_404();
+        }
 
-        parent::loginpage('reset/index',
-            [
-            	'key'	=> $key,
-                'title'=> 'Company Name | Reset Password',
-            ]
-        );
+        
     }
 
     public function authreset() {
@@ -27,13 +40,12 @@ class Reset extends MY_Controller
             echo json_encode($error);
         }else{
             $newpass = array(
-                'password'  => hash_password(clean_data($this->input->post('npass')))
+                'password'  => hash_password(clean_data($this->input->post('npass'))),
+                'status'    => 1
             );
             $key = $this->input->post('key');
             $where = array('reg_key' => $key);
             $this->Crud_model->update('users',$newpass,$where);
-
-            $this->session->sess_destroy();
             echo json_encode("success");
         }
     }

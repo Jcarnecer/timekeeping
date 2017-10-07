@@ -191,7 +191,7 @@ class Crud_model extends CI_Model{
 		return $query->row();
 	}
 
-	public function join_tag_result($tag,$table,$where="",$join_table,$columns,$order=""){
+	public function join_tag_result($tag,$table,$where="",$join_table,$columns,$keyword,$order=""){
 		if (!empty($where)) {
 			$this->db->where($where);	
 		}
@@ -200,7 +200,7 @@ class Crud_model extends CI_Model{
 		}
 		$this->db->select($tag);
 		$this->db->from($table);
-		$this->db->join($join_table,$columns);
+		$this->db->join($join_table,$columns,$keyword);
 		$query = $this->db->get();
 		return $query->result();
 	}

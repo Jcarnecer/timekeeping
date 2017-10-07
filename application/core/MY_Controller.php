@@ -9,7 +9,14 @@ class MY_Controller	extends CI_Controller
 		$this->load->library('authenticate');
 		$this->load->library('user');
 		// $this->userinfo();
+		// if(!$this->session->userdata('user_logged_in')){
+		// 	redirect('login');
+		// }else{
+		// 	base_url();
+		// }
+		
 	}
+
 	
 	private function no_session() {
         if(!$this->session->userdata('user_logged_in')) {
@@ -21,7 +28,7 @@ class MY_Controller	extends CI_Controller
     	if($this->session->userdata('user_logged_in')) {
             redirect('dashboard');
         }
-    }
+	}
 
 	function mainpage($location,$data=array()) {
 		$this->no_session();
@@ -38,5 +45,22 @@ class MY_Controller	extends CI_Controller
 		$this->load->view($location);
 		$this->load->view('login/include/footer');
 	}
+
+	function resetpage($location,$data=array()) {
+		$this->load->view('login/include/header',$data);
+		$this->load->view($location);
+		$this->load->view('login/include/footer');
+	}
+
+	function audittrail($action, $description,$user, $position = null,$ip){
+        $dat = array(
+            'action' => $action,
+            'description' => $description,
+            'user'				=> $user,
+            'position' => $position,
+            'ip_address' => $ip
+        );
+        $this->Crud_model->insert('logs',$dat);
+    }
 
 }

@@ -18,11 +18,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" type="text/css" href="assets/css/styles.css" >
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-select.min.css" >
 		<link rel="stylesheet" href="assets/datatables/jquery.dataTables.min.css" >
+		<link rel="stylesheet" href="assets/jquery-ui/jquery-ui.min.css" >
 		<script src="assets/datatables/jquery.dataTables.min.js"></script>
 		<script src="assets/js/bootstrap-notify.min.js"></script>
 		<script src="assets/js/bs_notify.js"></script>
 		<script src="assets/js/bootstrap-select.min.js"></script>
-		
+		<script src="assets/jquery-ui/jquery-ui.min.js"></script>
+		<script>
+		$( function() {
+			$("#user-start-date").datepicker({
+				dateFormat: 'yy-mm-dd'
+			})
+		})
+		</script>
 		<?php $segment =  $this->uri->segment(1);
 			  $segment2 =  $this->uri->segment(2);
 
@@ -51,10 +59,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script>
 				fetch_shift();
 			</script>
-		<?php }elseif ($segment == 'attendance' || 
+		<?php }elseif ($segment == 'timesheet' || 
 					   $segment == 'leaves' ||
-					   $segment == 'overtime') { ?>
+					   $segment == 'overtime' || 
+					   $segment2 = 'employee') { ?>
 			<script src="assets/js/attendance/script.js"></script>
-	<?php } ?>
+		<?php } ?>
     </head>
     <body>

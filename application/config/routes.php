@@ -68,6 +68,7 @@ $route['auth/login']    = 'login/auth';
 //Attendance
 $route['add/attendance'] = 'attendance/add_timesheet';
 $route['get/attendance'] = 'attendance/get_timesheet';
+$route['timesheet'] ='attendance/index';
 $route['leaves'] = 'attendance/leaves';
 $route['calendar'] = 'attendance/calendar';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';
@@ -77,10 +78,13 @@ $route['overtime'] = 'attendance/overtime';
 $route['add/overtime'] = 'attendance/add_overtime';
 $route['get/emp_overtime'] = 'attendance/get_employee_overtime';
 
+//email confirmation
+$route['auth/account/verification/(:any)/(:any)'] = 'email/verifykey/$1/$2';
 //$route['calendar']
 //$route['calendar']
 
+$route['404'] = 'errors/error_404';
 
 $route['default_controller'] = 'login';
-$route['404_override'] = '';
+$route['404_override'] = 'errors/error_404';
 $route['translate_uri_dashes'] = FALSE;

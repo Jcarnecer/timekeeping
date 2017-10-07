@@ -7,24 +7,10 @@
         </div>
       </div>
 
-      <div class="table-responsive">
-          <table class="table table-bordered" id="employee-overtime-table">
-              <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Overtime Date</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Reason</th>
-                    <th>Date Submitted</th>
-                    <th>Overtime Hours</th>
-                  </tr>
-              </thead>
-              <tbody id="employee-overtime">
+      <div class="table-responsive" id="employee-overtime">
+         
 
-              </tbody>
-
-          </table>
+             
         </div>
       </div>
     </div>

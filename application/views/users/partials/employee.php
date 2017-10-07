@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card">
@@ -8,8 +9,7 @@
                                 <hr>
 
                                 <!-- <a class="btn btn-info waves-effect" href="<?= base_url().'employee/request_shift/'.$this->session->id?>">Shift</a> -->
-                                <a class="btn btn-info waves-effect" href="login/logout"><i class="fa fa-sign-out m-r-10"></i>Logout</a>
-                            </div>
+                                 </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -38,11 +38,15 @@
                                     <div class="text-danger" id="email_err"></div>
                                   </div>
                                   <div class="form-group">
+                                    <label>Shift</label>
+                                    <input type="text" name="shift" disabled value="<?= $shift->shift_type ?>" class="form-control">
+                                   
+                                  </div>
+                                  <div class="form-group">
                                   <hr>
                                     <button type="Submit" class="btn btn-info"><i class="fa fa-save m-r-10"></i>Submit</button>
                                   </div>
                                 </form>
-
                             </div>
                         </div>
 </div>

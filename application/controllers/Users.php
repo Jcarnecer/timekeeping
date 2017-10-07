@@ -26,7 +26,7 @@ class Users extends MY_Controller
 			echo json_encode($error);
 		}else{
 			$generate_password 	= 	"timekeeping";
-			$generate_key		=	'_'.random_string('alnum',10).'_'; // generates "_10alnumstring_"
+			$generate_key		=	'_'.random_string('alnum',15).'_'; // generates "_10alnumstring_"
 
 			$insert = [
 				'firstname'    		=>    clean_data(ucwords($this->input->post('fname'))),
@@ -43,18 +43,18 @@ class Users extends MY_Controller
 			];
 			$get_rowid = $this->Crud_model->last_inserted_row('users',$insert);
 
-			if(clean_data($this->input->post('pos')) == 2 || clean_data($this->input->post('pos')==3)){
-				$insert_employee = [
-					'user_id'	=>    $get_rowid->id
-				];
-				$this->Crud_model->insert('employee',$insert_employee);
-			}elseif(clean_data($this->input->post('pos')==4)) {
+			if(clean_data($this->input->post('pos')==4)) {
 				$insert_intern = [
 					'no_of_hrs'	=>  clean_data($this->input->post('num_hrs')),
 					'user_id'	=> 	  $get_rowid->id,
 					'remaining'	=>  clean_data($this->input->post('num_hrs'))
 				];
 				$this->Crud_model->insert('intern',$insert_intern);
+			}else{
+				$insert_employee = [
+					'user_id'	=>    $get_rowid->id
+				];
+				$this->Crud_model->insert('employee',$insert_employee);
 			}
 			
 			$config = array(
@@ -68,12 +68,15 @@ class Users extends MY_Controller
 			$from="paypal.emailverify@gmail.com";
 			$to = $this->input->post('emailadd');
 			$subject = "Account Activation";
-			$data = [	'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
+			$data = [	
+						'id'	=> secret_url('encrypt',$get_rowid->id),
+						'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
 						'reg_key' => $insert['reg_key'],
 						'email'	=> $to,
 						'password'	=> $generate_password,
 						'verified_email'	=> $get_rowid->verified_email,
 					];
+			
 			$message = $this->load->view('email/account_verify',$data,TRUE);
 			// echo $message;
 			$this->load->library('email');
@@ -91,7 +94,10 @@ class Users extends MY_Controller
 				'name'	=> clean_data(ucwords($this->input->post('fname'))) .' '. clean_data(ucwords($this->input->post('lname'))),
 			];
 			
-			echo json_encode($success);
+			// redirect('test',$data);
+			// echo json_encode($success);
+			$this->load->view('email/account_verify',$data);
+
 		}
 	}
 
@@ -182,7 +188,7 @@ class Users extends MY_Controller
 	public function details($id) {
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture';
+		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture,shift_id';
 
 		$this->detail_id = $id;
 		//get position
@@ -193,20 +199,24 @@ class Users extends MY_Controller
 		if($position->name == 'Intern') {
 			$where = ['intern.user_id' => $decrypt_id];
 			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,intern.id,intern.user_id,school,birthday,no_of_hrs,course,year,start_date,remaining';
-			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
-			
+			$users = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
+			$shift_where = ['id'	=> $user->shift_id];
+			$shift = $this->Crud_model->fetch_tag_row('*','shift',$shift_where);
 		}else{
 			$where = ['employee.user_id' => $decrypt_id];
-			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,
+			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,shift_id,
 					employee.id,employee.user_id,sss_no,tin_no,phil_health,start_date';
-			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'employee','users.id = employee.user_id','inner'); //join
+			$users = $this->Crud_model->join_tag_row($tag,'users',$where,'employee','users.id = employee.user_id','inner'); //join
+			$shift_where = ['id'	=> $user->shift_id];
+			$shift = $this->Crud_model->fetch_tag_row('*','shift',$shift_where);
 		}
 		
 		parent::mainpage('users/details',
 			[
 				'title'	=> $user->firstname .' '. $user->lastname,
 				'pos'	=> $position,
-				'id'	=> $id
+				'id'	=> $id,
+				'shift'	=> $shift
 			]
 		);
 	}
@@ -345,12 +355,17 @@ class Users extends MY_Controller
 				'course' => clean_data(ucwords($this->input->post('course'))),
 				'birthday' => clean_data($this->input->post('bday')),
 				'year' => clean_data($this->input->post('year')),
-				'start_date' => clean_data($this->input->post('start_date')),
+				'remaining'	=> clean_data($this->input->post('no_of_hrs')),
+			];
+			$start_date_info = [
+				'start_date'	=> clean_data($this->input->post('start_date'))
 			];
 			$id = $this->input->post('id');
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('user_id' => $decrypt_id);
 			$this->Crud_model->update('intern',$other_info,$where);
+			$user_where = ['id'	=> $decrypt_id];
+			$this->Crud_model->update('users',$start_date_info,$user_where);
 			echo json_encode("success");
 		}
 	}
@@ -360,7 +375,8 @@ class Users extends MY_Controller
 			$error = [
 				'e_error'	=> form_error('email'),
 				'f_error'	=> form_error('fname'),
-				'l_error'	=> form_error('lname')
+				'l_error'	=> form_error('lname'),
+				's_error'	=> form_error('shift')
 			];
 
 			echo json_encode($error);
@@ -369,6 +385,7 @@ class Users extends MY_Controller
 				'firstname' => clean_data(ucwords($this->input->post('fname'))),
 				'lastname' => clean_data(ucwords($this->input->post('lname'))),
 				'email' => clean_data($this->input->post('email')),
+				'shift_id'	=> clean_data($this->input->post('shift'))
 			];
 			$id = $this->input->post('id');
 			$decrypt_id = secret_url('decrypt',$id);
@@ -383,12 +400,16 @@ class Users extends MY_Controller
 			'sss_no' => clean_data($this->input->post('sss')),
 			'tin_no' => clean_data($this->input->post('tin')),
 			'phil_health' => clean_data($this->input->post('philhealth')),
-			'start_date' => clean_data($this->input->post('date_start')),
+		];
+		$start_date_info = [
+			'start_date'	=> clean_data($this->input->post('date_start'))
 		];
 		$id = $this->input->post('id');
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = array('user_id' => $decrypt_id);
 		$this->Crud_model->update('employee',$other_info,$where);
+		$user_where = ['id'	=> $decrypt_id];
+		$this->Crud_model->update('users',$start_date_info,$user_where);
 		echo json_encode("success");
 	}
 

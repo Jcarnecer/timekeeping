@@ -1,12 +1,16 @@
-<div class="row" id="DateTime">
-  <div class="col-md-12">
-    <center>
-      <?= $now->format('m/d/Y'); ?><br>
-      <?= $now->format('H:i:s'); ?><br>
-    </center>
+<div class="row">
+<div class="col-md-12">
+    <h3>My Timesheet</h3>
+  <center>
+
+  <div class="row" id="DateTime">
+    <div class="col-md-12">
+      <center>
+        <?php echo $date = date('m/d/Y'); ?><br>
+        <?php echo $time = date('H:i:s'); ?><br>
+      </center>
+    </div>
   </div>
-</div>
-<center>
 
   <form id="timesheet-timein" class="form-timesheet"  method="post">
     <input type="hidden" name="userid" id="userid" value="<?=$this->user->info('id');?>">

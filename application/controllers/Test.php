@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users extends MY_Controller 
+class Test extends MY_Controller 
 {
-	public function index() {
-		$this->load->view('email/account_verify');
+		public function index($data) {
+			$this->load->view('email/account_verify',$data);
     }
 }

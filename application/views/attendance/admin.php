@@ -1,16 +1,16 @@
 <div class="row">
-  <div class="col-md-12">
-      <h3>My Timesheet</h3>
-    <center>
+<div class="col-md-12">
+    <h3>My Timesheet</h3>
+  <center>
 
-    <div class="row" id="DateTime">
-      <div class="col-md-12">
-        <center>
-          <?php echo $date = $now->format('m/d/Y'); ?><br>
-          <?php echo $time = $now->format('H:i:s'); ?><br>
-        </center>
-      </div>
+  <div class="row" id="DateTime">
+    <div class="col-md-12">
+      <center>
+        <?php echo $date = date('m/d/Y'); ?><br>
+        <?php echo $time = date('H:i:s'); ?><br>
+      </center>
     </div>
+  </div>
 
     <form id="timesheet_halfday" class ="form-timesheet" method="post">
       <input type="hidden" name="userid" id="userid" value="<?=$this->user->info('id');?>">
@@ -37,5 +37,5 @@
 
 <div class="table-responsive" id="timesheet">
    
-  </div>
+</div>
 </div>
