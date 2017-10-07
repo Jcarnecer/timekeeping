@@ -1,26 +1,26 @@
 <?php
 class Crud_model extends CI_Model{
-	
+
 	public function fetch($table,$where="",$limit="",$offset="",$order="",$where_in= false){
 		if (!empty($where)) {
-			$this->db->where($where);	
+			$this->db->where($where);
 		}
 		if (!empty($limit)) {
 			if (!empty($offset)) {
 				$this->db->limit($limit, $offset);
 			}else{
-				$this->db->limit($limit);	
+				$this->db->limit($limit);
 			}
 		}
 		if (!empty($order)) {
-			$this->db->order_by($order); 
+			$this->db->order_by($order);
 		}
 
 		if($where_in)
 		{
 			$this->db->where_in($where_in['name'], $where_in['values']);
 		}
-	
+
 
 		$query = $this->db->get($table);
 		if ($query->num_rows() > 0) {
@@ -29,24 +29,24 @@ class Crud_model extends CI_Model{
 			return FALSE;
 		}
 	}
-	
+
 
 	public function fetch_tag($tag,$table,$where="",$where_in="",$limit="",$offset="",$order=""){
 		if (!empty($where)) {
-			$this->db->where($where);	
+			$this->db->where($where);
 		}
 		if (!empty($where_in)) {
-			$this->db->or_where_in($where);	
+			$this->db->or_where_in($where);
 		}
 		if (!empty($limit)) {
 			if (!empty($offset)) {
 				$this->db->limit($limit, $offset);
 			}else{
-				$this->db->limit($limit);	
+				$this->db->limit($limit);
 			}
 		}
 		if (!empty($order)) {
-			$this->db->order_by($order); 
+			$this->db->order_by($order);
 		}
 		$this->db->select($tag);
 		$this->db->from($table);
@@ -61,18 +61,18 @@ class Crud_model extends CI_Model{
 
 	public function fetch_tag_row($tag,$table,$where="",$limit="",$offset="",$order=""){
 		if (!empty($where)) {
-			$this->db->where($where);	
+			$this->db->where($where);
 		}
-		
+
 		if (!empty($limit)) {
 			if (!empty($offset)) {
 				$this->db->limit($limit, $offset);
 			}else{
-				$this->db->limit($limit);	
+				$this->db->limit($limit);
 			}
 		}
 		if (!empty($order)) {
-			$this->db->order_by($order); 
+			$this->db->order_by($order);
 		}
 		$this->db->select($tag);
 		$this->db->from($table);
@@ -118,7 +118,7 @@ class Crud_model extends CI_Model{
 		if($where!=""){
 			$this->db->where($where);
 		}
-	 	$result = $this->db->delete($table); 
+	 	$result = $this->db->delete($table);
  		if ($result) {
 			return TRUE;
 		}else{
@@ -159,6 +159,14 @@ class Crud_model extends CI_Model{
 			$query = $this->db->get();
 			return $query->result();
 	}
+
+	public function join_user_overtime(){
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->join('record_overtime', 'users.id = record_overtime.user_id');
+		$query = $this->db->get();
+		return $query->result();
+	}
 	public function join_two_table($tag,$table){
 		$this->db->select($tag);
 		$this->db->from($table);
@@ -180,9 +188,11 @@ class Crud_model extends CI_Model{
 		return $query->row();
 	}
 
+
+
 	public function join_tag_row($tag,$table,$where="",$join_table,$columns){
 		if (!empty($where)) {
-			$this->db->where($where);	
+			$this->db->where($where);
 		}
 		$this->db->select($tag);
 		$this->db->from($table);
@@ -193,10 +203,10 @@ class Crud_model extends CI_Model{
 
 	public function join_tag_result($tag,$table,$where="",$join_table,$columns,$keyword,$order=""){
 		if (!empty($where)) {
-			$this->db->where($where);	
+			$this->db->where($where);
 		}
 		if (!empty($order)) {
-			$this->db->order_by($order); 
+			$this->db->order_by($order);
 		}
 		$this->db->select($tag);
 		$this->db->from($table);

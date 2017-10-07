@@ -76,7 +76,7 @@ $('[data-name="overtime-details"]').click(function(e){
   var id = $(this).attr('data-id');
   $.ajax({
       url: base_url + "attendance/get_overtime_details/" + id,
-      method: "GET",
+      method: "POST",
       success: function(data){
           var result = JSON.parse(data);
             $("#overtime-date").html(result.overtime_date);

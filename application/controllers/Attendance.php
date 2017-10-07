@@ -311,7 +311,7 @@ class Attendance extends MY_Controller {
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
             <a class="dropdown-item" data-toggle="modal"  data-id="<?= secret_url('encrypt',$row->id) ?>" href="#reject-overtime-modal" title="Reject" >Reject</a>
-            <a class="dropdown-item" data-toggle="modal" id="details" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
+            <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
             <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
           </div>
         </td>
