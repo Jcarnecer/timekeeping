@@ -27,7 +27,7 @@
                   <b><label class="group-label">Start:</label></b>
                 </td>
                 <td>
-                  <div class="group-data" id="start"></div>
+                  <div class="group-data" id="start-ot"></div>
                 </td>
               </tr>
 
@@ -36,7 +36,7 @@
                   <b><label class="group-label">End:</label></b>
                 </td>
                 <td>
-                  <div class="group-data" id="end"></div>
+                  <div class="group-data" id="end-ot"></div>
                 </td>
               </tr>
 
@@ -45,7 +45,7 @@
                   <b><label class="group-label">Reason:</label></b>
                 </td>
                 <td>
-                  <div class="group-data" id="reason"></div>
+                  <div class="group-data" id="reason-ot"></div>
                 </td>
               </tr>
             </tbody>

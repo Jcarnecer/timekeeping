@@ -130,6 +130,16 @@ $(document).ready(function(){
 	})
 })
 
+$(document).on('click','.activate-user',function(){
+    var id = $(this).data('id');
+    var name = $(this).data('name');
+    $(".modal-title").html("Activate "+name);
+    $("#u-a-id").val(id);
+    $("#u-a-name").val(name);
+    $("#activate-confirm-message").html("Are your sure you want to activate "+name+"?");
+})
+
+//overtime
 $(document).ready(function(){
 	$("#file-overtime-form").on('submit',function(e){
 		$.ajax({
@@ -145,19 +155,102 @@ $(document).ready(function(){
 	})
 })
 
-
-$(document).on('click','.activate-user',function(){
-    var id = $(this).data('id');
-    var name = $(this).data('name');
-    $(".modal-title").html("Activate "+name);
-    $("#u-a-id").val(id);
-    $("#u-a-name").val(name);
-    $("#activate-confirm-message").html("Are your sure you want to activate "+name+"?");
+$(document).ready(function(){
+	$("#accept-overtime-form").on('submit',function(e){
+		$.ajax({
+			url: base_url + 'attendance/approve_ot',
+			type: "POST",
+			data: $(this).serialize(),
+			success: function(data){
+				$('#accept-overtime-modal').modal('hide');
+				bs_notify("<strong>Successfully accepted overtime </strong>","success","top","right");
+				fetch_overtime();
+				fetch_admin_overtime();
+			}
+		})
+		e.preventDefault();
+	})
 })
+
+$(document).ready(function(){
+	$("#reject-overtime-form").on('submit',function(e){
+		$.ajax({
+			url: base_url + 'attendance/reject_ot',
+			type: "POST",
+			data: $(this).serialize(),
+			success: function(data){
+				$('#reject-overtime-modal').modal('hide');
+				bs_notify("<strong>Successfully reject overtime </strong>","success","top","right");
+				fetch_overtime();
+				fetch_admin_overtime();
+			}
+		})
+		e.preventDefault();
+	})
+})
+
+
 
 $(document).on('click','.accept-ot',function() {
 	var id = $(this).data('id');
 	var name = $(this).data('name');
+	var date = $(this).data('date');
+	var date_submit = $(this).data('datesubmit');
+	var from = $(this).data('start');
+	var to = $(this).data('end');
+	var reason = $(this).data('reason');
+
+	$("#ot-id").val(id);
+	$(".modal-title").html('Overtime Request');
+	$("#a-ot-q").html('Are you sure you want to accept?');
+	$("#ot-name").html(name);
+	$("#ot-date-submit").html("Date Submitted: "+date);
+	$("#ot-date").html(date);
+	$("#ot-start").html(from);
+	$("#ot-end").html(to);
+	$("#ot-reason").html(reason);
+})
+
+
+$(document).on('click','.reject-ot',function() {
+	var id = $(this).data('id');
+	var name = $(this).data('name');
+	var date = $(this).data('date');
+	var date_submit = $(this).data('datesubmit');
+	var from = $(this).data('start');
+	var to = $(this).data('end');
+	var reason = $(this).data('reason');
+
+	$("#r-ot-id").val(id);
+	$(".modal-title").html('Overtime Request');
+	$("#r-ot-q").html('Are you sure you want to reject?');
+	$("#r-ot-name").html(name);
+	$("#r-ot-date-submit").html("Date Submitted: "+date);
+	$("#r-ot-date").html(date);
+	$("#r-ot-start").html(from);
+	$("#r-ot-end").html(to);
+	$("#r-ot-reason").html(reason);
+})
+
+
+$(document).on('click','.details-ot',function() {
+	var id = $(this).data('id');
+	var name = $(this).data('name');
+	var date = $(this).data('date');
+	var date_submit = $(this).data('datesubmit');
+	var from = $(this).data('start');
+	var to = $(this).data('end');
+	var reason = $(this).data('reason');
+
+	$("#ot-id").val(id);
+	$(".modal-title").html('Overtime Request');
+	$("#a-ot-q").html('Are you sure you want to accept?');
+	$("#ot-name").html(name);
+	$("#ot-date-submit").html(date);
+	$("#overtime-date").html(date);
+	$("#start-ot").html(from);
+	$("#end-ot").html(to);
+	$("#reason-ot").html(reason);
 })
 
 fetch_leave();

@@ -74,6 +74,17 @@ class Attendance extends MY_Controller {
                 echo json_encode("You already have attendance today");
             }else{
                 $recent = $this->Crud_model->insert('record',$insert);
+                //position
+                $position_id = $this->user->info('position_id');
+                $pos_where = ['id'  => $position_id];
+                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                parent::audittrail(
+                    'User Time-in / Time-out',
+                    '4 Hours',
+                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                    $position->name,
+                    $this->input->ip_address()
+                );
                 echo json_encode($insert);
             }
 
@@ -94,6 +105,17 @@ class Attendance extends MY_Controller {
                 echo json_encode("You already have attendance today");
             }else{
                 $this->Crud_model->insert('record',$insert);
+                //position
+                $position_id = $this->user->info('position_id');
+                $pos_where = ['id'  => $position_id];
+                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                parent::audittrail(
+                    'User Time-in / Time-out',
+                    '8 Hours',
+                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                    $position->name,
+                    $this->input->ip_address()
+                );
                 echo json_encode($insert);
             }
 
@@ -114,6 +136,17 @@ class Attendance extends MY_Controller {
                 echo json_encode("You already have attendance today");
             }else{
                 $this->Crud_model->insert('record',$insert);
+                //position
+                $position_id = $this->user->info('position_id');
+                $pos_where = ['id'  => $position_id];
+                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                parent::audittrail(
+                    'User Leave',
+                    'Sick Leave',
+                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                    $position->name,
+                    $this->input->ip_address()
+                );
                 echo json_encode($insert);
             }
 
@@ -134,6 +167,17 @@ class Attendance extends MY_Controller {
                 echo json_encode("You already have attendance today");
             }else{
                 $this->Crud_model->insert('record',$insert);
+                //position
+                $position_id = $this->user->info('position_id');
+                $pos_where = ['id'  => $position_id];
+                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                parent::audittrail(
+                    'User Leave',
+                    'Vacation Leave',
+                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                    $position->name,
+                    $this->input->ip_address()
+                );
                 echo json_encode($insert);
             }
 
@@ -154,6 +198,17 @@ class Attendance extends MY_Controller {
                 echo json_encode("You already have attendance today");
             }else{
                 $this->Crud_model->insert('record',$insert);
+                //position
+                $position_id = $this->user->info('position_id');
+                $pos_where = ['id'  => $position_id];
+                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                parent::audittrail(
+                    'User Time-in / Time-out',
+                    'Work From Home',
+                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                    $position->name,
+                    $this->input->ip_address()
+                );
                 echo json_encode($insert);
             }
         }elseif($this->input->post('time-in')){
@@ -281,6 +336,17 @@ class Attendance extends MY_Controller {
             'status' => 0,
         ];
         $this->Crud_model->insert('record_overtime', $insert);
+        //position
+        $position_id = $this->user->info('position_id');
+        $pos_where = ['id'  => $position_id];
+        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        parent::audittrail(
+            'File Overtime',
+            'Filed Overtime',
+            $this->user->info('firstname') .' '. $this->user->info('lastname'),
+            $position->name,
+            $this->input->ip_address()
+        );
     }
 
     public function get_admin_overtime(){
@@ -308,18 +374,41 @@ class Attendance extends MY_Controller {
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <?php if($row->status == 0){ //pending ?>
-                    
-                <a class="dropdown-item accept-ot" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->uid) ?>" date-name="<?= $row->firstname.' '.$row->lastname ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
-                <a class="dropdown-item" data-toggle="modal"  data-id="<?= secret_url('encrypt',$row->id) ?>" href="#reject-overtime-modal" title="Reject" >Reject</a>
-                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
-                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
-              <?php }elseif($row->status == 1) { //accepted ?>
-                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
-                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
-              <?php }else { ?>
-                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
-                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
-              <?php } ?>
+                <a class="dropdown-item accept-ot" data-toggle="modal" 
+                        data-id="<?= secret_url('encrypt',$row->rid) ?>"
+                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-datesubmit="<?= $row->date_submitted ?>"
+                        data-start="<?= date('g:i a',strtotime($row->start)) ?>"
+                        data-end="<?= date('g:i a',strtotime($row->end)) ?>"
+                        data-reason="<?= $row->reason ?>"
+                        data-date="<?= date('F j, Y', strtotime($row->overtime_date)) ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
+                <a class="dropdown-item reject-ot" data-toggle="modal" 
+                        data-id="<?= secret_url('encrypt',$row->rid) ?>"
+                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-datesubmit="<?= $row->date_submitted ?>"
+                        data-start="<?= date('g:i a',strtotime($row->start)) ?>"
+                        data-end="<?= date('g:i a',strtotime($row->end)) ?>"
+                        data-reason="<?= $row->reason ?>"
+                        data-date="<?= date('F j, Y', strtotime($row->overtime_date)) ?>" href="#reject-overtime-modal" title="Reject" >Reject</a>
+              <?php }?>
+              <a class="dropdown-item details-ot" data-toggle="modal" 
+                        data-id="<?= secret_url('encrypt',$row->rid) ?>"
+                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-datesubmit="<?= $row->date_submitted ?>"
+                        data-start="<?= date('g:i a',strtotime($row->start)) ?>"
+                        data-end="<?= date('g:i a',strtotime($row->end)) ?>"
+                        data-reason="<?= $row->reason ?>"
+                        data-date="<?= date('F j, Y', strtotime($row->overtime_date)) ?>"
+                        href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
+                <!-- <a class="dropdown-item" data-toggle="modal" 
+                        data-id="<?= secret_url('encrypt',$row->rid) ?>"
+                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-datesubmit="<?= $row->date_submitted ?>"
+                        data-start="<?= date('g:i a',strtotime($row->start)) ?>"
+                        data-end="<?= date('g:i a',strtotime($row->end)) ?>"
+                        data-reason="<?= $row->reason ?>"
+                        data-date="<?= date('F j, Y', strtotime($row->overtime_date)) ?>"
+                 href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a> -->
           </div>
         </td>
       </tr>
@@ -338,22 +427,22 @@ class Attendance extends MY_Controller {
         $order_by = "id desc";
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
-        $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by); 
-         
-        if(!$overtime == NULL){ ?>
-            <table class="table table-bordered" id="employee-overtime-table">
-            <thead>
-                <tr>
-                  <th>Status</th>
-                  <th>Overtime Date</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>Reason</th>
-                  <th>Date Submitted</th>
-                  <th>Overtime Hours</th>
-                </tr>
-            </thead>
-            <tbody >
+        $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by);  ?>
+        <table class="table table-bordered" id="employee-overtime-table">
+        <thead>
+            <tr>
+              <th>Status</th>
+              <th>Overtime Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Reason</th>
+              <th>Date Submitted</th>
+              <th>Overtime Hours</th>
+            </tr>
+        </thead>
+        <tbody >
+        <?php if(!$overtime == NULL){ ?>
+            
           <?php  foreach ($overtime as $row) :
         ?>
             <tr>
@@ -382,7 +471,53 @@ class Attendance extends MY_Controller {
     }
 
     public function approve_ot() {  
+        $id = $this->input->post('id');
+        $decrypt_id = secret_url('decrypt',$id);
+        $where = ['id'  => $decrypt_id];
+        $approve = [
+            'status'   => 1
+        ];
+        $this->Crud_model->update('record_overtime',$approve,$where);
+        //user
+        $get_user_id = $this->Crud_model->fetch_tag_row('*','record_overtime',$where);
+        $user_where = ['id' => $get_user_id->user_id];
+        $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
+        //position
+        $position_id = $this->user->info('position_id');
+        $pos_where = ['id'  => $position_id];
+        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        parent::audittrail(
+            'Approve Overtime',
+            'Approved Overtime of '.$user->firstname.' '.$user->lastname,
+            $this->user->info('firstname') .' '. $this->user->info('lastname'),
+            $position->name,
+            $this->input->ip_address()
+        );
+    }
 
+    public function reject_ot() {  
+        $id = $this->input->post('id');
+        $decrypt_id = secret_url('decrypt',$id);
+        $where = ['id'  => $decrypt_id];
+        $approve = [
+            'status'   => 2
+        ];
+        $this->Crud_model->update('record_overtime',$approve,$where);
+        //user
+        $get_user_id = $this->Crud_model->fetch_tag_row('*','record_overtime',$where);
+        $user_where = ['id' => $get_user_id->user_id];
+        $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
+        //position
+        $position_id = $this->user->info('position_id');
+        $pos_where = ['id'  => $position_id];
+        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        parent::audittrail(
+            'Reject Overtime',
+            'Rejected Overtime of '.$user->firstname.' '.$user->lastname,
+            $this->user->info('firstname') .' '. $this->user->info('lastname'),
+            $position->name,
+            $this->input->ip_address()
+        );
     }
 }
 ?>

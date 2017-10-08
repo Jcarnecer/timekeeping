@@ -29,7 +29,17 @@ class Profile extends MY_Controller {
 			];
 			$where = array('id' => $this->user->info('id'));
 			$this->Crud_model->update('users',$profile,$where);
-
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
     }
@@ -63,7 +73,17 @@ class Profile extends MY_Controller {
             );
             $where = array('id' => $this->user->info('id'));
             $this->Crud_model->update('users',$newpass,$where);
-
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Change Password',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
             echo json_encode("success");
         }
 	}
@@ -101,7 +121,18 @@ class Profile extends MY_Controller {
 				'profile_picture' => $this->upload->data('file_name'),
 			];
 			$where = array('id' => $this->user->info('id'));
-			$this->Crud_model->update('users',$update,$where);
+            $this->Crud_model->update('users',$update,$where);
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update Profile Picture',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}

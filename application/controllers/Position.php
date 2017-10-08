@@ -33,6 +33,18 @@ class Position extends MY_Controller {
                 'success' => 1,
                 'name'  => $position
             ];
+
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Add Position',
+				'Added Position '.$insert_position['name'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
             echo json_encode($success);
         }
     }
@@ -64,6 +76,18 @@ class Position extends MY_Controller {
                 'success' => 1,
                 'name'  => clean_data(ucwords($this->input->post('position')))
             ];
+
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Edit Position',
+				'Update Position '.$insert_position['name'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
           
             echo json_encode($success);
         }

@@ -39,7 +39,8 @@ class Users extends MY_Controller
 				'profile_picture'		=> 'no_image.jpg',
 				'status'			=> 0, // account not activate
 				'verified_email' 	=> 0, // for email confirmation
-				'start_date'		=> clean_data($this->input->post('start_date'))
+				'start_date'		=> clean_data($this->input->post('start_date')),
+				'shift_id'	=> clean_data($this->input->post('shift')),
 			];
 			$get_rowid = $this->Crud_model->last_inserted_row('users',$insert);
 
@@ -56,6 +57,14 @@ class Users extends MY_Controller
 				];
 				$this->Crud_model->insert('employee',$insert_employee);
 			}
+
+			parent::audittrail(
+				'Add User',
+				'Added User '.$insert['firstname'].' '.$insert['lastname'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			
 			$config = array(
 				'smtp_timeout' => '4',
@@ -65,7 +74,7 @@ class Users extends MY_Controller
 
 			$this->load->initialize($config);
 
-			$from="paypal.emailverify@gmail.com";
+			$from="jun.carnecer@astridtechnologies.com";
 			$to = $this->input->post('emailadd');
 			$subject = "Account Activation";
 			$data = [	
@@ -94,9 +103,8 @@ class Users extends MY_Controller
 				'name'	=> clean_data(ucwords($this->input->post('fname'))) .' '. clean_data(ucwords($this->input->post('lname'))),
 			];
 			
-			// redirect('test',$data);
-			// echo json_encode($success);
-			$this->load->view('email/account_verify',$data);
+			echo json_encode($success);
+			// $this->load->view('email/account_verify',$data);
 
 		}
 	}
@@ -163,6 +171,18 @@ class Users extends MY_Controller
 			'success'	=> 1,
 			'name'	=> $this->input->post('name')
 		];
+		//position
+		$position_id = $this->user->info('position_id');
+		$pos_where = ['id'  => $position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+		parent::audittrail(
+			'Account Modify',
+			'Activate account of '.$this->input->post('name'),
+			$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			$position->name,
+			$this->input->ip_address()
+		);
+
 		echo json_encode($success);
 	}
 
@@ -181,6 +201,18 @@ class Users extends MY_Controller
 			'success'	=> 1,
 			'name'	=> $this->input->post('name')
 		];
+
+		//position
+		$position_id = $this->user->info('position_id');
+		$pos_where = ['id'  => $position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+		parent::audittrail(
+			'Account Modify',
+			'Deactivate account of '.$this->input->post('name'),
+			$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			$position->name,
+			$this->input->ip_address()
+		);
 		echo json_encode($success);
 	}
 
@@ -268,6 +300,18 @@ class Users extends MY_Controller
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$update,$where);
+			
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update profile picture',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -294,6 +338,17 @@ class Users extends MY_Controller
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$update,$where);
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update profile picture',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -332,6 +387,17 @@ class Users extends MY_Controller
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$profile,$where);
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information of '.$profile['firstname'].' '.$profile['lastname'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -366,6 +432,19 @@ class Users extends MY_Controller
 			$this->Crud_model->update('intern',$other_info,$where);
 			$user_where = ['id'	=> $decrypt_id];
 			$this->Crud_model->update('users',$start_date_info,$user_where);
+
+			$log_user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information of '.$log_user->firstname.' '.$log_user->lastname,
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -391,6 +470,17 @@ class Users extends MY_Controller
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$profile,$where);
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information of '.$profile['firstname'].' '.$profile['lastname'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -410,6 +500,19 @@ class Users extends MY_Controller
 		$this->Crud_model->update('employee',$other_info,$where);
 		$user_where = ['id'	=> $decrypt_id];
 		$this->Crud_model->update('users',$start_date_info,$user_where);
+
+		$log_user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
+		//position
+		$position_id = $this->user->info('position_id');
+		$pos_where = ['id'  => $position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+		parent::audittrail(
+			'Account Modify',
+			'Update information of '.$log_user->firstname.' '.$log_user->lastname,
+			$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			$position->name,
+			$this->input->ip_address()
+		);
 		echo json_encode("success");
 	}
 

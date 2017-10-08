@@ -117,7 +117,7 @@ class Reset extends MY_Controller
 
         $this->load->initialize($config);
 
-        $from="paypal.emailverify@gmail.com";
+        $from="jun.carnecer@astridtechnologies.com";
         $to = $this->input->post('email');
         $subject = "Reset Password";
         $data = [	

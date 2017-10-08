@@ -1,4 +1,4 @@
-
+<?php $shifts = $this->Crud_model->fetch('shift'); ?>
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card">
@@ -39,8 +39,12 @@
                                   </div>
                                   <div class="form-group">
                                     <label>Shift</label>
-                                    <input type="text" name="shift" disabled value="<?= $shift->shift_type ?>" class="form-control">
-                                   
+                                    <!-- <input type="text" name="shift" value="<?= $shift->shift_type ?>" class="form-control"> -->
+                                    <select class="form-control" name="shift" id="shift">
+                                    <?php foreach($shifts as $row): ?>
+                                      <option value="<?= $row->id ?>"<?php if($shift->id==$row->id) echo 'selected="selected"' ?> ><?= $row->shift_type ?></option>
+                                    <?php endforeach ?>
+                                    </select>
                                   </div>
                                   <div class="form-group">
                                   <hr>

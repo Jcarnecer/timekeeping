@@ -9,7 +9,60 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="accept-overtime" method="post">
+      <h5 id="a-ot-q"></h5><br>
+        <table class="table table-borderless table-responsive">
+          <thead> </thead>
+            <tbody>
+
+              <tr>
+                <td>
+                  <b><label class="group-label">Name:</label></b>
+                </td>
+                <td>
+                  <div class="group-data" id="ot-name"></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <b><label class="group-label">Overtime Date:</label></b>
+                </td>
+                <td>
+                  <div class="group-data" id="ot-date"></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <b><label class="group-label">Start:</label></b>
+                </td>
+                <td>
+                  <div class="group-data" id="ot-start"></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <b><label class="group-label">End:</label></b>
+                </td>
+                <td>
+                  <div class="group-data" id="ot-end"></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <b><label class="group-label">Reason:</label></b>
+                </td>
+                <td>
+                  <div class="group-data" id="ot-reason"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        <form id="accept-overtime-form" method="post">
+        <input type="hidden" id="ot-id" name="id">
       </div>
       <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Yes</button>

@@ -37,7 +37,16 @@ class Login extends MY_Controller
                             'profile_picture'   => $get_user->profile_picture,
                         ];
                         $sess = $this->session->set_userdata('user_logged_in',$user_session);
-                        // $this->session->set_userdata($sess,'TRUE');
+                        $position_id = $this->user->info('position_id');
+                        $pos_where = ['id'  => $position_id];
+                        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                        parent::audittrail(
+                            'Account Access',
+                            'Account Login ',
+                            $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                            $position->name,
+                            $this->input->ip_address()
+                        );
                         echo json_encode("success");
                     }elseif($get_user->status == 0){
                         echo json_encode("Your account is inactive. Contact our human resource department regarding this problem.");
@@ -55,6 +64,16 @@ class Login extends MY_Controller
     }
 
     public function logout() {
+        $position_id = $this->user->info('position_id');
+        $pos_where = ['id'  => $position_id];
+        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        parent::audittrail(
+            'Account Access',
+            'Account Logout ',
+            $this->user->info('firstname') .' '. $this->user->info('lastname'),
+            $position->name,
+            $this->input->ip_address()
+        );
         $this->session->sess_destroy();
         redirect('');
     }

@@ -32,7 +32,7 @@ class Shift extends MY_Controller {
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">	
 							<a class="dropdown-item edit_shift" data-toggle="modal" data-shift="<?= $row->shift_type ?>" data-start="<?= $row->start_time ?>" data-end="<?= $row->end_time ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#e-sh-modal" >Edit</a>
-							<a class="dropdown-item" href="" title="View">Details</a>
+							<!-- <a class="dropdown-item" href="" title="View">Details</a> -->
 						</div>
 					</div>
 				</td>
@@ -61,6 +61,18 @@ class Shift extends MY_Controller {
                 'success'   =>    1,
                 'shift'    => clean_data($this->input->post('shift'))    
             ];
+
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Shift Modify',
+				'Edit '.$success['shift'].' Shift',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
             echo json_encode($success);
         }
     }
