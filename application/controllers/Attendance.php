@@ -4,8 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Attendance extends MY_Controller {
 
     public function index() {
-        // print_r($this->user->info('position_id'));die;
-        
         // $now = new DateTime();
         // $now->setTimezone(new DateTimezone('Asia/Manila'));
         // $date_now = $now->format('Y-m-d');
@@ -309,10 +307,19 @@ class Attendance extends MY_Controller {
             Actions
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
-            <a class="dropdown-item" data-toggle="modal"  data-id="<?= secret_url('encrypt',$row->id) ?>" href="#reject-overtime-modal" title="Reject" >Reject</a>
-            <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
-            <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
+              <?php if($row->status == 0){ //pending ?>
+                    
+                <a class="dropdown-item accept-ot" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->uid) ?>" date-name="<?= $row->firstname.' '.$row->lastname ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
+                <a class="dropdown-item" data-toggle="modal"  data-id="<?= secret_url('encrypt',$row->id) ?>" href="#reject-overtime-modal" title="Reject" >Reject</a>
+                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
+                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
+              <?php }elseif($row->status == 1) { //accepted ?>
+                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
+                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
+              <?php }else { ?>
+                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-details-modal" title="Overtime Details" data-name="overtime-details">Details</a>
+                <a class="dropdown-item" data-toggle="modal" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#overtime-edit-modal" title="Edit Overtime Details">Edit</a>
+              <?php } ?>
           </div>
         </td>
       </tr>
@@ -372,6 +379,10 @@ class Attendance extends MY_Controller {
             </table>
             <?php
         }
+    }
+
+    public function approve_ot() {  
+
     }
 }
 ?>

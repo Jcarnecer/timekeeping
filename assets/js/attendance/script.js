@@ -154,6 +154,12 @@ $(document).on('click','.activate-user',function(){
     $("#u-a-name").val(name);
     $("#activate-confirm-message").html("Are your sure you want to activate "+name+"?");
 })
+
+$(document).on('click','.accept-ot',function() {
+	var id = $(this).data('id');
+	var name = $(this).data('name');
+})
+
 fetch_leave();
 fetch_overtime();
 // fetch_employee_overtime();

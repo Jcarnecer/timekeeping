@@ -161,7 +161,7 @@ class Crud_model extends CI_Model{
 	}
 
 	public function join_user_overtime(){
-		$this->db->select('*');
+		$this->db->select('users.*,record_overtime.*,users.id AS uid, record_overtime.id as rid');
 		$this->db->from('users');
 		$this->db->join('record_overtime', 'users.id = record_overtime.user_id');
 		$query = $this->db->get();
