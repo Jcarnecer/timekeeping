@@ -13,22 +13,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="assets/js/base_url.js"></script>
 		<link rel="stylesheet" type="text/css" href="assets/css/flavored-reset-and-normalize.min.css" >
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" > -->
-		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" >
 		<link rel="stylesheet" type="text/css" href="assets/css/styles.css" >
 		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-select.min.css" >
 		<link rel="stylesheet" href="assets/datatables/jquery.dataTables.min.css" >
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="assets/jquery-ui/jquery-ui.min.css" >
 		<script src="assets/datatables/jquery.dataTables.min.js"></script>
 		<script src="assets/js/bootstrap-notify.min.js"></script>
 		<script src="assets/js/bs_notify.js"></script>
 		<script src="assets/js/bootstrap-select.min.js"></script>
 		<script src="assets/jquery-ui/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.css">	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.js"></script>
 		<script>
 		$( function() {
-			$("#user-start-date").datepicker({
+			$("#user-start-date,#add_start_date,#add_end_date,#start_date,#end_date").datepicker({
 				dateFormat: 'yy-mm-dd'
-			})
+			});
+			
 		})
 		</script>
 		<?php $segment =  $this->uri->segment(1);

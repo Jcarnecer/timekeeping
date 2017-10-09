@@ -214,4 +214,35 @@ class Crud_model extends CI_Model{
 		$query = $this->db->get();
 		return $query->result();
 	}
+
+
+	public function get_events($start, $end) 
+    {
+		$id = $this->user->info('id');
+		return $this->db
+			->where('user_id', $id)
+            ->where("start >=", $start)
+            ->where("end <=", $end)
+            ->get("calendar_events");
+    }
+
+    public function add_event($data) 
+    {
+        $this->db->insert("calendar_events", $data);
+    }
+
+    public function get_event($id) 
+    {
+        return $this->db->where("id", $id)->get("calendar_events");
+    }
+
+    public function update_event($id, $data) 
+    {
+        $this->db->where("id", $id)->update("calendar_events", $data);
+    }
+
+    public function delete_event($id) 
+    {
+        $this->db->where("id", $id)->delete("calendar_events");
+    }
 }
