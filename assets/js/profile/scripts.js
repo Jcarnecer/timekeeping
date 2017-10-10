@@ -4,6 +4,7 @@ function fetch_profile() {
         type: "POST",
         success: function(data) {
             var result = JSON.parse(data);
+            $("#hrs_remaining").html(result.no_of_hrs)
             $("#firstname").val(result.firstname);
             $("#lastname").val(result.lastname);
             $("#email").val(result.email);

@@ -10,6 +10,7 @@
 	  $sub_privilege = $users_position->privilege_sub_menu;
 	  $submenu = $this->Crud_model->fetch('sub_menu');
 	  $sub_explode = explode(',',$sub_privilege);
+
 ?>
 <div id="sidebar">
 <!-- sidebar menu start-->

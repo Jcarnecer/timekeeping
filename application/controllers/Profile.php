@@ -45,12 +45,35 @@ class Profile extends MY_Controller {
     }
     
     public function get_user() {
-        $info = [
-            'firstname' => $this->user->info('firstname'),
-            'lastname'  => $this->user->info('lastname'),
-            'email' => $this->user->info('email'),
-            'profile_picture'   => $this->user->info('profile_picture'),
-        ];
+        $user = $this->user->info('id');
+        
+        
+		$position_where = ['id' =>  $this->user->info('position_id')];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
+        
+        $intern_where = ['user_id' => $user];
+        $intern_info = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
+        
+        if($position->name == 'Intern') {
+            $info = [
+                'no_of_hrs' => $intern_info->remaining, 
+                'firstname' => $this->user->info('firstname'),
+                'lastname'  => $this->user->info('lastname'),
+                'email' => $this->user->info('email'),
+                'profile_picture'   => $this->user->info('profile_picture'),
+            ];
+            // echo "intern";
+        }else{
+            $info = [
+                'firstname' => $this->user->info('firstname'),
+                'lastname'  => $this->user->info('lastname'),
+                'email' => $this->user->info('email'),
+                'profile_picture'   => $this->user->info('profile_picture'),
+            ];
+
+            // echo "not intern";
+        }
+        
         echo json_encode($info);
     }
 

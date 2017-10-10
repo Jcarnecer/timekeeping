@@ -13,6 +13,19 @@ function fetch_attendance(){
   })
 }
 
+function fetch_intern_attendance(){
+	$.ajax({
+	  url: base_url + "attendance/get_intern_timesheet",
+	  type: "POST",
+	  success: function(data){
+		$("#intern-timesheet").html(data);
+		$("#intern-timesheet-table").DataTable({
+		  "order": [[ 0, "desc" ],[ 1, "desc" ]]
+		});
+	  }
+	})
+  }
+
 function fetch_employee_attendance() {
 	$.ajax({
 		url: base_url + "get/emp_attendance",
@@ -116,12 +129,18 @@ $(document).ready(function(){
 				$("#attendance-modal").modal('show');
 				fetch_leave();
 				
+			}else if(status == 'Intern Attendance'){
+				
+				$("#intern-attendance-modal").modal('hide');
+				bs_notify("<strong>Successfully accepted overtime </strong>","success","top","right");
+				
+				fetch_intern_attendance();
+			
 			}else{
-
+				$("#intern-attendance-modal").modal('hide');
 				$(".modal-title").html(date_today);
 				$("#exist-attendance").html(result);
 				$("#attendance-modal").modal('show');
-			
 			}
 		}
 
@@ -259,3 +278,4 @@ fetch_overtime();
 fetch_admin_overtime();
 fetch_attendance();
 fetch_employee_attendance();
+fetch_intern_attendance();

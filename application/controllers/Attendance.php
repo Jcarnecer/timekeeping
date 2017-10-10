@@ -211,25 +211,39 @@ class Attendance extends MY_Controller {
                 );
                 echo json_encode($insert);
             }
-        }elseif($this->input->post('time-in')){
-            $insert =[
-                'user_id' => $id,
-                'date' => $date_now,
-                'time_in' => $now->format('H:i:s'),
-                'time_out' => NULL,
-                'status' => NULL,
-            ];
-            $this->Crud_model->insert('record',$insert);
+        }elseif($this->input->post('intern')){
+            $timein  = $this->input->post('intern_time_in');
+            $timeout = $this->input->post('intern_time_out');
+            $date = $this->input->post('intern_date');
+            $total   = strtotime($timeout) - strtotime($timein) ; 
+            $hours      = floor($total / 60 / 60);
+            $minutes    = round(($total - ($hours * 60 * 60)) / 60);
+            $no_of_hrs =  $hours.'.'.$minutes - 1.0;
+            
+            $user_id = $this->user->info('id');
+            $where = ['user_id' => $user_id , 'date' => $date];
+            $check_date = $this->Crud_model->fetch('record',$where);
+            if($check_date == TRUE){
+                echo json_encode("You already have attendance that day");
+            }else{
+                $insert =[
+                    'user_id' => $user_id,
+                    'date' => clean_data($date),
+                    'time_in' => clean_data($timein),
+                    'time_out' => clean_data($timeout),
+                    'status' => "Intern Attendance",
+                    'intern_no_hrs' => $no_of_hrs
+                ];
+                $this->Crud_model->insert('record',$insert);
+                $intern_where = ['user_id' => $user_id];
+                $get_intern = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
+                $remaining_update = [
+                    'remaining' => $get_intern->remaining - $no_of_hrs
+                ];
+                $this->Crud_model->update('intern',$remaining_update,$intern_where);
+                echo json_encode($insert);
+            }
 
-        }elseif($this->input->post('time-out')){
-            $insert =[
-                'user_id' => $id,
-                'date' => $date_now,
-                'time_in' => $now->format('H:i:s'),
-                'time_out' => NULL,
-                'status' => NULL,
-            ];
-            $this->Crud_model->insert('record',$insert);
         }
     }
 
@@ -259,6 +273,40 @@ class Attendance extends MY_Controller {
                 <td><?= $row->time_out?></td>
                 <td><?= $row->status?></td>
                 <!-- <td><button class="btn btn-custom">Edit</button></td> -->
+            </tr>
+            <?php endforeach;
+        }?>
+
+        </tbody>
+      </table>
+      <?php
+    }
+
+    public function get_intern_timesheet(){
+        $order_by = "id desc";
+        $user_id = $this->user->info('id');
+        $where = ['user_id' => $user_id];
+        // $where_in = ['name' => 'status', 'values' => ['4 hours', '8 hours', 'Work From Home']];
+        $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by); ?>
+        <table class="table table-bordered" id="intern-timesheet-table">
+          <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time in</th>
+                <th>Time out</th>
+                <th>No. of Hours</th>
+                <!-- <th>Action</th> -->
+              </tr>
+          </thead>
+          <tbody>
+    <?php if(!$timesheet == NULL){
+        foreach ($timesheet as $row):
+        ?>
+            <tr>
+                <td><?= $row->date?></td>
+                <td><?= $row->time_in?></td>
+                <td><?= $row->time_out?></td>
+                <td><?= $row->intern_no_hrs?></td>
             </tr>
             <?php endforeach;
         }?>

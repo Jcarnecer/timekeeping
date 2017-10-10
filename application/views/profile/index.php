@@ -9,7 +9,10 @@
                                 <hr>
 
                                 <!-- <a class="btn btn-info waves-effect" href="<?= base_url().'employee/request_shift/'.$this->session->id?>">Shift</a> -->
-                                <a class="btn btn-info waves-effect" href="login/logout"><i class="fa fa-sign-out m-r-10"></i>Logout</a>
+                                <?php if($this->user->info('position_id') == 4){ ?>
+                                  <h5>Remaining Hours</h5>
+                                  <h5 id="hrs_remaining"></h5>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
