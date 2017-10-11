@@ -14,11 +14,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" type="text/css" href="assets/css/flavored-reset-and-normalize.min.css" >
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" > -->
 		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" >
-		<link rel="stylesheet" type="text/css" href="assets/css/styles.css" >
-		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-select.min.css" >
-		<link rel="stylesheet" href="assets/datatables/jquery.dataTables.min.css" >
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-select.min.css" >
 		<link rel="stylesheet" href="assets/jquery-ui/jquery-ui.min.css" >
+		<link rel="stylesheet" href="assets/datatables/jquery.dataTables.min.css" >
+		<link rel="stylesheet" type="text/css" href="assets/css/styles.css" >
 		<script src="assets/datatables/jquery.dataTables.min.js"></script>
 		<script src="assets/js/bootstrap-notify.min.js"></script>
 		<script src="assets/js/bs_notify.js"></script>

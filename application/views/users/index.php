@@ -1,8 +1,9 @@
-<h3>Users Management</h3>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-users-modal">
+
+    <h3 class="title">Users Management</h3>
+    <button type="button" class="btn custom-button float-right" data-toggle="modal" data-target="#add-users-modal">
         Add Users
     </button>
-        <br><hr>
+    <hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">
                 <thead>

@@ -1,13 +1,51 @@
 @import 'custom-variables';
 
+html, body {
+    width: 100%;
+}
+
 body {
-    background-color: $gray-custom;
+    background-color: $lightest-gray;
+}
+
+.center-block {
+    display: block;
+    margin: 0 auto;
+}
+
+.bottom-margin {
+    margin-bottom: 50px;
+}
+
+.top-margin-title {
+    margin-top: 70px;
+}
+
+.btn {
+    border: none;
+}
+
+.custom-button {
+    background-color: $primary-color;
+    border: none;
+    color: $white;
+
+    &:hover {
+        background-color: $secondary-color;
+    }
+}
+
+.edit-button {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .navbar-custom {
     background-color: $white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.15);
     justify-content: left;
+    margin-bottom: 20px;
 }
 
 #sidebar {
@@ -44,12 +82,25 @@ body {
             border-left: 5px solid $dark-blue;
             text-decoration: none;
         }
+
+        span {
+            display: inline-grid;
+            white-space: normal;
+        }
     
+    }
+
+    .active {
+        background-color: pink;
     }
 
     ul.sub {
         li {
             padding-left: 30px;
+        }
+
+        a {
+            white-space: normal;
         }
     }
 }
@@ -58,8 +109,13 @@ body {
     display: none;
 }
 
+.title {
+    display: inline-block;
+}
+
 .main-content {
     margin-left: 210px;
+    overflow: hidden;
 }
 
 .animation { 
@@ -96,15 +152,6 @@ body {
     height: 25px;
     position: relative;
     width: 30px;
-    // margin: 10px;
-    // -webkit-transform: rotate(0deg);
-    // -moz-transform: rotate(0deg);
-    // -o-transform: rotate(0deg);
-    // transform: rotate(0deg);
-    // -webkit-transition: .5s ease-in-out;
-    // -moz-transition: .5s ease-in-out;
-    // -o-transition: .5s ease-in-out;
-    // transition: .5s ease-in-out;
 }
   
 .custom-toggle span {
@@ -116,14 +163,6 @@ body {
     opacity: 1;
     position: absolute;
     width: 100%;
-    // -webkit-transform: rotate(0deg);
-    // -moz-transform: rotate(0deg);
-    // -o-transform: rotate(0deg);
-    // transform: rotate(0deg);
-    // -webkit-transition: .25s ease-in-out;
-    // -moz-transition: .25s ease-in-out;
-    // -o-transition: .25s ease-in-out;
-    // transition: .25s ease-in-out;
 }
 
 /* Icon 3 */
@@ -154,28 +193,70 @@ body {
     transform: rotate(-45deg);
 }
 
-// .custom-toggle.open span:nth-child(1) {
-//     top: 18px;
-//     width: 0%;
-//     left: 50%;
-// }
+.custom-responsive {
+    display: block;
+    overflow: auto;
+}
 
-// .custom-toggle.open span:nth-child(2) {
-//     -webkit-transform: rotate(45deg);
-//     -moz-transform: rotate(45deg);
-//     -o-transform: rotate(45deg);
-//     transform: rotate(45deg);
-// }
+#prof_pic {
+    max-height: 200px;
+}
 
-// .custom-toggle.open span:nth-child(3) {
-//     -webkit-transform: rotate(-45deg);
-//     -moz-transform: rotate(-45deg);
-//     -o-transform: rotate(-45deg);
-//     transform: rotate(-45deg);
-// }
+.table {
+    background: $white;
+    thead {
+        tr {
+            th {
+                border: none;
+            }
+        }
+    }
+}
 
-// .custom-toggle.open span:nth-child(4) {
-//     top: 18px;
-//     width: 0%;
-//     left: 50%;
-// }
+.dataTables_wrapper {
+    margin-bottom: 30px;
+
+    .dataTables_filter {
+        input {
+            border: 1px solid $light-gray;
+            border-radius: 30px;
+            text-indent: 10px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .dataTables_paginate {
+        a {
+            &.paginate_button {
+                &.current {
+                    border-radius: 50%;
+                }
+
+                &:hover {
+                    background: $secondary-color;
+                    background-color: $secondary-color;
+                    border: 1px solid $secondary-color;
+                    border-radius: 50%;
+                    color: $white !important;
+                }
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            &#timesheet-table_next, &#timesheet-table_previous {
+                &:hover {
+                    background: none;
+                    border: 1px solid transparent;
+                    color: $secondary-color !important;
+                    cursor: pointer;
+                    // font-weight: bold;
+                }
+            }      
+        }
+    }
+}

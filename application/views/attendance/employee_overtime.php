@@ -1,5 +1,6 @@
 <div class="row">
   <h3>Overtime</h3>
+  <hr>
     <div class="col-md-12">
       <div class="row" id="DateTime">
         <div class="col-md-12">

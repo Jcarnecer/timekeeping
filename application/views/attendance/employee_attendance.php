@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <h3>Timesheet</h3>
+        <hr>
       <center>
 
       <div class="row" id="DateTime">
