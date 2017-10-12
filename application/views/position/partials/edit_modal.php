@@ -9,35 +9,35 @@
         </button>
       </div>
       <div class="modal-body">
-      <form id="update-position-form" method="POST" autocomplete="off">
-          <div id="u-position-error">
-
-          </div>
-          <div class="form-group">
-            <label>Enter position</label>
-            <input type="text" name="position" class="form-control position">
-          </div>
-          
-          <div class=form-group>
-          <label>Select position Privileges</label>
-               <select class="selectpicker" id="privileges"  data-width="100%" name="privileges[]" title="-- Please select privileges --" multiple>
-            <optgroup label="Current Privileges">
-              <?php
-              $x=1;
-              foreach($menu as $key){if($x!=1){ ?>
-              <option value="<?php echo $key->id?>"><?php echo $key->name; ?></option>
-              <?php  } $x+=1; }?>
-            </optgroup>
-          </select>
+        <form id="update-position-form" method="POST" autocomplete="off">
+            <div id="u-position-error">
+            </div>
+            <div class="form-group">
+              <label>Enter position</label>
+              <input type="text" name="position" class="form-control position">
+            </div>
+            
+            <div class=form-group>
+              <label>Select position Privileges</label>
+              <select class="selectpicker" id="privileges"  data-width="100%" name="privileges[]" title="-- Please select privileges --" multiple>
+              <optgroup label="Current Privileges">
+                <?php
+                $x=1;
+                foreach($menu as $key){if($x!=1){ ?>
+                <option value="<?php echo $key->id?>"><?php echo $key->name; ?></option>
+                <?php  } $x+=1; }?>
+              </optgroup>
+            </select>
           </div> 
-      <br>
-      <input type="hidden" id="id" name="id">
-      <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Save</button>
-          </form>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          
+        <br>
+        <input type="hidden" id="id" name="id">
       </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn custom-button">Save</button>
+        </form>  
+      </div>
+
     </div>
   </div>
 </div>

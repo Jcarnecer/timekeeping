@@ -179,3 +179,18 @@ body {
     border: 1px solid transparent;
     color: #15BBE8 !important;
     cursor: pointer; }
+
+.dropdown-item:hover, .dropdown-item:active {
+  background-color: #15BBE8;
+  color: #ffffff;
+  width: auto; }
+
+#calendar .ui-state-active, #calendar .ui-button:active {
+  background: #25CBF2;
+  border: 1px solid #15BBE8;
+  color: #ffffff; }
+  #calendar .ui-state-active:hover, #calendar .ui-button:hover:active {
+    background: #15BBE8; }
+
+#overtime-details-modal table td {
+  border-top: 0; }

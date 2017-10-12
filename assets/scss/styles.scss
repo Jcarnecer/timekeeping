@@ -260,3 +260,38 @@ body {
         }
     }
 }
+
+.dropdown-item {
+    &:hover, &:active {
+        background-color: $secondary-color;
+        color: $white;
+        width: auto;
+    }
+}
+
+#calendar {
+    .ui-state-active {
+        background: $primary-color;
+        border: 1px solid $secondary-color;
+        color: $white;
+        
+        &:hover {
+            background: $secondary-color;
+        }
+    }
+
+    .ui-button {
+
+        &:active {
+            @extend .ui-state-active;
+        }
+    }
+}
+
+#overtime-details-modal {
+    table {
+        td {
+            border-top: 0;
+        }
+    }
+}

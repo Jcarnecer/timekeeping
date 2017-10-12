@@ -10,16 +10,16 @@
       </div>
       <div class="modal-body">
         <h6 id="confirm-msg"></h6>
-        <hr>
-        <h6>Note: If email doesn't received wait atleast 2 mins. or check in spam mail. </h6>
+        <br>
+        <p>Note: If email doesn't received wait atleast 2 mins. or check in spam mail. </p>
         <form id="reset-password-form" method="post">
             <input type="hidden" id="id" name="id">
             <input type="hidden" name="email" id="email" class="form-control">
             <h5 class="text-danger fname-error" ></h5>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Proceed</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn custom-button">Proceed</button>
           </form>
       </div>
     </div>
