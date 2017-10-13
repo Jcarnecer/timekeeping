@@ -269,6 +269,76 @@ body {
     }
 }
 
+#DateTime {
+    display: block;
+    text-align: center;
+    .time {
+        font-size: 3em;
+        font-weight: bold;
+    }
+    
+    .date {
+        font-size: 1.5em;
+    }
+}
+
+.form-container {
+    @extend .bottom-margin;
+    text-align: center;
+
+    .form-timesheet {
+        display: inline-flex;
+        margin: 10px 0 10px 0;
+        
+        // button::after {
+        //         font-family: FontAwesome;
+        //         content: "\f093";
+        //         overflow: hidden;
+        //         display: inline-block;
+        //         padding-right: 3px;
+        //         vertical-align: middle;
+        //         color: $secondary-color;
+        //         position: absolute;
+        // }
+
+        // button:hover::after {
+        //     color: $primary-color;
+        // }
+
+        .custom-button {
+            font-size: 1.5em;
+            // font-weight: bold;
+            padding: 15px;
+            text-align: left;
+        }
+
+        #vacation-leave {
+            background-image: url(../images/vacation.svg);
+        }
+
+        #sick-leave {
+            background-image: url(../images/sick.svg);
+        }
+
+        .leave-button {
+            background-position-x: 5.5em;
+            background-position-y: -20px;
+            background-size: 60%;
+            background-repeat: no-repeat;
+            font-size: 1.2em !important;
+            height: auto;
+            width: 200px;
+        }
+
+        .button-text {
+            display: block;
+            white-space: normal;
+            width: 50%;
+        }
+    }
+}
+
+
 #calendar {
     .ui-state-active {
         background: $primary-color;
