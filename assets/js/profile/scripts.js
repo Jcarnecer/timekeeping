@@ -4,11 +4,23 @@ function fetch_profile() {
         type: "POST",
         success: function(data) {
             var result = JSON.parse(data);
-            $("#hrs_remaining").html(result.no_of_hrs)
             $("#firstname").val(result.firstname);
             $("#lastname").val(result.lastname);
             $("#email").val(result.email);
-            $('#prof_pic').attr('src','assets/uploads/'+result.profile_picture);
+            $("#profile-name").html(result.lastname+', '+result.firstname);
+            $("#profile-email").html(result.email);
+            $("#profile-position").html(result.position);
+			$('#prof_pic').attr('src','assets/uploads/'+result.profile_picture);
+			$("#profile-sss").html(result.sss_no);
+			$("#profile-tin").html(result.tin_no);
+			$("#profile-philhealth").html(result.ph_health);
+
+			//intern
+            $("#hrs_remaining").html(result.remaining)
+			$("#profile-school").html(result.school);
+			$("#profile-course").html(result.course);
+			$("#profile-year").html(result.year);
+			$("#profile-total-num-hrs").html(result.no_of_hrs);
         }
     })
 }
@@ -23,10 +35,11 @@ $(document).ready(function(){
             {
                 var result = JSON.parse(data);
                 if(result === "success"){
+                    $("#edit-profile-modal").modal('hide');
                     fetch_profile();
                     bs_notify("<strong> Successfully Change Your Profile.</strong>","success","top","right");
                     $(".text-danger").html("");
-            
+                    
                 }else{
                     perfield_error_message("#fname_err",result.f_error);
                     perfield_error_message("#lname_err",result.l_error);

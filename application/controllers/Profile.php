@@ -47,31 +47,39 @@ class Profile extends MY_Controller {
     public function get_user() {
         $user = $this->user->info('id');
         
-        
 		$position_where = ['id' =>  $this->user->info('position_id')];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
         
         $intern_where = ['user_id' => $user];
         $intern_info = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
-        
+		
+		$employee_where = ['user_id'	=> $user];
+		$employee_info = $this->Crud_model->fetch_tag_row('*','employee',$employee_where);
+
         if($position->name == 'Intern') {
             $info = [
-                'no_of_hrs' => $intern_info->remaining, 
+				'position'	=> $position->name,
+                'no_of_hrs' => $intern_info->no_of_hrs, 
+				'school'	=> $intern_info->school,
+				'course'	=> $intern_info->course,
+				'year'		=> $intern_info->year,
+				'remaining'	=> $intern_info->remaining,
                 'firstname' => $this->user->info('firstname'),
                 'lastname'  => $this->user->info('lastname'),
                 'email' => $this->user->info('email'),
-                'profile_picture'   => $this->user->info('profile_picture'),
+				'profile_picture'   => $this->user->info('profile_picture'),
             ];
-            // echo "intern";
         }else{
             $info = [
+				'position'	=> $position->name,
+				'sss_no'	=> $employee_info->sss_no,
+				'tin_no'	=> $employee_info->tin_no,
+				'ph_health'	=> $employee_info->phil_health,
                 'firstname' => $this->user->info('firstname'),
                 'lastname'  => $this->user->info('lastname'),
                 'email' => $this->user->info('email'),
                 'profile_picture'   => $this->user->info('profile_picture'),
             ];
-
-            // echo "not intern";
         }
         
         echo json_encode($info);

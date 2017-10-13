@@ -20,13 +20,29 @@
             <h5 id="hrs_remaining"></h5>
           <?php } ?>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
           <h2>User Information</h2>
-          <?= $this->user->info('lastname') ?>,
+          <!-- <?= $this->user->info('lastname') ?>,
           <?= $this->user->info('firstname') ?><br>
-          <?= $this->user->info('email') ?>
+          <?= $this->user->info('email') ?> -->
+          <h5 id="profile-name"></h5>
+          <h5 id="profile-email"></h5>
+          <h5 id="profile-position"></h5>
           <button class="btn custom-button edit-button" data-toggle="modal" href="#edit-profile-modal">Edit Account Info</button>
         </div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+          <h2>Other Information</h2>
+          <?php if($this->user->info('position_id') == 4){ ?>
+            <h5 >School: <span id="profile-school"></span></h5>
+            <h5>Course: <span  id="profile-course"></span></h5>
+            <h5>School Year: <span id="profile-year"></span></h5>
+            <h5>Total Number of Hours: <span id="profile-total-num-hrs"></span></h5>
+          <?php }else{ ?>
+						<h5 >SSS No.: <span id="profile-sss"></span></h5>
+            <h5>Tin No.: <span  id="profile-tin"></span></h5>
+            <h5>Phil Heath: <span id="profile-philhealth"></span></h5>
+					<?php } ?>
+         </div>
           <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
               <div class="card">
                   <div class="card-block text-center">
