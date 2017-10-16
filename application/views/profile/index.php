@@ -10,7 +10,7 @@
     <h2>Profile</h2>
     <hr>
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <a data-toggle="modal" href="#profile-picture-modal"><img id="prof_pic" class="center-block bottom-margin img-fluid"></a>
           <!-- <a data-toggle="modal" href="#profile-picture-modal"><img height="200" id="prof_pic"></a>
           <hr> -->
@@ -20,7 +20,7 @@
             <h5 id="hrs_remaining"></h5>
           <?php } ?>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
           <h2>User Information</h2>
           <!-- <?= $this->user->info('lastname') ?>,
           <?= $this->user->info('firstname') ?><br>
@@ -30,7 +30,7 @@
           <h5 id="profile-position"></h5>
           <button class="btn custom-button edit-button" data-toggle="modal" href="#edit-profile-modal">Edit Account Info</button>
         </div>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
           <h2>Other Information</h2>
           <?php if($this->user->info('position_id') == 4){ ?>
             <h5 >School: <span id="profile-school"></span></h5>
