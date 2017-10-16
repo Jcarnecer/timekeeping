@@ -53,6 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script src="assets/js/error-message.js"></script>
 			<script src="assets/js/users/scripts.js"></script>
 			<script>
+				fetch_details()
 				fetch_users();
 			</script>
 			

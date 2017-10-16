@@ -260,10 +260,12 @@ class Users extends MY_Controller
 		$where = ['id' => $decrypt_id];
 		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture';
 
-		$this->detail_id = $id;
+		// $this->detail_id = $id;
 		//get position
-		$user = $this->Crud_model->fetch_tag_row($tag,'users',$where);
-		$position_where = ['id' => $user->position_id];
+		$user_row = $this->Crud_model->fetch_tag_row($tag,'users',$where);
+		// print_r($user_row->position_id);die;
+		$pos_id = $user_row->position_id;
+		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
 		if($position->name == 'Intern') {
@@ -515,7 +517,7 @@ class Users extends MY_Controller
 			$position->name,
 			$this->input->ip_address()
 		);
-		echo json_encode("success");
+		echo json_encode(1);
 	}
 
 }

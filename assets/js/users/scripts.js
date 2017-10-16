@@ -15,7 +15,16 @@ function fetch_details() {
         url: base_url + "users/get_details/" + id,
         type: "POST",
         success: function(data) {
-            var result = JSON.parse(data);
+			var result = JSON.parse(data);
+			//details
+			$("#d-name").html(result.lastname+', '+result.firstname);
+			$("#d-email").html(result.email);
+			$("#d-sss").html(result.sss_no);
+			$("#d-phil-health").html(result.phil_health);
+			$("#d-tin").html(result.tin_no);
+			$("#d-date-start").html(result.start_date);
+
+
             $("#firstname").val(result.firstname);
             $("#lastname").val(result.lastname);
             $("#email").val(result.email);
@@ -29,7 +38,13 @@ function fetch_details() {
             $("#tin").val(result.tin_no);
             $("#sss").val(result.sss_no);
             $("#phil-health").val(result.phil_health);
-            $("#remaining").html(result.remaining);
+			$("#remaining").html(result.remaining);
+			
+			$("#d-school").html(result.school);
+			$("#d-no-of-hrs").html(result.no_of_hrs);
+			$("#d-course").html(result.course);
+			$("#d-bday").html(result.birthday);
+			$("#d-year").html(result.year);
         }
     })
 }
@@ -295,7 +310,8 @@ $(document).ready(function() {
             success:function(data) {
                 var result = JSON.parse(data);
                 if(result === 'success') {
-                    $(".text-danger").html("");
+					$("#employee-edit-information").modal('hide');
+					$(".text-danger").html("");
                     bs_notify("<strong>Successfully Updated Employee Information</strong>","success","top","right");
                     fetch_details();
                 }else{
@@ -319,9 +335,16 @@ $(document).ready(function() {
             type: "POST",
             data: $("#employee-other-info-form").serialize(),
             success:function(data) {
-                var result = JSON.parse(data);
-                bs_notify("<strong>Successfully Updated Employee Information</strong>","success","top","right");
-                fetch_details();
+				var result = JSON.parse(data);
+
+				if(result === 1){
+					$("#employee-edit-other-information").modal('hide');
+					bs_notify("<strong>Successfully Updated Employee Information</strong>","success","top","right");
+					fetch_details();
+				}else{
+					alert("There's an Error");
+				}
+				
                 
             },
             error: function(data){

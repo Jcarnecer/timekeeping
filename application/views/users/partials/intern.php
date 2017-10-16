@@ -12,10 +12,9 @@
     <!-- <?= $this->user->info('lastname') ?>,
     <?= $this->user->info('firstname') ?><br>
     <?= $this->user->info('email') ?> -->
-    <h5 id="firstname"></h5>
-    <h5 id="lastname"></h5>
-    <h5 id="email"></h5>
-    <h5 id="shift"></h5>
+    <h5 id="d-name"></h5>
+    <h5 id="d-email"></h5>
+    <h5 id="d-shift"></h5>
     <button class="btn custom-button edit-button" data-toggle="modal" href="#intern-edit-information">Edit Info</button>
   </div>
 
@@ -26,12 +25,12 @@
     <!-- <?= $this->user->info('lastname') ?>,
     <?= $this->user->info('firstname') ?><br>
     <?= $this->user->info('email') ?> -->
-    <h5 id="school"></h5>
-    <h5 id="no-of-hrs"></h5>
-    <h5 id="course"></h5>
-    <h5 id="bday"></h5>
-    <h5 id="year"></h5>
-    <h5 id="start-date"></h5>
+    <h5 >School: <span id="d-school"></span></h5>
+    <h5>No. of Hours: <span id="d-no-of-hrs"></span></h5>
+    <h5>Course: <span id="d-course"></span></h5>
+    <h5>Birthday: <span id="d-bday"></span></h5>
+    <h5>Year: <span id="d-year"></span></h5>
+    <h5>Date Start: <span id="d-date-start"></span></h5>
     <button class="btn custom-button edit-button" data-toggle="modal" href="#intern-edit-other-information">Edit Other Info</button>
   </div>
 

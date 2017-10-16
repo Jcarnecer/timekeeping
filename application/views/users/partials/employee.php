@@ -19,10 +19,9 @@
     <!-- <?= $this->user->info('lastname') ?>,
     <?= $this->user->info('firstname') ?><br>
     <?= $this->user->info('email') ?> -->
-    <h5 id="firstname"></h5>
-    <h5 id="lastname"></h5>
-    <h5 id="email"></h5>
-    <h5 id="shift"></h5>
+    <h5 id="d-name"></h5>
+    <h5 id="d-email"></h5>
+    <h5 id="d-shift"></h5>
     <button class="btn custom-button edit-button" data-toggle="modal" href="#employee-edit-information">Edit Info</button>
   </div>
 
@@ -31,10 +30,10 @@
     <!-- <?= $this->user->info('lastname') ?>,
     <?= $this->user->info('firstname') ?><br>
     <?= $this->user->info('email') ?> -->
-    <h5 id="sss"></h5>
-    <h5 id="phil-health"></h5>
-    <h5 id="tin"></h5>
-    <h5 id="date-start"></h5>
+    <h5>SSS: <span id="d-sss"></span> </h5>
+    <h5>Phil Health: <span id="d-phil-health"></span></h5>
+    <h5>Tin: <span id="d-tin"></span></h5>
+    <h5>Start Date: <span id="d-date-start"></span></h5>
     <button class="btn custom-button edit-button" data-toggle="modal" href="#employee-edit-other-information">Edit Other Info</button>
   </div>
 

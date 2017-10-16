@@ -18,7 +18,7 @@
         <form id="employee-info-form" method="post">
             <div class="form-group">
             <label>First Name</label>
-            <!-- <input type="hidden" name="id" value="<?= $this->uri->segment(3) ?>"> -->
+            <input type="hidden" name="id" value="<?= $this->uri->segment(3) ?>">
             <!-- <input type="text" name="fname" value="<?= $this->user->info('firstname') ?>" class="form-control"> -->
             <input type="text" name="fname" id="firstname" class="form-control">
             <div class="text-danger" id="fname_err"></div>
