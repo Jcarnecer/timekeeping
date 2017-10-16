@@ -57,7 +57,9 @@ class Users extends MY_Controller
 				];
 				$this->Crud_model->insert('employee',$insert_employee);
 			}
-
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
 				'Add User',
 				'Added User '.$insert['firstname'].' '.$insert['lastname'],
