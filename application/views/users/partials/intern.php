@@ -19,7 +19,7 @@
   </div>
 
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-    <h2>REMAINING HOURS</h2>
+    <h2>Remaining Hours</h2>
     <h3 id="remaining"></h3>
     <h2>Other Information</h2>
     <!-- <?= $this->user->info('lastname') ?>,
