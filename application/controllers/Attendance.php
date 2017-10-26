@@ -4,17 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Attendance extends MY_Controller {
 
     public function index() {
-        // $now = new DateTime();
-        // $now->setTimezone(new DateTimezone('Asia/Manila'));
-        // $date_now = $now->format('Y-m-d');
-        // $time = $now->format('H:i:s');
         parent::mainpage('attendance/index',
             [
                 'title' => 'Timesheet',
                 'record'	=> $this->Crud_model->fetch('record'),
             ]
         );
-    }
+	}
+	
 
     public function leaves(){
         parent::mainpage('attendance/leaves',
@@ -236,11 +233,11 @@ class Attendance extends MY_Controller {
                 ];
                 $this->Crud_model->insert('record',$insert);
                 $intern_where = ['user_id' => $user_id];
-                $get_intern = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
+                $get_intern = $this->Crud_model->fetch_tag_row('*','user_details',$intern_where);
                 $remaining_update = [
                     'remaining' => $get_intern->remaining - $no_of_hrs
                 ];
-                $this->Crud_model->update('intern',$remaining_update,$intern_where);
+                $this->Crud_model->update('user_details',$remaining_update,$intern_where);
                 echo json_encode($insert);
             }
 

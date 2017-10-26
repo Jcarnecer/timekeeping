@@ -33,6 +33,7 @@ $pos = $this->Crud_model->fetch('position'); ?>
 
               <label for="">Position</label>
               <select name="pos" id="position" class="form-control">
+								<option value="" disabled selected>-- Select Position --</option>
                   <?php foreach($pos as $row): ?>
                   <option id="<?= $row->id ?>" value="<?= $row->id ?>"><?= $row->name ?></option>
                   <?php endforeach;   ?>
@@ -43,6 +44,9 @@ $pos = $this->Crud_model->fetch('position'); ?>
               <input type="text" name="start_date" class="form-control" id="user-start-date" placeholder="yyyy-mm-dd">
               <h5 class="text-danger sd-error"></h5>
 
+							<label for="">Birthday </label>
+              <input type="text" name="bday" id="add_bday" class="form-control">
+
               <label for="">Shift</label>
               <select name="shift" id="shift" class="form-control">
                   <?php foreach($shift as $row): ?>
@@ -51,9 +55,24 @@ $pos = $this->Crud_model->fetch('position'); ?>
               </select>
           </div>
 
-          <div class="form-group" id="intern-no-hrs" style="display:none">
+          <div class="form-group" id="intern-other-info" style="display:none">
             <label for="">Number of Hours</label>
             <input type="text" name="num_hrs" class="form-control">
+						<label for="">School</label>
+						<input type="text" name="school" class="form-control">
+						<label for="">Course</label>
+						<input type="text" name="course" class="form-control">
+						<label for="">School Year</label>
+						<input type="text" name="sy" class="form-control">
+          </div>
+
+					<div class="form-group" id="emp-other-info" style="display:none">
+            <label for="">SSS</label>
+            <input type="text" name="sss" class="form-control">
+						<label for="">TIN</label>
+						<input type="text" name="tin" class="form-control">
+						<label for="">Phil Health</label>
+						<input type="text" name="phil_health" class="form-control">
           </div>
           <button type="submit" class="btn custom-button float-right">Save</button>
         </form>
@@ -66,10 +85,14 @@ $pos = $this->Crud_model->fetch('position'); ?>
   $(document).ready(function() {
     $("#position").on('change',function(){
       var pos_id = $("#position").val();
-      if(pos_id == 4){
-        $("#intern-no-hrs").css({"display":"block"});
-      }else{
-        $("#intern-no-hrs").css({"display":"none"});
+      if(pos_id >= 1 && pos_id != 4){
+
+				$("#intern-other-info").css({"display":"none"});
+        $("#emp-other-info").css({"display":"block"});
+      }else if(pos_id == 4){
+
+				$("#emp-other-info").css({"display":"none"});
+        $("#intern-other-info").css({"display":"block"});
       }
       // e.preventDefault();
     })

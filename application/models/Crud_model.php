@@ -190,13 +190,16 @@ class Crud_model extends CI_Model{
 
 
 
-	public function join_tag_row($tag,$table,$where="",$join_table,$columns){
+	public function join_tag_row($tag,$table,$where="",$join_table,$columns,$keyword,$order=""){
 		if (!empty($where)) {
 			$this->db->where($where);
 		}
+		if (!empty($order)) {
+			$this->db->order_by($order);
+		}
 		$this->db->select($tag);
 		$this->db->from($table);
-		$this->db->join($join_table,$columns);
+		$this->db->join($join_table,$columns,$keyword);
 		$query = $this->db->get();
 		return $query->row();
 	}

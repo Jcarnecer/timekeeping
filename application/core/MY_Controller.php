@@ -19,13 +19,13 @@ class MY_Controller	extends CI_Controller
 
 	
 	private function no_session() {
-        if(!$this->session->userdata('user_logged_in')) {
+        if(!$this->session->userdata('user')) {
             redirect('login');
         }
     }
 	
     private function with_session() {
-    	if($this->session->userdata('user_logged_in')) {
+    	if($this->session->userdata('user')) {
             redirect('dashboard');
         }
 	}

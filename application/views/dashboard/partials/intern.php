@@ -34,7 +34,7 @@
 
 			$id = $this->user->info('id');
 			$where = ['user_id' => $id];
-			$remaining = $this->Crud_model->fetch_tag_row('*','intern',$where);
+			$remaining = $this->Crud_model->fetch_tag_row('*','user_details',$where);
 			?>
 			<br>
 			Your remaining time is <?= $remaining->remaining ?>

@@ -132,7 +132,7 @@ $(document).ready(function(){
 			}else if(status == 'Intern Attendance'){
 				
 				$("#intern-attendance-modal").modal('hide');
-				bs_notify("<strong>Successfully accepted overtime </strong>","success","top","right");
+				bs_notify("<strong>Successfully have attendance</strong>","success","top","right");
 				
 				fetch_intern_attendance();
 			

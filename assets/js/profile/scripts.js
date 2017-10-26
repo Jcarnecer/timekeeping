@@ -97,7 +97,7 @@ $(document).ready(function(){
             {
                 var result = JSON.parse(data);
                 if(result === "success"){
-        
+					$("#edit-profile-modal").modal('hide');
                     $("input[type='password']").val("");
                     bs_notify("<strong> Successfully Change Your Password.</strong>","success","top","right");
                     $(".text-danger").html("");

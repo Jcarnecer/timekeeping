@@ -6,8 +6,8 @@ class Reset extends MY_Controller
 
 	public function password($check,$key,$id) {
         $decrypt_id = secret_url('decrypt',$id);
-        $where = array('id' => $decrypt_id);
-        $verify = $this->Crud_model->fetch_tag_row('reg_key,status,verified_email,reset_status','users',$where);
+        $where = array('user_id' => $decrypt_id);
+        $verify = $this->Crud_model->fetch_tag_row('reg_key,status,verified_email,reset_status','user_details',$where);
         
         if(!$verify == NULL){
             if($check == 'auth'){
@@ -59,19 +59,29 @@ class Reset extends MY_Controller
             if($check == 'forgot' ){
                 $newpass = array(
                     'password'  => hash_password(clean_data($this->input->post('npass'))),
-                    'reset_status'  => 1
-                );
+                    
+				);
+				$status = [
+					'reset_status'  => 1
+				];
             }else{
                 $newpass = array(
                     'password'  => hash_password(clean_data($this->input->post('npass'))),
-                    'status'    => 1
-                );
+                    
+				);
+				$status = [
+					'status'    => 1
+				];
             }
             
             $id = $this->input->post('id');
             $decrypt_id = secret_url('decrypt',$id);
             $where = array('id' => $decrypt_id);
-            $this->Crud_model->update('users',$newpass,$where);
+			$this->Crud_model->update('users',$newpass,$where);
+			
+			$ud_where = ['user_id'	=> $decrypt_id];
+			$this->Crud_model->update('user_details',$status,$ud_where);
+
             echo json_encode("success");
         }
     }
@@ -96,18 +106,26 @@ class Reset extends MY_Controller
         $id = $this->input->post('id');
         $decrypt_id = secret_url('decrypt',$id);
         $where = ['id'   => $decrypt_id];
-        $tag = "firstname,middlename,lastname,status,reset_status,reset_key,email,password";
+        $tag = "firstname,middlename,lastname,email,password";
         $user = $this->Crud_model->fetch_tag_row($tag,'users',$where);
+		
+		$tag_user_details = "status,reset_status,reset_key";
+		$ud_where =['user_id'	=> $decrypt_id];
+		$user_details = $this->Crud_model->fetch_tag_row($tag_user_details,'user_details',$where);
 
         $generate_reset_key		=	'_'.random_string('alnum',15).'_'; // generates "_10alnumstring_"
         $generate_password = random_string('alnum',8);
         
         $update_user = [
             'password'  => hash_password($generate_password),
-            'reset_status'  => 0,
-            'reset_key' => $generate_reset_key
         ];
-        $this->Crud_model->update('users',$update_user,$where);
+		$this->Crud_model->update('users',$update_user,$where);
+		
+		$update_user_detail = [
+			'reset_status'  => 0,
+            'reset_key' => $generate_reset_key
+		];
+		$this->Crud_model->update('user_details',$update_user_detail,$ud_where);
 
         $config = array(
             'smtp_timeout' => '4',
@@ -125,8 +143,8 @@ class Reset extends MY_Controller
                     'name'	=>	$user->firstname.' '.$user->lastname,
                     'email'	=> $to,
                     'password'	=> $generate_password,
-                    'reset_key' => $update_user['reset_key'],
-                    'reset_status'	=> $update_user['reset_status'],
+                    'reset_key' => $update_user_detail['reset_key'],
+                    'reset_status'	=> $update_user_detail['reset_status'],
                     'indicator'   => 'resetpassword' 
                 ];
         
@@ -134,7 +152,7 @@ class Reset extends MY_Controller
         // echo $message;
         $this->load->library('email');
         $this->email->clear();
-        $this->email->from($from, 'Company Name');
+        $this->email->from($from, 'Timekeeping');
         $this->email->to($to);
         $this->email->set_newline("\n");
         $this->email->subject($subject);
@@ -148,7 +166,9 @@ class Reset extends MY_Controller
             'name'	=> clean_data(ucwords($this->input->post('fname'))) .' '. clean_data(ucwords($this->input->post('lname'))),
         ];
 
-        echo json_encode($success);
+		echo json_encode($success);
+		// print_r($message);die;
+		// $this->load->view('email/reset_password',$data);
 
     }
 

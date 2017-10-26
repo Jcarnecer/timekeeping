@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.5.1/fullcalendar.min.js"></script>
 		<script>
 		$( function() {
-			$("#user-start-date,#add_start_date,#add_end_date,#start_date,#end_date,#intern_date").datepicker({
+			$("#user-start-date,#add_start_date,#add_end_date,#start_date,#end_date,#intern_date,#add_bday").datepicker({
 				dateFormat: 'yy-mm-dd'
 			});
 			

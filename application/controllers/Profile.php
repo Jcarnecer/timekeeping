@@ -50,20 +50,19 @@ class Profile extends MY_Controller {
 		$position_where = ['id' =>  $this->user->info('position_id')];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
         
-        $intern_where = ['user_id' => $user];
-        $intern_info = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
-		
+        // $intern_where = ['user_id' => $user];
+        // $intern_info = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
 		$employee_where = ['user_id'	=> $user];
-		$employee_info = $this->Crud_model->fetch_tag_row('*','employee',$employee_where);
+		$user_details = $this->Crud_model->fetch_tag_row('*','user_details',$employee_where);
 
         if($position->name == 'Intern') {
             $info = [
 				'position'	=> $position->name,
-                'no_of_hrs' => $intern_info->no_of_hrs, 
-				'school'	=> $intern_info->school,
-				'course'	=> $intern_info->course,
-				'year'		=> $intern_info->year,
-				'remaining'	=> $intern_info->remaining,
+                'no_of_hrs' => $user_details->no_of_hrs, 
+				'school'	=> $user_details->school,
+				'course'	=> $user_details->course,
+				'year'		=> $user_details->year,
+				'remaining'	=> $user_details->remaining,
                 'firstname' => $this->user->info('firstname'),
                 'lastname'  => $this->user->info('lastname'),
                 'email' => $this->user->info('email'),
@@ -72,9 +71,9 @@ class Profile extends MY_Controller {
         }else{
             $info = [
 				'position'	=> $position->name,
-				'sss_no'	=> $employee_info->sss_no,
-				'tin_no'	=> $employee_info->tin_no,
-				'ph_health'	=> $employee_info->phil_health,
+				'sss_no'	=> $user_details->sss_no,
+				'tin_no'	=> $user_details->tin_no,
+				'ph_health'	=> $user_details->phil_health,
                 'firstname' => $this->user->info('firstname'),
                 'lastname'  => $this->user->info('lastname'),
                 'email' => $this->user->info('email'),
@@ -151,8 +150,8 @@ class Profile extends MY_Controller {
 			$update = [
 				'profile_picture' => $this->upload->data('file_name'),
 			];
-			$where = array('id' => $this->user->info('id'));
-            $this->Crud_model->update('users',$update,$where);
+			$where = array('user_id' => $this->user->info('id'));
+            $this->Crud_model->update('user_details',$update,$where);
             //position
 			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];

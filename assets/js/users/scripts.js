@@ -255,6 +255,7 @@ $(document).ready(function() {
             success:function(data) {
                 var result = JSON.parse(data);
                 if(result === 'success') {
+					$("#intern-edit-information").modal('hide');
                     $(".text-danger").html("");
                     bs_notify("<strong>Successfully Updated Your Information</strong>","success","top","right");
                     fetch_details();
@@ -281,6 +282,7 @@ $(document).ready(function() {
             success:function(data) {
                 var result = JSON.parse(data);
                 if(result === 'success') {
+					$("#intern-edit-other-information").modal('hide');
                     $(".text-danger").html("");
                     bs_notify("<strong>Successfully Updated Your Information</strong>","success","top","right");
                     fetch_details();
