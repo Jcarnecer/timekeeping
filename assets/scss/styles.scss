@@ -21,6 +21,10 @@ body {
     margin-top: 70px;
 }
 
+// .label-heading {
+//     font-weight: bold;   
+// }
+
 .btn {
     border: none;
 }
@@ -35,6 +39,13 @@ body {
     }
 }
 
+.intern-attendance-button {
+    @extend .custom-button;
+    @extend .edit-button;
+    font-size: 1.5em;
+    margin: 0 auto;
+}
+
 .edit-button {
     display: block;
     margin-top: 10px;
@@ -44,8 +55,18 @@ body {
 .navbar-custom {
     background-color: $white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.15);
+    color: $primary-color;
     justify-content: left;
     margin-bottom: 20px;
+
+    a {
+        color: $dark-gray;
+
+        &:hover {
+            color: $secondary-color;
+            text-decoration: none;
+        }
+    }
 }
 
 #sidebar {
@@ -116,6 +137,9 @@ body {
 .main-content {
     margin-left: 210px;
     overflow: hidden;
+    transition: .5s;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
 }
 
 .animation { 
@@ -246,9 +270,14 @@ body {
                 &:focus {
                     outline: none;
                 }
+
+                &:active {
+                    background: none;
+                    box-shadow: none;
+                }
             }
 
-            &#timesheet-table_next, &#timesheet-table_previous {
+            &.next, &.previous {
                 &:hover {
                     background: none;
                     border: 1px solid transparent;
@@ -256,7 +285,17 @@ body {
                     cursor: pointer;
                     // font-weight: bold;
                 }
-            }      
+            }
+
+            // &#timesheet-table_next, &#timesheet-table_previous {
+            //     &:hover {
+            //         background: none;
+            //         border: 1px solid transparent;
+            //         color: $secondary-color !important;
+            //         cursor: pointer;
+            //         // font-weight: bold;
+            //     }
+            // }      
         }
     }
 }
@@ -363,5 +402,51 @@ body {
         td {
             border-top: 0;
         }
+    }
+}
+
+.dropdown-item {
+    &:hover, &:active {
+        background-color: $secondary-color;
+        color: $white !important;
+        cursor: pointer;
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #sidebar {
+        height: 100%;
+        margin-left: -210px;
+        position: fixed;
+        // top: 55px;
+        z-index: 99;
+
+        // .sidebar-menu {
+        //     padding-top: 0;
+        // }
+    }
+
+    .main-content {
+        margin-left: 0;
+        position: relative;
+    }
+
+    .navbar-custom {
+        z-index: 99;
+    }
+
+    .hidden-toggle {
+        display: block;
+    }
+
+    #nav-icon-close {
+        display: none;
+    }
+
+    .form-horizontal {
+        .control-label {
+            text-align: left;
+        }    
     }
 }

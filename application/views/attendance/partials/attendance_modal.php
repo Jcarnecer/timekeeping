@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-            <h4 class="text-center" id="exist-attendance"></h4>
+            <h4 id="exist-attendance"></h4>
         </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

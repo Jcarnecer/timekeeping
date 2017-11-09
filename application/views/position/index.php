@@ -3,7 +3,6 @@
         Add Position
     </button>
     <hr>
-        <br><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">
                 <thead>

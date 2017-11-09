@@ -18,19 +18,23 @@ $pos = $this->Crud_model->fetch('position'); ?>
               <label for="">First Name</label>
               <input type="text" name="fname" class="form-control">
               <h5 class="text-danger fname-error" ></h5>
-
+          </div>
+          <div class="form-group">
               <label for="">Middle Name</label>
               <input type="text" name="mname" class="form-control"> 
               <h5 class="text-danger mname-error" ></h5>
-
+          </div>
+          <div class="form-group">
               <label for="">Last Name</label>
               <input type="text" name="lname" class="form-control">
               <h5 class="text-danger lname-error" ></h5>
-              
+          </div>
+          <div class="form-group">   
               <label for="">Email Address</label>
               <input type="text" name="emailadd" class="form-control"> 
               <h5 class="text-danger email-error" ></h5>
-
+          </div>
+          <div class="form-group">
               <label for="">Position</label>
               <select name="pos" id="position" class="form-control">
 								<option value="" disabled selected>-- Select Position --</option>
@@ -39,14 +43,17 @@ $pos = $this->Crud_model->fetch('position'); ?>
                   <?php endforeach;   ?>
               </select>
               <h5 class="text-danger pos-error"></h5>
-
+          </div>
+          <div class="form-group">
               <label for="">Start Date</label>
               <input type="text" name="start_date" class="form-control" id="user-start-date" placeholder="yyyy-mm-dd">
               <h5 class="text-danger sd-error"></h5>
-
+          </div>
+          <div class="form-group">
 							<label for="">Birthday </label>
               <input type="text" name="bday" id="add_bday" class="form-control">
-
+          </div>
+          <div class="form-group">
               <label for="">Shift</label>
               <select name="shift" id="shift" class="form-control">
                   <?php foreach($shift as $row): ?>
@@ -54,27 +61,45 @@ $pos = $this->Crud_model->fetch('position'); ?>
                   <?php endforeach;   ?>
               </select>
           </div>
+          
 
-          <div class="form-group" id="intern-other-info" style="display:none">
-            <label for="">Number of Hours</label>
-            <input type="text" name="num_hrs" class="form-control">
-						<label for="">School</label>
-						<input type="text" name="school" class="form-control">
-						<label for="">Course</label>
-						<input type="text" name="course" class="form-control">
-						<label for="">School Year</label>
-						<input type="text" name="sy" class="form-control">
+          <div id="intern-other-info" style="display:none">
+            <div class="form-group">
+              <label for="">Number of Hours</label>
+              <input type="text" name="num_hrs" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">School</label>
+              <input type="text" name="school" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Course</label>
+              <input type="text" name="course" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">School Year</label>
+              <input type="text" name="sy" class="form-control">
+            </div>
           </div>
 
-					<div class="form-group" id="emp-other-info" style="display:none">
-            <label for="">SSS</label>
-            <input type="text" name="sss" class="form-control">
-						<label for="">TIN</label>
-						<input type="text" name="tin" class="form-control">
-						<label for="">Phil Health</label>
-						<input type="text" name="phil_health" class="form-control">
+					<div id="emp-other-info" style="display:none">
+            <div class="form-group">
+              <label for="">SSS</label>
+              <input type="text" name="sss" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">TIN</label>
+              <input type="text" name="tin" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Phil Health</label>
+              <input type="text" name="phil_health" class="form-control">
+            </div>
           </div>
-          <button type="submit" class="btn custom-button float-right">Save</button>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn custom-button" id="btn-save" data-id="" data-function="">Save</button>
         </form>
       </div>
     </div>

@@ -35,12 +35,11 @@
             <input type="text" name="date_start" id="start-date" class="form-control">
             <div class="text-danger" id="date_start_err"></div>
             </div>
-            <div class="form-group">
-            <hr>
-            <button type="Submit" class="btn custom-button float-right">Apply Changes</button>
-            </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="Submit" class="btn custom-button float-right">Apply Changes</button>
         </form>
-
       </div>
     </div>
   </div>

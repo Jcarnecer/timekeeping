@@ -35,8 +35,8 @@
                                    </div>
                                </div>
                            </div>
-                           <div class="form-action pull-right">
-                               <button type="submit" class="btn btn-success ">Submit</button>
+                           <div class="form-action float-right">
+                               <button type="submit" class="btn custom-button ">Submit</button>
                            </div>
                        </form>
                 </div>

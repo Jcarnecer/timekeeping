@@ -36,9 +36,10 @@
                                     <div class="text-danger" id="email_err"></div>
                                   </div>
                                   <div class="form-group">
-                                  <hr>
-                                    <button type="Submit" class="btn btn-info"><i class="fa fa-save m-r-10"></i>Submit</button>
-                                  </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn custom-button" id="btn-save" data-id="" data-function="">Save</button>
                                 </form>
                             </div>
                         </div>

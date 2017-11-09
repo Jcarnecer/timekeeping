@@ -17,14 +17,18 @@ body {
 .btn {
   border: none; }
 
-.custom-button {
-  background-color: #25CBF2;
+.custom-button, .intern-attendance-button {
+  background-color: #38b5ff;
   border: none;
   color: #ffffff; }
-  .custom-button:hover {
-    background-color: #15BBE8; }
+  .custom-button:hover, .intern-attendance-button:hover {
+    background-color: #3679b2; }
 
-.edit-button {
+.intern-attendance-button {
+  font-size: 1.5em;
+  margin: 0 auto; }
+
+.edit-button, .intern-attendance-button {
   display: block;
   margin-top: 10px;
   margin-bottom: 20px; }
@@ -32,14 +36,20 @@ body {
 .navbar-custom {
   background-color: #ffffff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.15);
+  color: #38b5ff;
   justify-content: left;
   margin-bottom: 20px; }
+  .navbar-custom a {
+    color: #626262; }
+    .navbar-custom a:hover {
+      color: #3679b2;
+      text-decoration: none; }
 
 #sidebar {
   width: 210px;
   height: 100%;
   position: fixed;
-  background: #25CBF2;
+  background: #38b5ff;
   overflow-y: scroll;
   transition: .5s;
   -webkit-transition: .5s;
@@ -57,8 +67,8 @@ body {
     padding: 15px 30px 15px 30px;
     white-space: nowrap; }
     #sidebar a:hover {
-      background-color: #15BBE8;
-      border-left: 5px solid #007A9B;
+      background-color: #3679b2;
+      border-left: 5px solid #273d6a;
       text-decoration: none; }
     #sidebar a span {
       display: inline-grid;
@@ -78,7 +88,10 @@ body {
 
 .main-content, .reverse-animation {
   margin-left: 210px;
-  overflow: hidden; }
+  overflow: hidden;
+  transition: .5s;
+  -webkit-transition: .5s;
+  -moz-transition: .5s; }
 
 .animation {
   animation: expand .5s;
@@ -113,7 +126,7 @@ body {
   width: 30px; }
 
 .custom-toggle span {
-  background: #007A9B;
+  background: #273d6a;
   border-radius: 9px;
   display: block;
   height: 3px;
@@ -167,21 +180,24 @@ body {
   .dataTables_wrapper .dataTables_paginate a.paginate_button.current {
     border-radius: 50%; }
   .dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
-    background: #15BBE8;
-    background-color: #15BBE8;
-    border: 1px solid #15BBE8;
+    background: #3679b2;
+    background-color: #3679b2;
+    border: 1px solid #3679b2;
     border-radius: 50%;
     color: #ffffff !important; }
   .dataTables_wrapper .dataTables_paginate a.paginate_button:focus {
     outline: none; }
-  .dataTables_wrapper .dataTables_paginate a#timesheet-table_next:hover, .dataTables_wrapper .dataTables_paginate a#timesheet-table_previous:hover {
+  .dataTables_wrapper .dataTables_paginate a.paginate_button:active {
+    background: none;
+    box-shadow: none; }
+  .dataTables_wrapper .dataTables_paginate a.next:hover, .dataTables_wrapper .dataTables_paginate a.previous:hover {
     background: none;
     border: 1px solid transparent;
-    color: #15BBE8 !important;
+    color: #3679b2 !important;
     cursor: pointer; }
 
 .dropdown-item:hover, .dropdown-item:active {
-  background-color: #15BBE8;
+  background-color: #3679b2;
   color: #ffffff;
   width: auto; }
 
@@ -199,7 +215,7 @@ body {
   .form-container .form-timesheet {
     display: inline-flex;
     margin: 10px 0 10px 0; }
-    .form-container .form-timesheet .custom-button {
+    .form-container .form-timesheet .custom-button, .form-container .form-timesheet .intern-attendance-button {
       font-size: 1.5em;
       padding: 15px;
       text-align: left; }
@@ -221,11 +237,35 @@ body {
       width: 50%; }
 
 #calendar .ui-state-active, #calendar .ui-button:active {
-  background: #25CBF2;
-  border: 1px solid #15BBE8;
+  background: #38b5ff;
+  border: 1px solid #3679b2;
   color: #ffffff; }
   #calendar .ui-state-active:hover, #calendar .ui-button:hover:active {
-    background: #15BBE8; }
+    background: #3679b2; }
 
 #overtime-details-modal table td {
   border-top: 0; }
+
+.dropdown-item:hover, .dropdown-item:active {
+  background-color: #3679b2;
+  color: #ffffff !important;
+  cursor: pointer;
+  width: auto; }
+
+@media only screen and (max-width: 768px) {
+  #sidebar {
+    height: 100%;
+    margin-left: -210px;
+    position: fixed;
+    z-index: 99; }
+  .main-content, .reverse-animation {
+    margin-left: 0;
+    position: relative; }
+  .navbar-custom {
+    z-index: 99; }
+  .hidden-toggle {
+    display: block; }
+  #nav-icon-close {
+    display: none; }
+  .form-horizontal .control-label {
+    text-align: left; } }
