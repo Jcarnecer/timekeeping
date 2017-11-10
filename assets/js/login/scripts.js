@@ -7,6 +7,7 @@ $(document).ready(function(){
             success: function(data)
             {
                 var result = JSON.parse(data);
+                console.log(result);
                 if(result === "success"){
                     $("#alert-login").html("");
                     window.location.href=base_url+"dashboard";
