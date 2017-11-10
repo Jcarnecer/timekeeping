@@ -44,14 +44,12 @@
                 <label>Start Date</label>
                 <input type="text" name="start_date" id="start-date" class="form-control">
                 <div class="text-danger" id="start_date_err"></div>
-            </div>
-            <div class="form-group">
-            <hr>
-                <button type="Submit" class="btn custom-button float-right">Apply Changes</button>
-            <!-- <button type="Submit" class="btn btn-info"><i class="fa fa-save m-r-10"></i>Submit</button> -->
-            </div>
+            </div>        
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="Submit" class="btn custom-button float-right">Apply Changes</button>
         </form>
-        
       </div>
     </div>
   </div>

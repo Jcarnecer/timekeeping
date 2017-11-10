@@ -116,7 +116,7 @@ class Position extends MY_Controller {
                 <td><?= $privileges ?></td>
                 <td>
                 <div class="dropdown show">
-						<button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn custom-button dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Action
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

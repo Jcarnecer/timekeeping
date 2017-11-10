@@ -414,7 +414,7 @@ class Attendance extends MY_Controller {
               } ?>
         </td>
         <td>
-          <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn custom-button dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Actions
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

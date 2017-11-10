@@ -45,13 +45,14 @@
             </select>
             </div>
             <div class="form-group">
-            <hr>
                 <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                <button type="Submit" class="btn custom-button float-right">Apply Changes</button>
             <!-- <button type="Submit" class="btn btn-info"><i class="fa fa-save m-r-10"></i>Submit</button> -->
             </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="Submit" class="btn custom-button float-right">Apply Changes</button>
         </form>
-        
       </div>
     </div>
   </div>

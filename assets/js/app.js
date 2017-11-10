@@ -1,6 +1,3 @@
-// console.log("Hello");
-// $('.collapse').collapse()
-
 $(function () {
     $('.btn-danger').popover({
       container: 'body'

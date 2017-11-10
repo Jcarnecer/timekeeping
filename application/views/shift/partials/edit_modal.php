@@ -29,13 +29,11 @@
             </div> 
         <br>
         <input type="hidden" id="id" name="id">
-
-        <div class="modal-footer">
+      </div>
+      <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn custom-button">Save</button>
           </form>
         </div>
-
-    </div>
   </div>
 </div>

@@ -21,28 +21,20 @@
             <div class="modal-body">
                 <?php echo form_open(site_url("calendar/add_event"), array("class" => "form-horizontal")) ?>
                 <div class="form-group">
-                    <label for="p-in" class="col-md-4 label-heading">Event Name</label>
-                    <div class="col-md-8 ui-front">
-                        <input type="text" class="form-control" name="name" value="">
-                    </div>
+                    <label for="p-in" class="label-heading">Event Name</label>
+                    <input type="text" class="form-control" name="name" value="">
                 </div>
                 <div class="form-group">
-                    <label for="p-in" class="col-md-4 label-heading">Description</label>
-                    <div class="col-md-8 ui-front">
-                        <input type="text" class="form-control" name="description">
-                    </div>
+                    <label for="p-in" class="label-heading">Description</label>
+                    <input type="text" class="form-control" name="description">
                 </div>
                 <div class="form-group">
-                    <label for="p-in" class="col-md-4 label-heading">Start Date</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="add_start_date" name="start_date">
-                    </div>
+                    <label for="p-in" class="label-heading">Start Date</label>
+                    <input type="text" class="form-control" id="add_start_date" name="start_date">
                 </div>
                 <div class="form-group">
-                    <label for="p-in" class="col-md-4 label-heading">End Date</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="add_end_date" name="end_date">
-                    </div>
+                    <label for="p-in" class="label-heading">End Date</label>
+                    <input type="text" class="form-control" id="add_end_date" name="end_date">
                 </div>
             </div>
 
