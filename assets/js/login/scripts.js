@@ -10,7 +10,7 @@ $(document).ready(function(){
                 console.log(result);
                 if(result === "success"){
                     $("#alert-login").html("");
-                    window.location.href=base_url+"dashboard";
+                    window.location.href="dashboard";
                 }
                 else{
                     error_message("#alert-login",result)
