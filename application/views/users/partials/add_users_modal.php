@@ -99,7 +99,7 @@ $pos = $this->Crud_model->fetch('position'); ?>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn custom-button" id="btn-save" data-id="" data-function="">Save</button>
+          <button type="submit" class="btn custom-button" id="btn-save" data-id="" data-function="">Save</button>
         </form>
       </div>
     </div>
