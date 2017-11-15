@@ -26,7 +26,7 @@ class Users extends MY_Controller
 			echo json_encode($error);
 
 		}else{
-			$generate_password 	= 	"timekeeping";
+			$generate_password 	= 	"password";
 			
 			// generates "_10alnumstring_"
 			$generate_key		=	'_'.random_string('alnum',15).'_'; 
@@ -34,7 +34,7 @@ class Users extends MY_Controller
 				'firstname'    		=>    clean_data(ucwords($this->input->post('fname'))),
 				'lastname'    		=>    clean_data(ucwords($this->input->post('lname'))),
 				'middlename'    	=>    clean_data(ucwords($this->input->post('mname'))),
-				'position_id'   	=>    clean_data($this->input->post('pos')),
+				'pos_id'   	=>    clean_data($this->input->post('pos')),
 				'email'				=>    clean_data($this->input->post('emailadd')),
 				'password'			=>    hash_password($generate_password),
 			];
@@ -60,7 +60,7 @@ class Users extends MY_Controller
 			$this->Crud_model->insert('user_details',$insert_user_details);
 
 
-			$position_id = $this->user->info('position_id');
+			$position_id = $this->user->info('pos_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -116,17 +116,17 @@ class Users extends MY_Controller
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		if($this->user->info('position_id') == 1){
+		if($this->user->info('pos_id') == 1){
 			$where = NULL;
 		}else{
-			$where = ['position_id >' => '1']; //not include admin
+			$where = ['pos_id >' => '1']; //not include admin
 		}
 		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
 		if(!$users == NULL){
 			foreach($users as $row): 
 			$user_id = $row->id;
-			$pos_id = $row->position_id;
+			$pos_id = $row->pos_id;
 			$where = ['id' => $pos_id];
 			$user_details_where = ['id' => $user_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$where);
@@ -230,10 +230,10 @@ class Users extends MY_Controller
 
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$user_tag = 'id,firstname,lastname,middlename,email,position_id,profile_picture';
+		$user_tag = 'id,firstname,lastname,middlename,email,pos_id,profile_picture';
 
 		$user_row = $this->Crud_model->fetch_tag_row($user_tag,'users',$where);
-		$pos_id = $user_row->position_id;
+		$pos_id = $user_row->pos_id;
 		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
@@ -243,7 +243,7 @@ class Users extends MY_Controller
 		$user = $this->Crud_model->join_tag_row($tag,'users',$where,'user_details','users.id = user_details.user_id','inner'); //join
 		
 		$shift_where = ['id'	=> $user->shift_id];
-		$shift = $this->Crud_model->fetch_tag_row('*','shift',$shift_where);
+		$shift = $this->Crud_model->fetch_tag_row('*','timekeeping_shift',$shift_where);
 		
 		parent::mainpage('users/details',
 			[
@@ -258,12 +258,12 @@ class Users extends MY_Controller
 	public function get_details($id) {
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$user_tag = 'id,firstname,lastname,middlename,email,position_id,profile_picture';
+		$user_tag = 'id,firstname,lastname,middlename,email,pos_id,profile_picture';
 
 		//get position
 		$user_row = $this->Crud_model->fetch_tag_row($user_tag,'users',$where);
 		
-		$pos_id = $user_row->position_id;
+		$pos_id = $user_row->pos_id;
 		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
@@ -278,7 +278,7 @@ class Users extends MY_Controller
 			$tag = 'users.*,user_details.*';
 			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'user_details','users.id = user_details.user_id','inner'); //join
 		// }
-		echo json_encode($user);
+		echo json_encode($id);
 	}
 	
 	public function change_intern_picture() {

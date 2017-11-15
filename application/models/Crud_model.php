@@ -109,7 +109,7 @@ class Crud_model extends CI_Model{
 	}
 
 	public function test($user_id){
-		$sql = "select * from record where user_id = $user_id and status = 'Sick Leave' OR status = 'Vacation Leave'";
+		$sql = "select * from timekeeping_record where user_id = $user_id and status = 'Sick Leave' OR status = 'Vacation Leave'";
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -138,7 +138,7 @@ class Crud_model extends CI_Model{
 		$this->db->from('users');
 		$this->db->order_by('time_in','desc');
 		$this->db->where('users.id',$id);
-		$this->db->join('record', 'users.id = record.id', 'inner');
+		$this->db->join('timekeeping_record', 'users.id = timekeeping_record.id', 'inner');
 		$query = $this->db->get();
 		return $query->row();
 
@@ -161,9 +161,9 @@ class Crud_model extends CI_Model{
 	}
 
 	public function join_user_overtime(){
-		$this->db->select('users.*,record_overtime.*,users.id AS uid, record_overtime.id as rid');
+		$this->db->select('users.*,timekeeping_record_overtime.*,users.id AS uid, timekeeping_record_overtime.id as rid');
 		$this->db->from('users');
-		$this->db->join('record_overtime', 'users.id = record_overtime.user_id');
+		$this->db->join('timekeeping_record_overtime', 'users.id = timekeeping_record_overtime.user_id');
 		$query = $this->db->get();
 		return $query->result();
 	}

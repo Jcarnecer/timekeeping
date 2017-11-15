@@ -7,7 +7,7 @@ class Attendance extends MY_Controller {
         parent::mainpage('attendance/index',
             [
                 'title' => 'Timesheet',
-                'record'	=> $this->Crud_model->fetch('record'),
+                'record'	=> $this->Crud_model->fetch('timekeeping_record'),
             ]
         );
 	}
@@ -66,13 +66,13 @@ class Attendance extends MY_Controller {
             ];
             $user_id = $this->user->info('id');
             $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
-            $check_date = $this->Crud_model->fetch('record',$where);
+            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
             if($check_date == TRUE){
                 echo json_encode("You already have attendance today");
             }else{
-                $recent = $this->Crud_model->insert('record',$insert);
+                $recent = $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
+                $position_id = $this->user->info('pos_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -97,13 +97,13 @@ class Attendance extends MY_Controller {
             ];
             $user_id = $this->user->info('id');
             $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
-            $check_date = $this->Crud_model->fetch('record',$where);
+            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
             if($check_date == TRUE){
                 echo json_encode("You already have attendance today");
             }else{
-                $this->Crud_model->insert('record',$insert);
+                $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
+                $position_id = $this->user->info('pos_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -128,13 +128,13 @@ class Attendance extends MY_Controller {
             ];
             $user_id = $this->user->info('id');
             $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
-            $check_date = $this->Crud_model->fetch('record',$where);
+            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
             if($check_date == TRUE){
                 echo json_encode("You already have attendance today");
             }else{
-                $this->Crud_model->insert('record',$insert);
+                $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
+                $position_id = $this->user->info('pos_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -159,13 +159,13 @@ class Attendance extends MY_Controller {
             ];
             $user_id = $this->user->info('id');
             $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
-            $check_date = $this->Crud_model->fetch('record',$where);
+            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
             if($check_date == TRUE){
                 echo json_encode("You already have attendance today");
             }else{
-                $this->Crud_model->insert('record',$insert);
+                $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
+                $position_id = $this->user->info('pos_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -190,13 +190,13 @@ class Attendance extends MY_Controller {
             ];
             $user_id = $this->user->info('id');
             $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
-            $check_date = $this->Crud_model->fetch('record',$where);
+            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
             if($check_date == TRUE){
                 echo json_encode("You already have attendance today");
             }else{
-                $this->Crud_model->insert('record',$insert);
+                $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
+                $position_id = $this->user->info('pos_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -219,7 +219,7 @@ class Attendance extends MY_Controller {
             
             $user_id = $this->user->info('id');
             $where = ['user_id' => $user_id , 'date' => $date];
-            $check_date = $this->Crud_model->fetch('record',$where);
+            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
             if($check_date == TRUE){
                 echo json_encode("You already have attendance that day");
             }else{
@@ -231,7 +231,7 @@ class Attendance extends MY_Controller {
                     'status' => "Intern Attendance",
                     'intern_no_hrs' => $no_of_hrs
                 ];
-                $this->Crud_model->insert('record',$insert);
+                $this->Crud_model->insert('timekeeping_record',$insert);
                 $intern_where = ['user_id' => $user_id];
                 $get_intern = $this->Crud_model->fetch_tag_row('*','user_details',$intern_where);
                 $remaining_update = [
@@ -249,7 +249,7 @@ class Attendance extends MY_Controller {
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
         $where_in = ['name' => 'status', 'values' => ['4 hours', '8 hours', 'Work From Home']];
-        $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by, $where_in); ?>
+        $timesheet = $this->Crud_model->fetch('timekeeping_record',$where,"","",$order_by, $where_in); ?>
         <table class="table table-bordered" id="timesheet-table">
           <thead>
               <tr>
@@ -284,7 +284,7 @@ class Attendance extends MY_Controller {
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
         // $where_in = ['name' => 'status', 'values' => ['4 hours', '8 hours', 'Work From Home']];
-        $timesheet = $this->Crud_model->fetch('record',$where,"","",$order_by); ?>
+        $timesheet = $this->Crud_model->fetch('timekeeping_record',$where,"","",$order_by); ?>
         <table class="table table-bordered" id="intern-timesheet-table">
           <thead>
               <tr>
@@ -315,7 +315,7 @@ class Attendance extends MY_Controller {
 
     public function get_employee_attendance() {
         $order_by = "lastname desc";
-        $timesheet = $this->Crud_model->join_tag_result('users.*,record.*,record.id AS rid,users.id AS uid','users','','record','users.id = record.user_id ',"inner",$order_by);
+        $timesheet = $this->Crud_model->join_tag_result('users.*,timekeeping_record.*,timekeeping_record.id AS rid,users.id AS uid','users','','timekeeping_record','users.id = timekeeping_record.user_id ',"inner",$order_by);
         // print_r($timesheet);die;
         if(!$timesheet == NULL){
             foreach ($timesheet as $row) :
@@ -337,7 +337,7 @@ class Attendance extends MY_Controller {
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
         $where_in = ['name' => 'status', 'values' => ['Sick Leave', 'Vacation Leave']];
-        $leave = $this->Crud_model->fetch('record',$where,"","","", $where_in); 
+        $leave = $this->Crud_model->fetch('timekeeping_record',$where,"","","", $where_in); 
         ?>
             <table class="table table-bordered" id="leave-table">
                 <thead>
@@ -380,9 +380,9 @@ class Attendance extends MY_Controller {
             'ot_hours' => clean_data($diff),
             'status' => 0,
         ];
-        $this->Crud_model->insert('record_overtime', $insert);
+        $this->Crud_model->insert('timekeeping_record_overtime', $insert);
         //position
-        $position_id = $this->user->info('position_id');
+        $position_id = $this->user->info('pos_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(
@@ -464,7 +464,7 @@ class Attendance extends MY_Controller {
     public function get_overtime_details($id){
       $decrypt_id = secret_url('decrypt',$id);
       $where = ['id' => $decrypt_id];
-      $overtime = $this->db->get_where('record_overtime',$where)->row();
+      $overtime = $this->db->get_where('timekeeping_record_overtime',$where)->row();
       print json_encode($overtime);
     }
 
@@ -472,7 +472,7 @@ class Attendance extends MY_Controller {
         $order_by = "id desc";
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
-        $overtime = $this->Crud_model->fetch('record_overtime',$where,"","",$order_by);  ?>
+        $overtime = $this->Crud_model->fetch('timekeeping_record_overtime',$where,"","",$order_by);  ?>
         <table class="table table-bordered" id="employee-overtime-table">
         <thead>
             <tr>
@@ -522,13 +522,13 @@ class Attendance extends MY_Controller {
         $approve = [
             'status'   => 1
         ];
-        $this->Crud_model->update('record_overtime',$approve,$where);
+        $this->Crud_model->update('timekeeping_record_overtime',$approve,$where);
         //user
-        $get_user_id = $this->Crud_model->fetch_tag_row('*','record_overtime',$where);
+        $get_user_id = $this->Crud_model->fetch_tag_row('*','timekeeping_record_overtime',$where);
         $user_where = ['id' => $get_user_id->user_id];
         $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
         //position
-        $position_id = $this->user->info('position_id');
+        $position_id = $this->user->info('pos_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(
@@ -547,13 +547,13 @@ class Attendance extends MY_Controller {
         $approve = [
             'status'   => 2
         ];
-        $this->Crud_model->update('record_overtime',$approve,$where);
+        $this->Crud_model->update('timekeeping_record_overtime',$approve,$where);
         //user
-        $get_user_id = $this->Crud_model->fetch_tag_row('*','record_overtime',$where);
+        $get_user_id = $this->Crud_model->fetch_tag_row('*','timekeeping_record_overtime',$where);
         $user_where = ['id' => $get_user_id->user_id];
         $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
         //position
-        $position_id = $this->user->info('position_id');
+        $position_id = $this->user->info('pos_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(

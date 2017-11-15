@@ -1,14 +1,14 @@
 <?php
-      $position = $this->user->info('position_id');
+      $position = $this->user->info('pos_id');
       $where = array('id' => $position);
       $users_position = $this->Crud_model->fetch_tag_row('*','position',$where);
       $privilege = $users_position->privileges;
-	  $menu = $this->Crud_model->fetch('menu');
+	  $menu = $this->Crud_model->fetch('timekeeping_menu');
 	  $explode = explode(',',$privilege);
 	  
 	//   $submenu = $this->Crud_model->fetch('sub_menu');
 	  $sub_privilege = $users_position->privilege_sub_menu;
-	  $submenu = $this->Crud_model->fetch('sub_menu');
+	  $submenu = $this->Crud_model->fetch('timekeeping_sub_menu');
 	  $sub_explode = explode(',',$sub_privilege);
 
 ?>
@@ -26,7 +26,7 @@
 			if(in_array($row->id,$explode)){
 				if($menu_withsub == 1){
 				$sub_where = ["menu_id" => $menu_id];
-				$w_submenu = $this->Crud_model->fetch('sub_menu', $sub_where); ?>
+				$w_submenu = $this->Crud_model->fetch('timekeeping_sub_menu', $sub_where); ?>
 				<li class="sub-menu">
 					<?php $name = $row->name ?>	
 					<a data-toggle="collapse" href="#<?= str_replace(' ','',$name) ?>" aria-expanded="false" aria-controls="UIElementsSub" >

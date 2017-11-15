@@ -8,7 +8,7 @@ class Position extends MY_Controller {
         parent::mainpage('position/index',
             [
                 'title' => 'Position',
-                'menu'  => $this->Crud_model->fetch('menu')
+                'menu'  => $this->Crud_model->fetch('timekeeping_menu')
             ]
         );
     }
@@ -35,7 +35,7 @@ class Position extends MY_Controller {
             ];
 
             //position
-			$position_id = $this->user->info('position_id');
+			$position_id = $this->user->info('pos_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -78,7 +78,7 @@ class Position extends MY_Controller {
             ];
 
             //position
-			$position_id = $this->user->info('position_id');
+			$position_id = $this->user->info('pos_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -104,7 +104,7 @@ class Position extends MY_Controller {
                 $y = 0;
                 while($y < count($privileges_array)){
                   $filter = array('id'=> $privileges_array[$y]);
-                  $menu = $this->Crud_model->fetch_tag_row('name','menu',$filter);
+                  $menu = $this->Crud_model->fetch_tag_row('name','timekeeping_menu',$filter);
                   array_push($privileges2_array,$menu->name);
                   $y++;
                 }

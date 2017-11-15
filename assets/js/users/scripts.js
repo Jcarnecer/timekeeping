@@ -15,7 +15,8 @@ function fetch_details() {
         url: base_url + "users/get_details/" + id,
         type: "POST",
         success: function(data) {
-			var result = JSON.parse(data);
+            var result = JSON.parse(data);
+        
 			//details
 			$("#d-name").html(result.lastname+', '+result.firstname);
 			$("#d-email").html(result.email);
@@ -109,7 +110,12 @@ $(document).ready(function(){
                     $(".pos-error").html(result.pos_error);
                     $(".sd-error").html(result.sd_error);
                 }
-            }
+            },
+            error: function(data)
+            {
+                alert('Opps! Something went wrong. please contact the administrator. ');
+            },
+        
         })
         e.preventDefault();
     })

@@ -1,4 +1,4 @@
-<?php $shifts = $this->Crud_model->fetch('shift'); ?>
+<?php $shifts = $this->Crud_model->fetch('timekeeping_shift'); ?>
 <!-- Modal -->
 <div id="employee-edit-information" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
   <div class="modal-dialog">

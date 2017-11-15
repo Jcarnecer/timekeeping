@@ -60,7 +60,7 @@ class MY_Controller	extends CI_Controller
             'position' => $position,
             'ip_address' => $ip
         );
-        $this->Crud_model->insert('logs',$dat);
+        $this->Crud_model->insert('timekeeping_logs',$dat);
     }
 
 }

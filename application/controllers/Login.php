@@ -37,11 +37,11 @@ class Login extends MY_Controller
                             'email'     => $get_user->email,
                             'firstname' => $get_user->firstname,
                             'lastname'  => $get_user->lastname,
-                            'position' => $get_user->position_id,
+                            'position' => $get_user->pos_id,
                             'profile_picture'   => $get_user->profile_picture,
                         ];
                         $sess = $this->session->set_userdata('user',$user_session);
-                        $position_id = $this->user->info('position_id');
+                        $position_id = $this->user->info('pos_id');
                         $pos_where = ['id'  => $position_id];
                         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                         parent::audittrail(
@@ -68,7 +68,7 @@ class Login extends MY_Controller
     }
 
     public function logout() {
-        $position_id = $this->user->info('position_id');
+        $position_id = $this->user->info('pos_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(

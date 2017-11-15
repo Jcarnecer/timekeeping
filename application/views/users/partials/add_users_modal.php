@@ -1,6 +1,6 @@
 <?php 
 // $where = ['id !=' => 1];
-$shift = $this->Crud_model->fetch('shift');
+$shift = $this->Crud_model->fetch('timekeeping_shift');
 $pos = $this->Crud_model->fetch('position'); ?>
 <!-- Modal -->
 <div class="modal fade" id="add-users-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >

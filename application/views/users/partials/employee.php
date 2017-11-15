@@ -4,7 +4,7 @@
   $user = $this->Crud_model->fetch_tag_row('*','users',$where);
 ?>
 
-<?php $shifts = $this->Crud_model->fetch('shift'); ?>
+<?php $shifts = $this->Crud_model->fetch('timekeeping_shift'); ?>
 <?php $this->load->view('users/partials/employee_picture') ?>
 <?php $this->load->view('users/partials/employee_edit_information') ?>
 <?php $this->load->view('users/partials/employee_edit_other_information') ?>
