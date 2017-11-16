@@ -58,7 +58,18 @@ class Users extends MY_Controller
 				'remaining'	=>  clean_data($this->input->post('num_hrs'))
 			];
 			$this->Crud_model->insert('user_details',$insert_user_details);
-
+		
+			$classification = $this->Crud_model->fetch('expense_classification');
+            foreach($classification as $row){
+                $classification = $row->classification;
+                $allowance = $row->allowance_per_user;
+                $classify_lowercase = strtolower($classification);
+                $data = [
+                    $classify_lowercase => $allowance
+                ];
+                $where = ['id' => $get_rowid->id];
+                $this->Crud_model->update('users',$data,$where);
+            }
 
 			$position_id = $this->user->info('pos_id');
 			$pos_where = ['id'  => $position_id];
