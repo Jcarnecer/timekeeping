@@ -1,6 +1,6 @@
 function fetch_users() {
     $.ajax({
-        url: base_url + "get/users",
+        url: "get/users",
         type: "POST",
         success: function(data) {
             $("#userdata").html(data);
@@ -12,7 +12,7 @@ function fetch_users() {
 function fetch_details() {
     var id = $("#detail_id").val();
     $.ajax({
-        url: base_url + "users/get_details/" + id,
+        url: "users/get_details/" + id,
         type: "POST",
         success: function(data) {
             var result = JSON.parse(data);
@@ -63,7 +63,7 @@ $(document).on('click','.reset-password',function(){
 $(document).ready(function() {
     $("#reset-password-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "reset/reset_user_password",
+            url: "reset/reset_user_password",
             type: "POST",
             data: $("#reset-password-form").serialize(),
             success: function(data) {
@@ -83,7 +83,7 @@ $(document).ready(function() {
 $(document).ready(function(){
     $("#add-user-form").on('submit',function(e){
         $.ajax({
-            url: base_url + 'add/user',
+            url: 'add/user',
             type: "POST",
             data: $("#add-user-form").serialize(),
             success: function(data){
@@ -133,7 +133,7 @@ $(document).on('click','.activate-user',function(){
 $(document).ready(function(){
     $("#user-activated-form").on('submit',function(e) {
         $.ajax({
-            url: base_url + 'activate/user',
+            url: 'activate/user',
             type: "POST",
             data: $("#user-activated-form").serialize(),
             success: function(data){
@@ -159,7 +159,7 @@ $(document).on('click','.deactivate-user',function(){
 $(document).ready(function(){
     $("#user-deactivated-form").on('submit',function(e) {
         $.ajax({
-            url: base_url + 'deactivate/user',
+            url: 'deactivate/user',
             type: "POST",
             data: $("#user-deactivated-form").serialize(),
             success: function(data){
@@ -175,7 +175,7 @@ $(document).ready(function(){
 
 function fetch_user_info() {
     $.ajax({
-        url: base_url + "profile/get_user",
+        url: "profile/get_user",
         type: "POST",
         success: function(data) {
             var result = JSON.parse(data);
@@ -192,7 +192,7 @@ $(document).ready(function(){
     $("#intern-picture-form").on('submit',function(e){
         var form = new FormData(document.getElementById("intern-picture-form"));
         $.ajax({
-            url: base_url + 'users/change_intern_picture',
+            url: 'users/change_intern_picture',
             data: form,
             type: "POST",
             processData: false, // tell jQuery not to process the data
@@ -224,7 +224,7 @@ $(document).ready(function(){
     $("#employee-picture-form").on('submit',function(e){
         var form = new FormData(document.getElementById("employee-picture-form"));
         $.ajax({
-            url: base_url + 'users/change_intern_picture',
+            url: 'users/change_intern_picture',
             data: form,
             type: "POST",
             processData: false, // tell jQuery not to process the data
@@ -255,7 +255,7 @@ $(document).ready(function(){
 $(document).ready(function() {
     $("#intern-info-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "users/update_intern_info",
+            url:"users/update_intern_info",
             type: "POST",
             data: $("#intern-info-form").serialize(),
             success:function(data) {
@@ -282,7 +282,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#intern-other-info-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "users/update_intern_other_info",
+            url:  "users/update_intern_other_info",
             type: "POST",
             data: $("#intern-other-info-form").serialize(),
             success:function(data) {
@@ -312,7 +312,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#employee-info-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "users/update_employee_info",
+            url:"users/update_employee_info",
             type: "POST",
             data: $("#employee-info-form").serialize(),
             success:function(data) {
@@ -339,7 +339,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#employee-other-info-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "users/update_employee_other_info",
+            url: "users/update_employee_other_info",
             type: "POST",
             data: $("#employee-other-info-form").serialize(),
             success:function(data) {
