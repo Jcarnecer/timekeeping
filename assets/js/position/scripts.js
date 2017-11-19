@@ -52,7 +52,7 @@ $(document).on('click','.edit-pos-modal',function() {
 $(document).ready(function() {
     $("#update-position-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "edit/position",
+            url: "edit/position",
             type: "POST",
             data: $("#update-position-form").serialize(),
             success:function(data) {
