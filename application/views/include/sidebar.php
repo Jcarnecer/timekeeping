@@ -1,5 +1,5 @@
 <?php
-      $position = $this->user->info('pos_id');
+      $position = $this->user->info('position_id');
       $where = array('id' => $position);
       $users_position = $this->Crud_model->fetch_tag_row('*','position',$where);
       $privilege = $users_position->privileges;

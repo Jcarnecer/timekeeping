@@ -30,7 +30,7 @@ class Profile extends MY_Controller {
 			$where = array('id' => $this->user->info('id'));
 			$this->Crud_model->update('users',$profile,$where);
             //position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -47,7 +47,7 @@ class Profile extends MY_Controller {
     public function get_user() {
         $user = $this->user->info('id');
         
-		$position_where = ['id' =>  $this->user->info('pos_id')];
+		$position_where = ['id' =>  $this->user->info('position_id')];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
         
         // $intern_where = ['user_id' => $user];
@@ -104,7 +104,7 @@ class Profile extends MY_Controller {
             $where = array('id' => $this->user->info('id'));
             $this->Crud_model->update('users',$newpass,$where);
             //position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -153,7 +153,7 @@ class Profile extends MY_Controller {
 			$where = array('user_id' => $this->user->info('id'));
             $this->Crud_model->update('user_details',$update,$where);
             //position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(

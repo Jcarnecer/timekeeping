@@ -72,7 +72,7 @@ class Attendance extends MY_Controller {
             }else{
                 $recent = $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('pos_id');
+                $position_id = $this->user->info('position_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -103,7 +103,7 @@ class Attendance extends MY_Controller {
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('pos_id');
+                $position_id = $this->user->info('position_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -134,7 +134,7 @@ class Attendance extends MY_Controller {
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('pos_id');
+                $position_id = $this->user->info('position_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -165,7 +165,7 @@ class Attendance extends MY_Controller {
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('pos_id');
+                $position_id = $this->user->info('position_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -196,7 +196,7 @@ class Attendance extends MY_Controller {
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('pos_id');
+                $position_id = $this->user->info('position_id');
                 $pos_where = ['id'  => $position_id];
                 $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
                 parent::audittrail(
@@ -382,7 +382,7 @@ class Attendance extends MY_Controller {
         ];
         $this->Crud_model->insert('timekeeping_record_overtime', $insert);
         //position
-        $position_id = $this->user->info('pos_id');
+        $position_id = $this->user->info('position_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(
@@ -528,7 +528,7 @@ class Attendance extends MY_Controller {
         $user_where = ['id' => $get_user_id->user_id];
         $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
         //position
-        $position_id = $this->user->info('pos_id');
+        $position_id = $this->user->info('position_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(
@@ -553,7 +553,7 @@ class Attendance extends MY_Controller {
         $user_where = ['id' => $get_user_id->user_id];
         $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
         //position
-        $position_id = $this->user->info('pos_id');
+        $position_id = $this->user->info('position_id');
         $pos_where = ['id'  => $position_id];
         $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
         parent::audittrail(

@@ -71,7 +71,7 @@ class Users extends MY_Controller
                 $this->Crud_model->update('users',$data,$where);
             }
 
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -127,17 +127,17 @@ class Users extends MY_Controller
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		if($this->user->info('pos_id') == 1){
+		if($this->user->info('position_id') == 1){
 			$where = NULL;
 		}else{
-			$where = ['pos_id >' => '1']; //not include admin
+			$where = ['position_id >' => '1']; //not include admin
 		}
 		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
 		if(!$users == NULL){
 			foreach($users as $row): 
 			$user_id = $row->id;
-			$pos_id = $row->pos_id;
+			$pos_id = $row->position_id;
 			$where = ['id' => $pos_id];
 			$user_details_where = ['id' => $user_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$where);
@@ -192,7 +192,7 @@ class Users extends MY_Controller
 			'name'	=> $this->input->post('name')
 		];
 		//position
-		$position_id = $this->user->info('pos_id');
+		$position_id = $this->user->info('position_id');
 		$pos_where = ['id'  => $position_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 		parent::audittrail(
@@ -223,7 +223,7 @@ class Users extends MY_Controller
 		];
 
 		//position
-		$position_id = $this->user->info('pos_id');
+		$position_id = $this->user->info('position_id');
 		$pos_where = ['id'  => $position_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 		parent::audittrail(
@@ -241,10 +241,10 @@ class Users extends MY_Controller
 
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$user_tag = 'id,firstname,lastname,middlename,email,pos_id,profile_picture';
+		$user_tag = 'id,firstname,lastname,middlename,email,position_id,profile_picture';
 
 		$user_row = $this->Crud_model->fetch_tag_row($user_tag,'users',$where);
-		$pos_id = $user_row->pos_id;
+		$pos_id = $user_row->position_id;
 		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
@@ -269,12 +269,12 @@ class Users extends MY_Controller
 	public function get_details($id) {
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$user_tag = 'id,firstname,lastname,middlename,email,pos_id,profile_picture';
+		$user_tag = 'id,firstname,lastname,middlename,email,position_id,profile_picture';
 
 		//get position
 		$user_row = $this->Crud_model->fetch_tag_row($user_tag,'users',$where);
 		
-		$pos_id = $user_row->pos_id;
+		$pos_id = $user_row->position_id;
 		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
@@ -402,7 +402,7 @@ class Users extends MY_Controller
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$profile,$where);
 			//position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -448,7 +448,7 @@ class Users extends MY_Controller
 			$log_user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
 
 			//position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -488,7 +488,7 @@ class Users extends MY_Controller
 			$this->Crud_model->update('users',$profile,$where);
 			$this->Crud_model->update('user_details',$user_detail,$where);
 			//position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -517,7 +517,7 @@ class Users extends MY_Controller
 		$user_where = ['id'	=> $decrypt_id];
 		$log_user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
 		//position
-		$position_id = $this->user->info('pos_id');
+		$position_id = $this->user->info('position_id');
 		$pos_where = ['id'  => $position_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 		parent::audittrail(

@@ -1,5 +1,5 @@
 <?php
-$pos_id = $this->user->info('pos_id');
+$pos_id = $this->user->info('position_id');
 $where = ['id'	=> $pos_id];
 $position = $this->Crud_model->fetch_tag_row('*','position',$where);
 

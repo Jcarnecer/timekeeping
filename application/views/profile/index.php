@@ -15,7 +15,7 @@
           <!-- <a data-toggle="modal" href="#profile-picture-modal"><img height="200" id="prof_pic"></a>
           <hr> -->
           <!-- <a class="btn btn-info waves-effect" href="<?= base_url().'employee/request_shift/'.$this->session->id?>">Shift</a> -->
-          <?php if($this->user->info('pos_id') == 4){ ?>
+          <?php if($this->user->info('position_id') == 4){ ?>
             <h5>Remaining Hours</h5>
             <h5 id="hrs_remaining"></h5>
           <?php } ?>
@@ -32,7 +32,7 @@
         </div>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
           <h2>Other Information</h2>
-          <?php if($this->user->info('pos_id') == 4){ ?>
+          <?php if($this->user->info('position_id') == 4){ ?>
             <h5 >School: <span id="profile-school"></span></h5>
             <h5>Course: <span  id="profile-course"></span></h5>
             <h5>School Year: <span id="profile-year"></span></h5>

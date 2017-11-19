@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Shift extends MY_Controller {
 
 	public function index() {
-       $get_all_shift = $this->Crud_model->fetch('shift');
+       $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
         parent::mainpage('shift/index',
             [
                 'title' => 'Shift List',
@@ -63,7 +63,7 @@ class Shift extends MY_Controller {
             ];
 
             //position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(

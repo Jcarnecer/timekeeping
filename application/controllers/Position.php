@@ -35,7 +35,7 @@ class Position extends MY_Controller {
             ];
 
             //position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -78,7 +78,7 @@ class Position extends MY_Controller {
             ];
 
             //position
-			$position_id = $this->user->info('pos_id');
+			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
