@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 		<title><?= $title ?></title>
 		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/base_url.js"></script>
+		<!-- <script src="assets/js/base_url.js"></script> -->
 		<link rel="stylesheet" type="text/css" href="assets/css/flavored-reset-and-normalize.min.css" >
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" > -->
 		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css" >
