@@ -1,6 +1,6 @@
 function fetch_positions() {
     $.ajax({
-        url: base_url + "get/position",
+        url: "get/position",
         type: "POST",
         success: function(data) {
             $("#positiondata").html(data);
@@ -12,7 +12,7 @@ function fetch_positions() {
 $(document).ready(function() {
     $("#add-position-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "add/position",
+            url: "add/position",
             method: "POST",
             data: $(this).serialize(),
             success:function(data){
