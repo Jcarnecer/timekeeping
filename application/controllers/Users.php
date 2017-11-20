@@ -34,7 +34,7 @@ class Users extends MY_Controller
 				'firstname'    		=>    clean_data(ucwords($this->input->post('fname'))),
 				'lastname'    		=>    clean_data(ucwords($this->input->post('lname'))),
 				'middlename'    	=>    clean_data(ucwords($this->input->post('mname'))),
-				'pos_id'   	=>    clean_data($this->input->post('pos')),
+				'position_id'   	=>    clean_data($this->input->post('pos')),
 				'email'				=>    clean_data($this->input->post('emailadd')),
 				'password'			=>    hash_password($generate_password),
 			];
@@ -59,17 +59,6 @@ class Users extends MY_Controller
 			];
 			$this->Crud_model->insert('user_details',$insert_user_details);
 		
-			$classification = $this->Crud_model->fetch('expense_classification');
-            foreach($classification as $row){
-                $classification = $row->classification;
-                $allowance = $row->allowance_per_user;
-                $classify_lowercase = strtolower($classification);
-                $data = [
-                    $classify_lowercase => $allowance
-                ];
-                $where = ['id' => $get_rowid->id];
-                $this->Crud_model->update('users',$data,$where);
-            }
 
 			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
