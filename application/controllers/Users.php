@@ -116,7 +116,7 @@ class Users extends MY_Controller
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		if($this->user->info('position_id') == 1){
+		if($this->user->info('position_id') == '1'){
 			$where = NULL;
 		}else{
 			$where = ['position_id >' => '1']; //not include admin
