@@ -71,37 +71,37 @@ class Users extends MY_Controller
 				$this->input->ip_address()
 			);
 			
-			$config = array(
-				'smtp_timeout' => '4',
-				'charset' => 'utf-8',
-				'mailtype'=> 'html',
-			);
+			// $config = array(
+			// 	'smtp_timeout' => '4',
+			// 	'charset' => 'utf-8',
+			// 	'mailtype'=> 'html',
+			// );
 
-			$this->load->initialize($config);
+			// $this->load->initialize($config);
 
-			$from="jun.carnecer@astridtechnologies.com";
-			$to = $this->input->post('emailadd');
-			$subject = "Account Activation";
-			$data = [	
-						'id'	=> secret_url('encrypt',$get_rowid->id),
-						'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
-						'reg_key' => $insert_user_details['reg_key'],
-						'email'	=> $to,
-						'password'	=> $generate_password,
-						'verified_email'	=> $insert_user_details['verified_email'],
-					];
+			// $from="jun.carnecer@astridtechnologies.com";
+			// $to = $this->input->post('emailadd');
+			// $subject = "Account Activation";
+			// $data = [	
+			// 			'id'	=> secret_url('encrypt',$get_rowid->id),
+			// 			'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
+			// 			'reg_key' => $insert_user_details['reg_key'],
+			// 			'email'	=> $to,
+			// 			'password'	=> $generate_password,
+			// 			'verified_email'	=> $insert_user_details['verified_email'],
+			// 		];
 			
-			$message = $this->load->view('email/account_verify',$data,TRUE);
+			// $message = $this->load->view('email/account_verify',$data,TRUE);
 
-			$this->load->library('email');
-			$this->email->clear();
-			$this->email->from($from, 'Timekeeping');
-			$this->email->to($to);
-			$this->email->set_newline("\n");
-			$this->email->subject($subject);
-			$this->email->message($message);
-			$this->email->set_mailtype('html');
-			$this->email->send();
+			// $this->load->library('email');
+			// $this->email->clear();
+			// $this->email->from($from, 'Timekeeping');
+			// $this->email->to($to);
+			// $this->email->set_newline("\n");
+			// $this->email->subject($subject);
+			// $this->email->message($message);
+			// $this->email->set_mailtype('html');
+			// $this->email->send();
 			
 			$success = [
 				'success' => 1,
@@ -119,7 +119,7 @@ class Users extends MY_Controller
 		if($this->user->info('position_id') == 1){
 			$where = NULL;
 		}else{
-			$where = ['position_id >' => '1']; //not include admin
+			$where = ['position_id >' => 1]; //not include admin
 		}
 		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
