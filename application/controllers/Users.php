@@ -119,7 +119,7 @@ class Users extends MY_Controller
 		if($this->user->info('position_id') == 1){
 			$where = NULL;
 		}else{
-			$where = ['position_id >' => 1]; //not include admin
+			$where = ['position_id >' => '1']; //not include admin
 		}
 		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
