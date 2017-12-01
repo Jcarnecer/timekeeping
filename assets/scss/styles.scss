@@ -39,6 +39,20 @@ body {
     }
 }
 
+.btn-group {
+    .btn-custom {
+        border: 1px solid $button-gray;
+        color: inherit !important;
+
+        &:focus {
+            box-shadow: none;
+            outline: none !important;
+            border-color: #80bdff;
+        }
+        
+    }
+}
+
 .intern-attendance-button {
     @extend .custom-button;
     @extend .edit-button;
@@ -140,26 +154,6 @@ body {
     transition: .5s;
     -webkit-transition: .5s;
     -moz-transition: .5s;
-}
-
-.animation { 
-    animation: expand .5s;
-    margin-left: 0;
-}
-
-.reverse-animation { 
-    @extend .main-content;
-    animation: reverse-expand .5s;
-}
-
-@keyframes expand {
-    from {margin-left: 210px;}
-    to {margin-left: 0px;}
-}
-
-@keyframes reverse-expand {
-    from {margin-left: 0px;}
-    to {margin-left: 210px;}
 }
 
 #nav-icon-close {
