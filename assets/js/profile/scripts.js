@@ -1,6 +1,6 @@
 function fetch_profile() {
     $.ajax({
-        url: base_url + "profile/get_user",
+        url: "profile/get_user",
         type: "POST",
         success: function(data) {
             var result = JSON.parse(data);
@@ -28,7 +28,7 @@ function fetch_profile() {
 $(document).ready(function(){
     $("#change-profile-form").on('submit',function(e){
         $.ajax({
-            url: base_url + 'profile/changeinfo',
+            url: 'profile/changeinfo',
             data: $("#change-profile-form").serialize(),
             type: "POST",
             success: function(data)
@@ -59,7 +59,7 @@ $(document).ready(function(){
     $("#change-picture-form").on('submit',function(e){
         var form = new FormData(document.getElementById("change-picture-form"));
         $.ajax({
-            url: base_url + 'profile/changepicture',
+            url: 'profile/changepicture',
             data: form,
             type: "POST",
             processData: false, // tell jQuery not to process the data
@@ -90,7 +90,7 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#change-pass-form").on('submit',function(e){
         $.ajax({
-            url: base_url + 'profile/changepassword',
+            url: 'profile/changepassword',
             data: $(this).serialize(),
             type: "POST",
             success: function(data)

@@ -34,7 +34,7 @@ class Users extends MY_Controller
 				'firstname'    		=>    clean_data(ucwords($this->input->post('fname'))),
 				'lastname'    		=>    clean_data(ucwords($this->input->post('lname'))),
 				'middlename'    	=>    clean_data(ucwords($this->input->post('mname'))),
-				'pos_id'   	=>    clean_data($this->input->post('pos')),
+				'position_id'   	=>    clean_data($this->input->post('pos')),
 				'email'				=>    clean_data($this->input->post('emailadd')),
 				'password'			=>    hash_password($generate_password),
 			];
@@ -59,17 +59,6 @@ class Users extends MY_Controller
 			];
 			$this->Crud_model->insert('user_details',$insert_user_details);
 		
-			$classification = $this->Crud_model->fetch('expense_classification');
-            foreach($classification as $row){
-                $classification = $row->classification;
-                $allowance = $row->allowance_per_user;
-                $classify_lowercase = strtolower($classification);
-                $data = [
-                    $classify_lowercase => $allowance
-                ];
-                $where = ['id' => $get_rowid->id];
-                $this->Crud_model->update('users',$data,$where);
-            }
 
 			$position_id = $this->user->info('position_id');
 			$pos_where = ['id'  => $position_id];
@@ -82,37 +71,37 @@ class Users extends MY_Controller
 				$this->input->ip_address()
 			);
 			
-			$config = array(
-				'smtp_timeout' => '4',
-				'charset' => 'utf-8',
-				'mailtype'=> 'html',
-			);
+			// $config = array(
+			// 	'smtp_timeout' => '4',
+			// 	'charset' => 'utf-8',
+			// 	'mailtype'=> 'html',
+			// );
 
-			$this->load->initialize($config);
+			// $this->load->initialize($config);
 
-			$from="jun.carnecer@astridtechnologies.com";
-			$to = $this->input->post('emailadd');
-			$subject = "Account Activation";
-			$data = [	
-						'id'	=> secret_url('encrypt',$get_rowid->id),
-						'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
-						'reg_key' => $insert_user_details['reg_key'],
-						'email'	=> $to,
-						'password'	=> $generate_password,
-						'verified_email'	=> $insert_user_details['verified_email'],
-					];
+			// $from="jun.carnecer@astridtechnologies.com";
+			// $to = $this->input->post('emailadd');
+			// $subject = "Account Activation";
+			// $data = [	
+			// 			'id'	=> secret_url('encrypt',$get_rowid->id),
+			// 			'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
+			// 			'reg_key' => $insert_user_details['reg_key'],
+			// 			'email'	=> $to,
+			// 			'password'	=> $generate_password,
+			// 			'verified_email'	=> $insert_user_details['verified_email'],
+			// 		];
 			
-			$message = $this->load->view('email/account_verify',$data,TRUE);
+			// $message = $this->load->view('email/account_verify',$data,TRUE);
 
-			$this->load->library('email');
-			$this->email->clear();
-			$this->email->from($from, 'Timekeeping');
-			$this->email->to($to);
-			$this->email->set_newline("\n");
-			$this->email->subject($subject);
-			$this->email->message($message);
-			$this->email->set_mailtype('html');
-			$this->email->send();
+			// $this->load->library('email');
+			// $this->email->clear();
+			// $this->email->from($from, 'Timekeeping');
+			// $this->email->to($to);
+			// $this->email->set_newline("\n");
+			// $this->email->subject($subject);
+			// $this->email->message($message);
+			// $this->email->set_mailtype('html');
+			// $this->email->send();
 			
 			$success = [
 				'success' => 1,

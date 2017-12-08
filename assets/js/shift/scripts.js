@@ -1,6 +1,6 @@
 function fetch_shift() {
     $.ajax({
-        url: base_url + "shift/get_shift",
+        url: "shift/get_shift",
         type: "POST",
         success: function(data) {
             $("#shiftdata").html(data);
@@ -24,7 +24,7 @@ $(document).on('click','.edit_shift',function(){
 $(document).ready(function() {
     $("#update-shift-form").on('submit',function(e){
         $.ajax({
-            url: base_url + 'shift/edit_shift',
+            url: 'shift/edit_shift',
             data: $("#update-shift-form").serialize(),
             type: "POST",
             success: function(data) {

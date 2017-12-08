@@ -2,7 +2,7 @@ var date_today = $.datepicker.formatDate('DD - MM dd, yy', new Date());
 
 function fetch_attendance(){
   $.ajax({
-    url: base_url + "get/attendance",
+    url: "get/attendance",
     type: "POST",
     success: function(data){
       $("#timesheet").html(data);
@@ -15,7 +15,7 @@ function fetch_attendance(){
 
 function fetch_intern_attendance(){
 	$.ajax({
-	  url: base_url + "attendance/get_intern_timesheet",
+	  url: "attendance/get_intern_timesheet",
 	  type: "POST",
 	  success: function(data){
 		$("#intern-timesheet").html(data);
@@ -28,7 +28,7 @@ function fetch_intern_attendance(){
 
 function fetch_employee_attendance() {
 	$.ajax({
-		url: base_url + "get/emp_attendance",
+		url: "get/emp_attendance",
 		type: "POST",
 		success: function(data){
 			$("#employee-attendance").html(data);
@@ -41,7 +41,7 @@ function fetch_employee_attendance() {
 
 function fetch_leave(index,order) {
 	$.ajax({
-		url: base_url + "get/leave",
+		url: "get/leave",
 		type: "POST",
 		success: function(data){
 			$("#leave-data").html(data);
@@ -54,7 +54,7 @@ function fetch_leave(index,order) {
 
 function fetch_overtime() {
 	$.ajax({
-		url: base_url + "get/emp_overtime",
+		url: "get/emp_overtime",
 		type: "POST",
 		success: function(data){
 			$("#employee-overtime").html(data);
@@ -75,7 +75,7 @@ function fetch_overtime() {
 // }
 function fetch_admin_overtime(){
   $.ajax({
-    url: base_url + "get/admin_overtime",
+    url: "get/admin_overtime",
     type: "POST",
     success: function(data){
         $("#admin-overtime").html(data);
@@ -88,7 +88,7 @@ $(function(){
 $('[data-name="overtime-details"]').click(function(e){
   var id = $(this).attr('data-id');
   $.ajax({
-      url: base_url + "attendance/get_overtime_details/" + id,
+      url:"attendance/get_overtime_details/" + id,
       method: "POST",
       success: function(data){
           var result = JSON.parse(data);
@@ -106,7 +106,7 @@ $('[data-name="overtime-details"]').click(function(e){
 $(document).ready(function(){
 	$(".form-timesheet").on('submit',function(e){
 		$.ajax({
-		url: base_url + 'add/attendance',
+		url: 'add/attendance',
 		type: "POST",
 		data: $(this).serialize(),
 		success: function(data){
@@ -162,7 +162,7 @@ $(document).on('click','.activate-user',function(){
 $(document).ready(function(){
 	$("#file-overtime-form").on('submit',function(e){
 		$.ajax({
-			url: base_url + 'add/overtime',
+			url: 'add/overtime',
 			type: "POST",
 			data: $(this).serialize(),
 			success: function(data){
@@ -177,7 +177,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$("#accept-overtime-form").on('submit',function(e){
 		$.ajax({
-			url: base_url + 'attendance/approve_ot',
+			url: 'attendance/approve_ot',
 			type: "POST",
 			data: $(this).serialize(),
 			success: function(data){
@@ -194,7 +194,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$("#reject-overtime-form").on('submit',function(e){
 		$.ajax({
-			url: base_url + 'attendance/reject_ot',
+			url: 'attendance/reject_ot',
 			type: "POST",
 			data: $(this).serialize(),
 			success: function(data){
