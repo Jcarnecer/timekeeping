@@ -1,1 +1,1 @@
-var base_url = window.location.origin+"http://localhost/resume-management/";
+var base_url = window.location.origin+"http://localhost/timekeeping/";
