@@ -22,7 +22,7 @@
 
           <div class="form-group">
             <label>Select Position Privileges</label>
-            <select class="form-control selectpicker"  name="privileges[]" multiple id="add-select" title="-- SELECT PRIVILEGE/S --">
+            <select class="form-control selectpicker custom-select-picker"  name="privileges[]" multiple id="add-select" data-style="btn-custom" title="-- SELECT PRIVILEGE/S --">
               <optgroup label="Current Privileges">
                 <?php
                 $x=1;
