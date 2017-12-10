@@ -1,1 +1,1 @@
-var base_url = window.location.origin+"https://timekeeping-astrid.herokuapp.com/";
+var base_url = window.location.origin+"http://localhost/timekeeping/";

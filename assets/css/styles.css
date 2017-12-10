@@ -24,6 +24,14 @@ body {
   .custom-button:hover, .intern-attendance-button:hover {
     background-color: #3679b2; }
 
+.btn-group .btn-custom {
+  border: 1px solid #cccccc;
+  color: inherit !important; }
+  .btn-group .btn-custom:focus {
+    box-shadow: none;
+    outline: none !important;
+    border-color: #80bdff; }
+
 .intern-attendance-button {
   font-size: 1.5em;
   margin: 0 auto; }
@@ -86,31 +94,12 @@ body {
 .title {
   display: inline-block; }
 
-.main-content, .reverse-animation {
+.main-content {
   margin-left: 210px;
   overflow: hidden;
   transition: .5s;
   -webkit-transition: .5s;
   -moz-transition: .5s; }
-
-.animation {
-  animation: expand .5s;
-  margin-left: 0; }
-
-.reverse-animation {
-  animation: reverse-expand .5s; }
-
-@keyframes expand {
-  from {
-    margin-left: 210px; }
-  to {
-    margin-left: 0px; } }
-
-@keyframes reverse-expand {
-  from {
-    margin-left: 0px; }
-  to {
-    margin-left: 210px; } }
 
 #nav-icon-close {
   float: right;
@@ -258,7 +247,7 @@ body {
     margin-left: -210px;
     position: fixed;
     z-index: 99; }
-  .main-content, .reverse-animation {
+  .main-content {
     margin-left: 0;
     position: relative; }
   .navbar-custom {
