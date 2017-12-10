@@ -58,7 +58,8 @@ class MY_Controller	extends CI_Controller
             'description' => $description,
             'user'				=> $user,
             'position' => $position,
-            'ip_address' => $ip
+			'ip_address' => $ip,
+			'date' => (date('Y-m-d H:i:s'))
         );
         $this->Crud_model->insert('timekeeping_logs',$dat);
     }
