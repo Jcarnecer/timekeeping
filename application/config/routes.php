@@ -84,9 +84,12 @@ $route['auth/account/verification/(:any)/(:any)'] = 'email/verifykey/$1/$2';
 $route['auth/reset/verification/(:any)/(:any)'] = 'email/resetkey/$1/$2';
 //$route['calendar']
 //$route['calendar']
-
+//mobile api
+$route['mobile/auth/login']['POST'] = 'mobile/login/auth';
+//
 $route['404'] = 'errors/error_404';
 
 $route['default_controller'] = 'login';
 $route['404_override'] = 'errors/error_404';
 $route['translate_uri_dashes'] = FALSE;
+
