@@ -223,7 +223,7 @@ CREATE TABLE `position` (
 --
 
 INSERT INTO `position` (`id`, `name`, `privileges`, `created_at`, `updated_at`, `privilege_sub_menu`) VALUES
-(1, 'Admin', '1,2,3,4,5,6,7', '2017-08-22 02:02:42', '2017-10-11 23:11:15', '1,2,3,4,5,6,7'),
+(1, 'Admin', '1,2,3,4,5,6,7,8', '2017-08-22 02:02:42', '2017-10-11 23:11:15', '1,2,3,4,5,6,7,8'),
 (2, 'Employee', '1,3,7', '2017-08-22 02:02:55', '2017-10-25 09:14:08', '2,3,4,5,6'),
 (3, 'Human Resource', '1,2,3,4,5,6,7', '2017-08-22 05:02:01', '2017-10-11 23:20:23', '1,2,3,4,5,6,7'),
 (4, 'Intern', '1,3,7', '2017-08-22 05:18:24', '2017-10-11 23:19:56', '3'),
@@ -779,7 +779,8 @@ INSERT INTO `timekeeping_menu` (`id`, `name`, `icon`, `status`, `created_at`, `u
 (4, 'Management Shift', 'fa fa-clock-o', 1, '2017-08-21 14:10:21', '2017-10-05 08:28:52', '', 1),
 (5, 'Position Management', 'fa fa-sitemap', 1, '2017-08-21 14:10:21', '2017-09-02 10:04:25', 'position', NULL),
 (6, 'Logs', 'fa fa-tasks', 1, '2017-10-08 17:21:44', '0000-00-00 00:00:00', 'logs', NULL),
-(7, 'Profile', 'fa fa-user', 1, '2017-10-11 23:11:06', '0000-00-00 00:00:00', 'profile', NULL);
+(7, 'Profile', 'fa fa-user', 1, '2017-10-11 23:11:06', '0000-00-00 00:00:00', 'profile', NULL),
+(8, 'Schedule', 'fa fa-columns', 1, '2017-10-11 23:11:06', '0000-00-00 00:00:00', 'eschedule', NULL);
 
 -- --------------------------------------------------------
 
@@ -912,7 +913,8 @@ INSERT INTO `timekeeping_sub_menu` (`id`, `sub`, `url`, `menu_id`, `intern`, `ad
 (4, 'Leaves', 'leaves', 3, NULL, 1),
 (5, 'Calendar', 'calendar', 3, NULL, 1),
 (6, 'Overtime', 'overtime', 3, NULL, 1),
-(7, 'Employee Attendance', 'attendance/employee', 3, NULL, 1);
+(7, 'Employee Attendance', 'attendance/employee', 3, NULL, 1),
+(8, 'Schedule', 'schedule', 4, NULL, 1);
 
 -- --------------------------------------------------------
 

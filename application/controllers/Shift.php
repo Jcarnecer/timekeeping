@@ -4,10 +4,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Shift extends MY_Controller {
 
 	public function index() {
-       $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
         parent::mainpage('shift/index',
             [
                 'title' => 'Shift List',
+                'all_shift' => $get_all_shift
+            ]
+        );
+    }
+
+    public function schedule() {
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Schedule',
+                'all_shift' => $get_all_shift
+            ]
+        );
+    }
+    public function eschedule() {
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Schedule',
                 'all_shift' => $get_all_shift
             ]
         );
