@@ -58,7 +58,7 @@ body {
   height: 100%;
   position: fixed;
   background: #38b5ff;
-  overflow-y: scroll;
+  overflow-y: auto;
   transition: .5s;
   -webkit-transition: .5s;
   -moz-transition: .5s; }
@@ -240,6 +240,17 @@ body {
   color: #ffffff !important;
   cursor: pointer;
   width: auto; }
+
+#shiftDock {
+  height: 510px; 
+  bottom: 100px; 
+  transition-duration: 0.2s;
+  transition-delay: 1.5s;
+}
+#shiftDock.show {
+  bottom: 500px;
+  transition-delay: 0s;
+}
 
 @media only screen and (max-width: 768px) {
   #sidebar {
