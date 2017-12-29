@@ -48,10 +48,9 @@ class Login extends MY_Controller
                     $response="Invalid Credentials";
                 }
                 $result=[
-                    "response"=>$response,
-                    'email'=>$get_user->email,
+                    "response"=>$response
                 ];  
-                  echo json_encode($result);      
+                  echo json_encode($result);       
             }
     }
 
