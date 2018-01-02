@@ -70,6 +70,7 @@ $route['add/attendance'] = 'attendance/add_timesheet';
 $route['get/attendance'] = 'attendance/get_timesheet';
 $route['timesheet'] ='attendance/index';
 $route['leaves'] = 'attendance/leaves';
+$route['eleave']='leaves/index';
 //Shift
 $route['shift'] = 'shift/index';
 $route['schedule'] = 'shift/schedule';
