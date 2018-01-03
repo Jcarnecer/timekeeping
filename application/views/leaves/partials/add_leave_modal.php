@@ -10,7 +10,7 @@
       </div>
 
       <div class="modal-body">
-        <form id="file-overtime-form" method="post">
+        <form id="leave-form" method="post">
           <div class="form-group">
             <label for="">Name</label>
             <input type="text" name="leave_name" class="form-control">

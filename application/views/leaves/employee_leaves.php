@@ -4,17 +4,19 @@
         Add Leave
     </button>
     <hr>
-<div class="table-responsive" id="leave-employee">
-    <table class="table table-bordered" id="table-leaves">
+    <table class="table table-bordered table-responsive-xl" id="table-leaves">
         <thead>
             <th>ID</th>
             <th>Name</th>
             <th>No. of Days</th>
             <th>Action</th>
         </thead>
-        <tbody>
+      
+        <tbody id="tbody-leaves">
+           
+           
         </tbody>
+     
     </table>
-</div>
 
 

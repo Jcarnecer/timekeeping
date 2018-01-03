@@ -71,6 +71,8 @@ $route['get/attendance'] = 'attendance/get_timesheet';
 $route['timesheet'] ='attendance/index';
 $route['leaves'] = 'attendance/leaves';
 $route['eleave']='leaves/index';
+$route['leaves/add']='leaves/insert_leave';
+$route['get/leaveInfo']='leaves/get_leave';
 //Shift
 $route['shift'] = 'shift/index';
 $route['schedule'] = 'shift/schedule';
