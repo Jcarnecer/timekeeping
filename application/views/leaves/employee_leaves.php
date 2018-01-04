@@ -1,6 +1,6 @@
 
   <h3 class="title">Leave Management</h3>
-    <button type="button" class="btn custom-button float-right" data-toggle="modal" data-target="#add-leave-modal">
+    <button type="button" id="btn-add-leave" class="btn custom-button float-right" data-toggle="modal" data-target="#leave-modal">
         Add Leave
     </button>
     <hr>

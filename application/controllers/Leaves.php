@@ -31,6 +31,18 @@ Class Leaves extends MY_Controller{
     public function get_leave(){
         $leave=$this->Crud_model->fetch('timekeeping_leave');
         echo json_encode($leave);
-    }   
+    }
+    
+    public function update_leave(){
+        $id=$this->uri->segment(3);
+         
+        $leave=[
+            'leave_name'=>clean_data($this->input->post('leave_name')),
+             'No_of_days'=>clean_data($this->input->post('days'))
+        ];
+
+        $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id]);
+        echo json_encode('success');
+    }
     
 }

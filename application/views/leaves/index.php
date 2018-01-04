@@ -4,5 +4,5 @@
     if($segment=='eleave'){
         $this->load->view('leaves/employee_leaves');
     }
-    $this->load->view('leaves/partials/add_leave_modal');
+    $this->load->view('leaves/partials/leave_modal');
 ?>

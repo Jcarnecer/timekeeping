@@ -1,4 +1,4 @@
-<div class="modal fade" id="add-leave-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >
+<div class="modal fade" id="leave-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
@@ -13,16 +13,16 @@
         <form id="leave-form" method="post">
           <div class="form-group">
             <label for="">Name</label>
-            <input type="text" name="leave_name" class="form-control">
+            <input type="text" name="leave_name" id="leave_name" class="form-control">
           </div>
           <div class="form-group">
             <label for="">No. of Days</label>
-            <input type="text" name="days" class="form-control">
+            <input type="text" name="days" id="No_of_days"class="form-control">
       </div>
 
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn custom-button">Save</button> 
+          <button type="button" class="btn custom-button" id="btn-save" data-function="" data-id="">Save</button> 
         </form>
       </div>
 
