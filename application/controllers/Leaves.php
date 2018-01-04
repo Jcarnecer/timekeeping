@@ -20,7 +20,7 @@ Class Leaves extends MY_Controller{
           
            $leave=[
                'leave_name'=>clean_data($this->input->post('leave_name')),
-                'No_of_days'=>clean_data($this->input->post('days'))
+               'No_of_days'=>clean_data($this->input->post('days'))
            ];
 
            $this->Crud_model->insert('timekeeping_leave',$leave);
@@ -35,14 +35,18 @@ Class Leaves extends MY_Controller{
     
     public function update_leave(){
         $id=$this->uri->segment(3);
-         
-        $leave=[
-            'leave_name'=>clean_data($this->input->post('leave_name')),
-             'No_of_days'=>clean_data($this->input->post('days'))
-        ];
+            if( $this->form_validation->run('edit_leave')==FALSE){
+                echo json_encode(validation_errors());
+            }
+            else{ 
+                $leave=[
+                    'leave_name'=>clean_data($this->input->post('leave_name')),
+                    'No_of_days'=>clean_data($this->input->post('days'))
+                ];
 
-        $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id]);
-        echo json_encode('success');
+                $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id]);
+                echo json_encode('success');
+            }
     }
     
 }

@@ -2,7 +2,7 @@
 $(document).on('click','#btn-add-leave',function(){
     $('#leave-form')[0].reset();
     $("#leave-modal").find(".modal-title").html("Add Leave");
-    $("#leave-modal").find("#btn-save").attr("data-function","add_");    
+    $("#leave-modal").find("#btn-save").attr("data-function","add_leave");    
 });
 
 $(document).on('click','#btn-edit-leave',function(){
@@ -21,13 +21,13 @@ $(document).on('click','button[data-function="add_leave"]',function(){
     $.ajax({
         url: 'leaves/add',
         type: "POST",
-        data: $("leave-form").serialize(),
-        datatype:JSON,
+        data: $("#leave-form").serialize(),
         success: function(data){
-            if(data=='success'){
+            var result = JSON.parse(data);
+            if(result=='success'){
                 $(document).getLeaveInfo().done(function(data){	
                     $(document).displayLeaveInfo(data); 
-                  });
+                  });  
                 
             }
             else{
