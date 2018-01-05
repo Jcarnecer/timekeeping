@@ -152,7 +152,7 @@ $config =
             =>[
                 [
                     'field'=>'leave_name',
-                    'label'=>'Leave name',
+                    'label'=>'Leave',
                     'rules'=>'required|is_unique[timekeeping_leave.leave_name]|regex_match[/^([a-zA-Z0-9@.,_]|\s)+$/]',
                     'errors'=> ['is_unique'=>'%s is already taken',],
                   ],

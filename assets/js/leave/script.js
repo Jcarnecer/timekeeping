@@ -18,7 +18,7 @@ $(document).on('click','#btn-edit-leave',function(){
 }); 
 
 $(document).on('click','button[data-function="add_leave"]',function(){
-    $.ajax({
+    $.ajax({    
         url: 'leaves/add',
         type: "POST",
         data: $("#leave-form").serialize(),
@@ -55,7 +55,7 @@ $(document).on('click',"button[data-function='update_leave']",function(){
                 }
                 else{
                     $("#error-message").html(result);
-                }
+                }   
                
             }
         });
