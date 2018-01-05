@@ -28,12 +28,12 @@ $(document).on('click','button[data-function="add_leave"]',function(){
                 $(document).getLeaveInfo().done(function(data){	
                     $(document).displayLeaveInfo(data); 
                   });  
-                
+                  $("#leave-modal").modal('toggle');      
             }
             else{
                 $("#error-message").html(result);
             }
-            $("#leave-modal").modal('toggle');  
+            
         }
     })
 });
@@ -51,12 +51,12 @@ $(document).on('click',"button[data-function='update_leave']",function(){
                 $(document).getLeaveInfo().done(function(data){	
                     $(document).displayLeaveInfo(data); 
                   });
-                 
+                  $("#leave-modal").modal('toggle');   
                 }
                 else{
                     $("#error-message").html(result);
                 }
-                $("#leave-modal").modal('toggle');   
+               
             }
         });
   });
