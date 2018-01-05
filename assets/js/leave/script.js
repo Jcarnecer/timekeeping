@@ -31,7 +31,7 @@ $(document).on('click','button[data-function="add_leave"]',function(){
                 
             }
             else{
-                 
+                $("#error-message").html(result);
             }
             $("#leave-modal").modal('toggle');  
         }
@@ -54,7 +54,7 @@ $(document).on('click',"button[data-function='update_leave']",function(){
                  
                 }
                 else{
-               
+                    $("#error-message").html(result);
                 }
                 $("#leave-modal").modal('toggle');   
             }

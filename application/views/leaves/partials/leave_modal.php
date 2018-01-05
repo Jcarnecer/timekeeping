@@ -3,6 +3,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
+        
         <h5 class="modal-title" id="exampleModalLabel">Add Leave</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -10,6 +11,7 @@
       </div>
 
       <div class="modal-body">
+      <h5 class="text-danger" id="error-message"></h5>
         <form id="leave-form" method="POST">
           <div class="form-group">
             <label for="">Name</label>
