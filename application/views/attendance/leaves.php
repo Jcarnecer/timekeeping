@@ -2,10 +2,11 @@
   <div class="col-md-12">
       <h3>My Leaves</h3>
       <hr>
+      <button class="btn intern-attendance-button" data-toggle="modal" data-target="#file-leave-modal">File Leave</button>
   </div>
 </div>
 
-  <div class="row" id="DateTime">
+  <!-- <div class="row" id="DateTime">
     <div class="col-md-12">
       <div class="form-container">
 
@@ -27,10 +28,12 @@
 
       </div>
     </div>
-  </div>
+  </div> -->
+
+  
 
 
 <div class="table-responsive" id="leave-data">
 </div>
 <?php 
-$this->load->view('attendance/partials/attendance_modal'); ?>
+$this->load->view('attendance/partials/file_leave_modal'); ?>
