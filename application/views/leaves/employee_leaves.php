@@ -6,7 +6,6 @@
     <hr>
     <table class="table table-bordered table-responsive-xl" id="table-leaves">
         <thead>
-            <th>ID</th>
             <th>Name</th>
             <th>No. of Days</th>
             <th>Action</th>

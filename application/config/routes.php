@@ -86,7 +86,7 @@ $route['overtime'] = 'attendance/overtime';
 $route['add/overtime'] = 'attendance/add_overtime';
 $route['get/admin_overtime'] = 'attendance/get_admin_overtime';
 $route['get/emp_overtime'] = 'attendance/get_employee_overtime';
-
+$route['leave/reset']='leaves/approved_reset';
 //email confirmation
 $route['auth/account/verification/(:any)/(:any)'] = 'email/verifykey/$1/$2';
 $route['auth/reset/verification/(:any)/(:any)'] = 'email/resetkey/$1/$2';

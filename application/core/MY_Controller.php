@@ -8,6 +8,7 @@ class MY_Controller	extends CI_Controller
 		$this->load->model('Crud_model');
 		$this->load->library('authenticate');
 		$this->load->library('user');
+		$this->load->dbforge();
 		// $this->userinfo();
 		// if(!$this->session->userdata('user_logged_in')){
 		// 	redirect('login');

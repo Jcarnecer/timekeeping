@@ -9,7 +9,7 @@ $(document).on('click','#btn-edit-leave',function(){
              
     var $leave_name=$(this).closest('tr').find('td[data-leave="leave_name"]').html();
     var $days=$(this).closest('tr').find('td[data-leave="days"]').html();
-    $("#leave_name").val($leave_name);
+    $("#leave").val($leave_name);
     $('#No_of_days').val($days);
     var leaveId=$(this).attr('data-id');
     $("#leave-modal").find("#btn-save").attr("data-id",leaveId);
@@ -80,8 +80,7 @@ $.fn.getLeaveInfo=function(){
         $.each(items,function(i,item){
             $('#tbody-leaves').append(`
                       
-                    <tr class=${item['id']}>
-                        <td>${item['id']}</td>
+                    <tr class=${item['id']}>    
                         <td data-leave="leave_name">${item['leave_name']}</td>
                         <td data-leave="days">${item['No_of_days']}</td>
                         <td>
@@ -91,7 +90,7 @@ $.fn.getLeaveInfo=function(){
                              </button>
                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                      <a class="dropdown-item" id="btn-edit-leave" data-id="${item['id']}" data-target="#leave-modal" data-toggle="modal">Edit</a>
-                                     <a class="dropdown-item">Reset Leave</a>
+                                     <a class="dropdown-item" data-toggle="modal" data-target="#reset-leave-modal" id="btn-reset-leave" data-leave="${item['leave_name']}" data-id="${item['id']}" data-days="${item['No_of_days']}">Reset Leave</a>
                                  </div>
                              </div>  
                         </td>
@@ -101,7 +100,35 @@ $.fn.getLeaveInfo=function(){
 		$("#table-leaves").DataTable();
   };
 
-  
+  $(document).on('click','#btn-reset-leave ',function(){
+    var leave_name = $(this).attr('data-leave');
+    var $NoOfDays =  $(this).attr('data-days');
+    var id = $(this).data('id');
+    $("#id").val(id);
+
+    
+})
+
+
+  $(document).ready(function(){
+    $("#r-a-form").on('submit',function(e){
+        $.ajax({
+            url: 'leaves/approved_reset',
+            method: "POST",
+            data: $("#r-a-form").serialize(),
+            success: function(data){
+                $("#reset-leave-modal").modal('hide');
+                bs_notify("<strong>Successfully Reset Leave</strong>","success","top","right");
+            },
+            error: function() {
+                alert('error');
+            }
+        })
+        e.preventDefault();
+    })
+}) 
+
+
   $(document).getLeaveInfo().done(function(data){	
 	  $(document).displayLeaveInfo(data); 
 	});

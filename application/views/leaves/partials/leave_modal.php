@@ -15,7 +15,7 @@
         <form id="leave-form" method="POST">
           <div class="form-group">
             <label for="">Name</label>
-            <input type="text" name="leave_name" id="leave_name" class="form-control">
+            <input type="text" name="leave_name" id="leave" class="form-control">
           </div>
           <div class="form-group">
             <label for="">No. of Days</label>
