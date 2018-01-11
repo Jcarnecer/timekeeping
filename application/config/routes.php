@@ -73,6 +73,7 @@ $route['leaves'] = 'attendance/leaves';
 $route['eleave']='leaves/index';
 $route['leaves/add']['POST']='leaves/insert_leave';
 $route['leaves/edit/(:any)']='leaves/update_leave/$1';
+$route['leaves/file']['POST']='leaves/leave_request';
 $route['get/leaveInfo']='leaves/get_leave';
 //Shift
 $route['shift'] = 'shift/index';
@@ -80,7 +81,7 @@ $route['schedule'] = 'shift/schedule';
 $route['eschedule'] = 'shift/eschedule';
 // $route['calendar'] = 'attendance/calendar';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';
-$route['get/leave'] = 'attendance/get_leave';
+ $route['get/leave'] = 'leaves/fetch_leave';
 //Overtime
 $route['overtime'] = 'attendance/overtime';
 $route['add/overtime'] = 'attendance/add_overtime';

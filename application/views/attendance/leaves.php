@@ -29,11 +29,22 @@
       </div>
     </div>
   </div> -->
-
-  
-
-
 <div class="table-responsive" id="leave-data">
+<table class="table table-bordered table-responsive-xl" id="table-my-leave" > 
+        <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                  
+                </tr>
+        </thead>
+      <tbody id="tbody-my-leave">
+
+      </tbody> 
+</table>
 </div>
 <?php 
 $this->load->view('attendance/partials/file_leave_modal'); ?>

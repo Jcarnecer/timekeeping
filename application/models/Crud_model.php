@@ -247,5 +247,18 @@ class Crud_model extends CI_Model{
     public function delete_event($id) 
     {
         $this->db->where("id", $id)->delete("calendar_events");
-    }
+	}
+	
+   public function fetch_leave($user_id){
+	   if(!empty($user_id)){
+			$this->db->where($user_id);
+	  	 }
+			$this->db->select('timekeeping_leave.leave_name,timekeeping_file_leave.start_date,timekeeping_file_leave.end_date,timekeeping_file_leave.duration,users.firstname,users.lastname,timekeeping_file_leave.status');
+			$this->db->from('timekeeping_file_leave');
+			$this->db->join('users','timekeeping_file_leave.user_id=users.id','inner');
+			$this->db->join('timekeeping_leave','timekeeping_file_leave.leave_id=timekeeping_leave.id','inner');
+			$query = $this->db->get();
+			return $query->result();
+		}
+	
 }

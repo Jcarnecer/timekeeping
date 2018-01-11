@@ -39,18 +39,18 @@ function fetch_employee_attendance() {
 	})
 }
 
-function fetch_leave(index,order) {
-	$.ajax({
-		url: "get/leave",
-		type: "POST",
-		success: function(data){
-			$("#leave-data").html(data);
-			$("#leave-table").DataTable({
-				"order": [[ 0, "desc" ]]
-			});
-		}
-	})
-}
+// function fetch_leave(index,order) {
+// 	$.ajax({
+// 		url: "get/leave",
+// 		type: "POST",
+// 		success: function(data){
+// 			$("#leave-data").html(data);
+// 			$("#leave-table").DataTable({
+// 				"order": [[ 0, "desc" ]]
+// 			});
+// 		}
+// 	})
+// }
 
 function fetch_overtime() {
 	$.ajax({
@@ -231,6 +231,8 @@ $(document).on('click','.accept-ot',function() {
 })
 
 
+
+
 $(document).on('click','.reject-ot',function() {
 	var id = $(this).data('id');
 	var name = $(this).data('name');
@@ -272,7 +274,70 @@ $(document).on('click','.details-ot',function() {
 	$("#reason-ot").html(reason);
 })
 
-fetch_leave();
+
+$(document).on('click','#btn-file-leave',function(){
+	$.ajax({
+		url: 'leaves/leave_request',
+		type: "POST",
+		data: $('#file-leave-form').serialize(),
+		success: function(data){
+			var result=JSON.parse(data);
+			if(result=='success'){ 	
+			$('#file-leave-modal').modal('hide');
+			bs_notify("<strong>Successfully File a Leave </strong>","success","top","right");
+			}
+			else{
+				$("#error-message").html(result);
+			}
+		}
+	});
+});
+
+
+
+$.fn.getmyLeave=function(){
+    var $url = "get/leave";
+   return $.ajax({
+      url:$url,
+      type:"GET",
+      dataType: 'JSON'
+    });
+  };
+
+  $.fn.displayMyLeave=function(items){
+	$("#tbody-my-leave").html("");
+
+	$.each(items,function(i,item){
+				
+
+				$('#tbody-my-leave').append(`
+						<tr>    
+							<td>${item['leave_name']}</td>
+							<td>${item['start_date']}</td>
+							<td>${item['end_date']}</td>
+							<td>${item['duration']} Days</td>
+							<td>${item['status']}</td>
+						</tr>`    
+				);
+	});
+	$("#table-my-leave").DataTable();
+   
+  };
+
+
+
+
+
+  $(document).getmyLeave().done(function(data){	
+	$(document).displayMyLeave(data); 
+  });
+
+
+ 
+
+
+
+// fetch_leave();
 fetch_overtime();
 // fetch_employee_overtime();
 fetch_admin_overtime();

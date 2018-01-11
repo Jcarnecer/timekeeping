@@ -13,13 +13,14 @@ $leave=$this->Crud_model->fetch('timekeeping_leave');
       </div>
     
       <div class="modal-body">
-        <form id="file-overtime-form" method="post">
+        <form id="file-leave-form" method="post">
           <input type="hidden" name="user_id" value="<?=$this->user->info('id');?>">
           <div class="form-group">
+          <h5 class="text-danger" id="error-message"></h5>
             <label for="">Leave</label>
-            <select class="form-control" id="leaveSelect">
+            <select class="form-control" id="leaveSelect" name="leave_id">
                <?php foreach($leave as $row){ ?> 
-                    <option><?=$row->leave_name?></option>
+                    <option value=<?=$row->id?>><?=$row->leave_name?></option>
                 <?php }?> 
             </select>    
           </div>
@@ -39,7 +40,7 @@ $leave=$this->Crud_model->fetch('timekeeping_leave');
 
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn custom-button">Save</button> 
+          <button type="button" class="btn custom-button" id="btn-file-leave">Save</button> 
         </form>
       </div>
 
