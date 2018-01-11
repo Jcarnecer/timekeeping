@@ -315,7 +315,7 @@ $.fn.getmyLeave=function(){
 							<td>${item['leave_name']}</td>
 							<td>${item['start_date']}</td>
 							<td>${item['end_date']}</td>
-							<td>${item['duration']} Days</td>
+							<td>${item['duration']} Days </td>
 							<td>${item['status']}</td>
 						</tr>`    
 				);
