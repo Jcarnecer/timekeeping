@@ -58,7 +58,7 @@ body {
   height: 100%;
   position: fixed;
   background: #38b5ff;
-  overflow-y: auto;
+  overflow-y: scroll;
   transition: .5s;
   -webkit-transition: .5s;
   -moz-transition: .5s; }
@@ -242,15 +242,23 @@ body {
   width: auto; }
 
 #shiftDock {
-  height: 510px; 
-  bottom: 100px; 
+  background: #3679b2;
+  border: none;
+  bottom: 100px;
+  height: 510px;
   transition-duration: 0.2s;
-  transition-delay: 1.5s;
-}
-#shiftDock.show {
-  bottom: 500px;
-  transition-delay: 0s;
-}
+  transition-delay: 1.5s; }
+  #shiftDock.show {
+    bottom: 500px;
+    transition-delay: 0s; }
+  #shiftDock .custom-card {
+    border: none;
+    border-radius: 0; }
+
+.shift-table .custom-card {
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1), 0 1px 6px rgba(0, 0, 0, 0.15); }
 
 @media only screen and (max-width: 768px) {
   #sidebar {

@@ -1,6 +1,6 @@
 <div class="main-content h-100">
 	<?php if($this->uri->segment(1) == 'schedule'): ?>
-	<div class="topbar" style="height: 56px;">
+	<div class="topbar">
 	<?php else: ?>
 	<div class="topbar">
 	<?php endif; ?>
@@ -17,7 +17,7 @@
 	</div>
 
 	<?php if($this->uri->segment(1) == 'schedule'): ?>
-	<div class="container-fluid p-0" style="height: calc(100% - 56px);">
+	<div class="container-fluid" style="height: calc(100% - 56px);">
 	<?php else: ?>
 	<div class="container-fluid">
 	<?php endif; ?>
