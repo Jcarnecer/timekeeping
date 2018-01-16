@@ -324,8 +324,65 @@ $.fn.getmyLeave=function(){
    
   };
 
+  
+  
+$.fn.getEmployeeLeave=function(){
+    var $url = "get/leave/requests";
+   return $.ajax({
+      url:$url,
+      type:"GET",
+      dataType: 'JSON'
+    });
+  };
+
+  $.fn.displayEmployeeLeave=function(items){
+	$("#tbody-employee-leave").html("");
+	$(".dropdown-menu").html("");
+				
+
+				$.each(items,function(i,item){
+					
 
 
+							$('#tbody-employee-leave').append(`
+									<tr>    
+										<td>${item['leave_name']}</td>
+										<td>${item['start_date']}</td>
+										<td>${item['end_date']}</td>
+										<td>${item['duration']} Days </td>
+										<td>${item['lastname']} ${item['firstname']}</td>
+										<td>${item['status']}</td>
+										
+										<td>
+										<div class="btn-group">
+											<button type="button" class="btn custom-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Action
+										</button>
+ 
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown">
+													${item['status']=="Pending"?
+														`<a class="dropdown-item">View</a>
+														 <a class="dropdown-item">Approve</a>
+														 <a class="dropdown-item">Reject</a>`
+														 :
+														`<a class="dropdown-item">View</a>`}
+											</div>
+										</div>  
+								  	 </td>
+									</tr>`    
+							);
+						
+				});
+			
+				$("#employee-leave-table").DataTable();
+				
+			
+  };
+
+  
+  $(document).getEmployeeLeave().done(function(data){	
+	$(document).displayEmployeeLeave(data); 
+  });
 
 
   $(document).getmyLeave().done(function(data){	

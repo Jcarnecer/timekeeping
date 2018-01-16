@@ -46,6 +46,14 @@ class Attendance extends MY_Controller {
         
     }
 
+    public function leave_request(){
+        parent::mainpage('attendance/employee_leave',
+        [
+            'title' => 'Employee Leave',
+        ]
+    );
+    }
+
     public function add_timesheet(){
         $now = new DateTime();
         $now->setTimezone(new DateTimezone('Asia/Manila'));
