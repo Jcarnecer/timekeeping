@@ -198,6 +198,22 @@ Class Leaves extends MY_Controller{
             }
 
 
+            public function reject_leave($id){
+                $update_status=[
+                    'status'=>'Rejected'
+                ];
+		        $this->Crud_model->update('timekeeping_file_leave',$update_status,['id'=>$id]);
+                echo json_encode("success");
+            }
+            public function approve_leave($id){
+                $update_status=[
+                    'status'=>'Approved'
+                ];
+                $this->Crud_model->update('timekeeping_file_leave',$update_status,['id'=>$id]);
+                echo json_encode("success");
+            }
+
+
 
             
 

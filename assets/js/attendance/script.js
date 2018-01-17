@@ -337,12 +337,14 @@ $.fn.getEmployeeLeave=function(){
 
   $.fn.displayEmployeeLeave=function(items){
 	$("#tbody-employee-leave").html("");
+	
+
 	$(".dropdown-menu").html("");
 				
 
 				$.each(items,function(i,item){
 					
-
+						
 
 							$('#tbody-employee-leave').append(`
 									<tr>    
@@ -361,9 +363,9 @@ $.fn.getEmployeeLeave=function(){
  
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown">
 													${item['status']=="Pending"?
-														`<a class="dropdown-item">View</a>
-														 <a class="dropdown-item">Approve</a>
-														 <a class="dropdown-item">Reject</a>`
+														`<a class="dropdown-item" href=>View</a>
+														 <a class="dropdown-item" data-id="${item['id']}"  id="approve_leave">Approve</a>
+														 <a class="dropdown-item" data-id="${item['id']}"  id="reject_leave">Reject</a>`
 														 :
 														`<a class="dropdown-item">View</a>`}
 											</div>
@@ -371,16 +373,55 @@ $.fn.getEmployeeLeave=function(){
 								  	 </td>
 									</tr>`    
 							);
-						
-				});
-			
-				$("#employee-leave-table").DataTable();
-				
-			
+							$("#employee-leave-table").DataTable();	
+				});			
   };
 
-  
+  $(document).on('click','#approve_leave',function(){
+	  $id=$(this).attr('data-id');
+	$.ajax({
+		url: 'leave/approve/'+ $id,
+		type: "POST",
+		success: function(data){
+			var result=JSON.parse(data);
+			if(result=='success'){ 	
+			bs_notify("<strong>Successfully Updated an Employee Request(Leave) </strong>","success","top","right");
+			
+					$(document).getEmployeeLeave().done(function(data){	
+						$(document).displayEmployeeLeave(data); 
+					});
+			}
+			else{
+				
+			}
+		}
+	});
+  });
+  $(document).on('click','#reject_leave',function(){
+	$id=$(this).attr('data-id');
+	$.ajax({
+		url: 'leaves/reject_leave/'+ $id,
+		type: "POST",
+		success: function(data){
+			var result=JSON.parse(data);
+			if(result=='success'){ 	
+			bs_notify("<strong>Successfully Updated an Employee Request(Leave) </strong>","success","top","right");
+			
+					$(document).getEmployeeLeave().done(function(data){	
+						$(document).displayEmployeeLeave(data); 
+					});
+			}
+			else{
+				
+			}
+		}
+	});
+  });	
+
+
+
   $(document).getEmployeeLeave().done(function(data){	
+	
 	$(document).displayEmployeeLeave(data); 
   });
 
@@ -391,7 +432,6 @@ $.fn.getEmployeeLeave=function(){
 
 
  
-
 
 
 // fetch_leave();

@@ -100,7 +100,7 @@ $.fn.getLeaveInfo=function(){
 		$("#table-leaves").DataTable();
   };
 
-  $(document).on('click','#btn-reset-leave ',function(){
+  $(document).on('click','#btn-reset-leave',function(){
     var leave_name = $(this).attr('data-leave');
     var $NoOfDays =  $(this).attr('data-days');
     var id = $(this).data('id');
