@@ -18,7 +18,8 @@ class Shift extends MY_Controller {
 
         # ---------------------------------------------------------------------------------------------------------------
         
-        $get_all_employee = $this->Crud_model->fetch('users');
+        $get_all_employee = $this->Crud_model->get_users();
+        // $get_all_employee = $this->Crud_model->fetch('users');
 
         # ---------------------------------------------------------------------------------------------------------------
         
@@ -109,5 +110,11 @@ class Shift extends MY_Controller {
 			);
             echo json_encode($success);
         }
+    }
+
+    public function change_shift() {
+        echo json_encode($this->Crud_model->update('user_details', 
+            ['shift_id' => $this->input->post('shift_id')], 
+            ['user_id' => $this->input->post('user_id')]));
     }
 }

@@ -247,7 +247,7 @@ body {
   bottom: 100px;
   height: 510px;
   transition-duration: 0.2s;
-  transition-delay: 1.5s; }
+  transition-delay: 0.5s; }
   #shiftDock.show {
     bottom: 500px;
     transition-delay: 0s; }
