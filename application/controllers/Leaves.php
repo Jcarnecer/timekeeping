@@ -219,7 +219,7 @@ Class Leaves extends MY_Controller{
 
                 if($result->duration < $user_leave){
                     $deduct_leave=$user->$leave_name - $result->duration;
-                    $update_status_leave=[
+                    $update_status_leave=[ 
                         'status'=>'Approved'
                     ];
                     $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id]);
