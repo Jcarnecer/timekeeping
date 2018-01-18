@@ -206,11 +206,33 @@ Class Leaves extends MY_Controller{
                 echo json_encode("success");
             }
             public function approve_leave($id){
-                $update_status=[
-                    'status'=>'Approved'
-                ];
-                $this->Crud_model->update('timekeeping_file_leave',$update_status,['id'=>$id]);
-                echo json_encode("success");
+                
+                $result=$this->Crud_model->fetch_tag_row('*','timekeeping_file_leave',['id'=>$id]);
+                $where_leave=['id'=>$result->leave_id];
+                $leave=$this->Crud_model->fetch_tag_row('*','timekeeping_leave',$where_leave);
+                $leave_name=strtolower(str_replace(' ','_',$leave->leave_name));
+
+                $where_user=['id'=>$result->user_id];
+
+                $user= $this->Crud_model->fetch_tag_row('*','users',$where_user);
+                $user_leave=$user->$leave_name;
+
+                if($result->duration < $user_leave){
+                    $deduct_leave=$user->$leave_name - $result->duration;
+                    $update_status_leave=[
+                        'status'=>'Approved'
+                    ];
+                    $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id]);
+                    $update_status=[
+                        $leave_name => $deduct_leave
+                    ];
+                    $this->Crud_model->update('users',$update_status,$where_user);   
+                     echo json_encode("success");
+
+                }
+                else {
+                    echo json_encode("No available leave for this user");
+                }
             }
 
 

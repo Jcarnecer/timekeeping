@@ -392,7 +392,7 @@ $.fn.getEmployeeLeave=function(){
 					});
 			}
 			else{
-				
+				bs_notify("<strong>"+ result +"</strong>","danger","top","right");
 			}
 		}
 	});
