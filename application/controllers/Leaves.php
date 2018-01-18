@@ -186,9 +186,9 @@ Class Leaves extends MY_Controller{
         }
 
 
-            public function fetch_leave(){
-                $user_id=$this->user->info('id');
-                echo json_encode($this->Crud_model->fetch_leave(['user_id'=>$user_id]));
+            public function fetch_leave($id){
+            
+                echo json_encode($this->Crud_model->fetch_leave(['user_id'=>$id]));
                 
             }
 
@@ -197,6 +197,7 @@ Class Leaves extends MY_Controller{
                 echo json_encode($leave_request);
             }
 
+           
 
             public function reject_leave($id){
                 $update_status=[

@@ -276,6 +276,7 @@ $(document).on('click','.details-ot',function() {
 
 
 $(document).on('click','#btn-file-leave',function(){
+	
 	$.ajax({
 		url: 'leaves/leave_request',
 		type: "POST",
@@ -293,36 +294,60 @@ $(document).on('click','#btn-file-leave',function(){
 	});
 });
 
-
-
-$.fn.getmyLeave=function(){
-    var $url = "get/leave";
-   return $.ajax({
-      url:$url,
-      type:"GET",
-      dataType: 'JSON'
-    });
-  };
-
-  $.fn.displayMyLeave=function(items){
-	$("#tbody-my-leave").html("");
-
-	$.each(items,function(i,item){
-				
-
-				$('#tbody-my-leave').append(`
-						<tr>    
-							<td>${item['leave_name']}</td>
-							<td>${item['start_date']}</td>
-							<td>${item['end_date']}</td>
-							<td>${item['duration']} Days </td>
-							<td>${item['status']}</td>
-						</tr>`    
-				);
+$(document).ready(function(){
+	$id=$("#my_leave").attr('data-id');
+	var $url = "get/leave/"+ $id ;
+	$.ajax({
+		url:$url,
+		type:"GET",
+		dataType: 'JSON',
+	 success:function(data){
+		$("#tbody-my-leave").html("");
+		$.each(data,function(i,item){
+					$('#tbody-my-leave').append(`
+							<tr>    
+								<td>${item['leave_name']}</td>
+								<td>${item['start_date']}</td>
+								<td>${item['end_date']}</td>
+								<td>${item['duration']} Days </td>
+								<td>${item['status']}</td>
+							</tr>`    
+					);
+		});
+		$("#table-my-leave").DataTable();
+	 } 
 	});
-	$("#table-my-leave").DataTable();
+});
+
+// $.fn.getmyLeave=function(){
+// 	$id=$("#my_leave").attr('data-id');
+// 	var $url = "get/leave/"+ $id ;
+// 	console.log($url);
+//    return $.ajax({
+	  
+//       url:$url,
+//       type:"GET",
+//       dataType: 'JSON'
+//     });
+//   };
+
+//   $.fn.displayMyLeave=function(items){
+// 	$("#tbody-my-leave").html("");
+
+// 	$.each(items,function(i,item){
+// 				$('#tbody-my-leave').append(`
+// 						<tr>    
+// 							<td>${item['leave_name']}</td>
+// 							<td>${item['start_date']}</td>
+// 							<td>${item['end_date']}</td>
+// 							<td>${item['duration']} Days </td>
+// 							<td>${item['status']}</td>
+// 						</tr>`    
+// 				);
+// 	});
+// 	$("#table-my-leave").DataTable();
    
-  };
+//   };
 
   
   
@@ -418,6 +443,10 @@ $.fn.getEmployeeLeave=function(){
 	});
   });	
 
+//   $(document).getmyLeave().done(function(data){	
+// 	$(document).displayMyLeave(data); 
+//   });
+
 
 
   $(document).getEmployeeLeave().done(function(data){	
@@ -426,10 +455,7 @@ $.fn.getEmployeeLeave=function(){
   });
 
 
-  $(document).getmyLeave().done(function(data){	
-	$(document).displayMyLeave(data); 
-  });
-
+ 
 
  
 

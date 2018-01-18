@@ -2,6 +2,7 @@
   <div class="col-md-12">
       <h3>My Leaves</h3>
       <hr>
+      <input type="hidden" name="user_id" id="my_leave" value="<?=$this->user->info('id');?>" data-id="<?=$this->user->info('id');?>">
       <button class="btn intern-attendance-button" data-toggle="modal" data-target="#file-leave-modal">File Leave</button>
   </div>
 </div>
@@ -31,6 +32,7 @@
   </div> -->
 <div class="table-responsive" id="leave-data">
 <table class="table table-bordered table-responsive-xl" id="table-my-leave" > 
+
         <thead>
                 <tr>
                   <th>Name</th>

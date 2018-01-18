@@ -82,7 +82,7 @@ $route['schedule'] = 'shift/schedule';
 $route['eschedule'] = 'shift/eschedule';
 // $route['calendar'] = 'attendance/calendar';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';
- $route['get/leave'] = 'leaves/fetch_leave';
+ $route['get/leave/(:any)'] = 'leaves/fetch_leave/$1';
  $route['get/leave/requests']['GET']='leaves/fetch_leave_request';
 //Overtime
 $route['overtime'] = 'attendance/overtime';
