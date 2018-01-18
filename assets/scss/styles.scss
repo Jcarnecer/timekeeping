@@ -6,6 +6,7 @@ html, body {
 
 body {
     background-color: $lightest-gray;
+    font-size: 14px;
 }
 
 .center-block {
@@ -56,7 +57,7 @@ body {
 .intern-attendance-button {
     @extend .custom-button;
     @extend .edit-button;
-    font-size: 1.5em;
+    font-size: 18px;
     margin: 0 auto;
 }
 
@@ -87,7 +88,7 @@ body {
     width: 210px;
     height: 100%;
     position: fixed;
-    background: $primary-color;
+    background: $dark-blue;
     overflow-y: scroll;
     transition: .5s;
     -webkit-transition: .5s;
@@ -114,7 +115,7 @@ body {
 
         &:hover {
             background-color: $secondary-color;
-            border-left: 5px solid $dark-blue;
+            border-left: 5px solid $primary-color;
             text-decoration: none;
         }
 
@@ -173,7 +174,7 @@ body {
 }
   
 .custom-toggle span {
-    background: $dark-blue;
+    background: $primary-color;
     border-radius: 9px;
     display: block;
     height: 3px;
@@ -306,12 +307,12 @@ body {
     display: block;
     text-align: center;
     .time {
-        font-size: 3em;
+        font-size: 48px;
         font-weight: bold;
     }
     
     .date {
-        font-size: 1.5em;
+        font-size: 24px;
     }
 }
 
@@ -339,7 +340,7 @@ body {
         // }
 
         .custom-button {
-            font-size: 1.5em;
+            font-size: 24px;
             // font-weight: bold;
             padding: 15px;
             text-align: left;
@@ -358,7 +359,7 @@ body {
             background-position-y: -20px;
             background-size: 60%;
             background-repeat: no-repeat;
-            font-size: 1.2em !important;
+            font-size: 16px !important;
             height: auto;
             width: 200px;
         }
