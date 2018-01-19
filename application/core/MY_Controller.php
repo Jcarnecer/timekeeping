@@ -52,14 +52,14 @@ class MY_Controller	extends CI_Controller
 		$this->load->view('login/include/footer');
 	}
 
-	function audittrail($action, $description,$user, $position = null,$ip){
+	function audittrail($action, $description, $user, $position = null,$ip){
         $dat = array(
-            'action' => $action,
-            'description' => $description,
-            'user'				=> $user,
-            'position' => $position,
-			'ip_address' => $ip,
-			'date' => (date('Y-m-d H:i:s'))
+            'action'		=> $action,
+            'description'	=> $description,
+            'user'			=> $user,
+            'position' 		=> $position,
+			'ip_address' 	=> $ip,
+			'date'			=> (date('Y-m-d H:i:s'))
         );
         $this->Crud_model->insert('timekeeping_logs',$dat);
     }

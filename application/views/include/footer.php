@@ -1,3 +1,6 @@
+			</div>
+		</div>
+
 		<?php 
 			$segment =  $this->uri->segment(1);
 			$segment2 =  $this->uri->segment(2);

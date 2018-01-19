@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 	<head>
 		<base href="<?php echo base_url();?>" />
 		<meta charset="UTF-8" />
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script>
 				fetch_profile();
 			</script>
-		<?php }elseif($segment == 'shift'){ ?>
+		<?php }elseif($segment == 'shift'|| $segment == 'schedule'){ ?>
 			<script src="assets/js/error-message.js"></script>
 			<script src="assets/js/shift/scripts.js"></script>
 			<script>
@@ -104,4 +104,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			window.onload=DisplayTime
 		</script>
     </head>
-    <body>
+    <body class="h-100">
