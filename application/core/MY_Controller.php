@@ -5,6 +5,7 @@ class MY_Controller	extends CI_Controller
 
 		parent::__construct();
 		$this->load->helper('encryption');
+		$this->load->helper('date');
 		$this->load->model('Crud_model');
 		$this->load->library('authenticate');
 		$this->load->library('user');

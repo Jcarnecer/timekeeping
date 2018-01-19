@@ -186,15 +186,18 @@ Class Leaves extends MY_Controller{
         }
 
 
-            public function fetch_leave($id){
-            
+            public function fetch_leave(){
+               $id=$this->user->info('id');
                 echo json_encode($this->Crud_model->fetch_leave(['user_id'=>$id]));
-                
+               
+             
             }
 
             public function fetch_leave_request(){
+                
                 $leave_request=$this->Crud_model->fetch_leave("");
                 echo json_encode($leave_request);
+                
             }
 
            
@@ -219,6 +222,11 @@ Class Leaves extends MY_Controller{
                 $user_leave=$user->$leave_name;
 
                 if($result->duration < $user_leave){
+                    // $end_date=new DateTime($this->input->post('end_date'));
+                    // $start_date=new DateTime($this->input->post('start_date'));
+                    // $end_date=$end_date->modify('+1 day');
+                    // $period=new DatePeriod($start_date,new DateInt erval('P1D'),$end_date);
+                    $period=date_range($this->input->post('start_date'),$this->input->post('end_date'));   
                     $deduct_leave=$user->$leave_name - $result->duration;
                     $update_status_leave=[ 
                         'status'=>'Approved'
@@ -227,14 +235,33 @@ Class Leaves extends MY_Controller{
                     $update_status=[
                         $leave_name => $deduct_leave
                     ];
-                    $this->Crud_model->update('users',$update_status,$where_user);   
-                     echo json_encode("success");
+                    $this->Crud_model->update('users',$update_status,$where_user);
+                    $date=array();
+                    foreach($period as $key=>$value){
+                        $value=new DateTime($value);
 
+                        if($value->format('N')>=6){
+                               break; 
+                        }   
+                        else{
+                            $date[]=$value->format('Y-m-d');    
+                        }
+                      
+                        
+                    }
+                    
+                     print_r($date);
                 }
                 else {
                     echo json_encode("No available leave for this user");
                 }
             }
+
+
+            
+
+
+
 
 
 

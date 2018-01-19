@@ -286,6 +286,9 @@ $(document).on('click','#btn-file-leave',function(){
 			if(result=='success'){ 	
 			$('#file-leave-modal').modal('hide');
 			bs_notify("<strong>Successfully File a Leave </strong>","success","top","right");
+			$(document).getMyLeave().done(function(data){	
+				$(document).displayMyLeave(data); 
+			  });	
 			}
 			else{
 				$("#error-message").html(result);
@@ -294,65 +297,63 @@ $(document).on('click','#btn-file-leave',function(){
 	});
 });
 
-$(document).ready(function(){
-	$id=$("#my_leave").attr('data-id');
-	var $url = "get/leave/"+ $id ;
-	$.ajax({
-		url:$url,
-		type:"GET",
-		dataType: 'JSON',
-	 success:function(data){
-		$("#tbody-my-leave").html("");
-		$.each(data,function(i,item){
-					$('#tbody-my-leave').append(`
-							<tr>    
-								<td>${item['leave_name']}</td>
-								<td>${item['start_date']}</td>
-								<td>${item['end_date']}</td>
-								<td>${item['duration']} Days </td>
-								<td>${item['status']}</td>
-							</tr>`    
-					);
-		});
-		$("#table-my-leave").DataTable();
-	 } 
-	});
-});
-
-// $.fn.getmyLeave=function(){
+// $(document).ready(function(){
 // 	$id=$("#my_leave").attr('data-id');
 // 	var $url = "get/leave/"+ $id ;
-// 	console.log($url);
-//    return $.ajax({
-	  
-//       url:$url,
-//       type:"GET",
-//       dataType: 'JSON'
-//     });
-//   };
-
-//   $.fn.displayMyLeave=function(items){
-// 	$("#tbody-my-leave").html("");
-
-// 	$.each(items,function(i,item){
-// 				$('#tbody-my-leave').append(`
-// 						<tr>    
-// 							<td>${item['leave_name']}</td>
-// 							<td>${item['start_date']}</td>
-// 							<td>${item['end_date']}</td>
-// 							<td>${item['duration']} Days </td>
-// 							<td>${item['status']}</td>
-// 						</tr>`    
-// 				);
+// 	$.ajax({
+// 		url:$url,
+// 		type:"GET",
+// 		dataType: 'JSON',
+// 	 success:function(data){
+// 		$("#tbody-my-leave").html("");
+// 		$.each(data,function(i,item){
+// 					$('#tbody-my-leave').append(`
+// 							<tr>    
+// 								<td>${item['leave_name']}</td>
+// 								<td>${item['start_date']}</td>
+// 								<td>${item['end_date']}</td>
+// 								<td>${item['duration']} Days </td>
+// 								<td>${item['status']}</td>
+// 							</tr>`    
+// 					);
+// 		});
+// 		$("#table-my-leave").DataTable();
+// 	 } 
 // 	});
-// 	$("#table-my-leave").DataTable();
+// });
+
+
+$.fn.getMyLeave=function(){
+	var $url = "get/leave"; 
+   return $.ajax({
+      url:$url,
+      type:"GET",
+      dataType: 'JSON'
+    });
+  };
+
+  $.fn.displayMyLeave=function(items){
+	$("#tbody-my-leave").html("");
+
+	$.each(items,function(i,item){
+				$('#tbody-my-leave').append(`
+						<tr>    
+							<td>${item['leave_name']}</td>
+							<td>${item['start_date']}</td>
+							<td>${item['end_date']}</td>
+							<td>${item['duration']} Days </td>
+							<td>${item['status']}</td>
+						</tr>`    
+				);
+	});
+	$("#table-my-leave").DataTable();
    
-//   };
+  };
 
   
   
 $.fn.getEmployeeLeave=function(){
-    var $url = "get/leave/requests";
+    var $url = "get/leave/request";
    return $.ajax({
       url:$url,
       type:"GET",
@@ -362,15 +363,9 @@ $.fn.getEmployeeLeave=function(){
 
   $.fn.displayEmployeeLeave=function(items){
 	$("#tbody-employee-leave").html("");
-	
-
 	$(".dropdown-menu").html("");
-				
-
+	
 				$.each(items,function(i,item){
-					
-						
-
 							$('#tbody-employee-leave').append(`
 									<tr>    
 										<td>${item['leave_name']}</td>
@@ -389,7 +384,7 @@ $.fn.getEmployeeLeave=function(){
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown">
 													${item['status']=="Pending"?
 														`<a class="dropdown-item" href=>View</a>
-														 <a class="dropdown-item" data-id="${item['id']}"  id="approve_leave">Approve</a>
+														 <a class="dropdown-item" data-id="${item['id']}"  id="approve_leave" data-start="${item['start_date']}" data-end="${item['end_date']}">Approve</a>
 														 <a class="dropdown-item" data-id="${item['id']}"  id="reject_leave">Reject</a>`
 														 :
 														`<a class="dropdown-item">View</a>`}
@@ -398,15 +393,22 @@ $.fn.getEmployeeLeave=function(){
 								  	 </td>
 									</tr>`    
 							);
-							$("#employee-leave-table").DataTable();	
-				});			
+							
+						
+				});	
+				$("#employee-leave-table").DataTable();		
   };
 
   $(document).on('click','#approve_leave',function(){
 	  $id=$(this).attr('data-id');
+	  $start=$(this).attr('data-start');
+	  $end=$(this).attr('data-end');
+	  console.log($end + $start);
 	$.ajax({
 		url: 'leave/approve/'+ $id,
 		type: "POST",
+		data: {'start_date':$start,
+			   'end_date':$end},
 		success: function(data){
 			var result=JSON.parse(data);
 			if(result=='success'){ 	
@@ -443,14 +445,12 @@ $.fn.getEmployeeLeave=function(){
 	});
   });	
 
-//   $(document).getmyLeave().done(function(data){	
-// 	$(document).displayMyLeave(data); 
-//   });
-
-
+ 
+  $(document).getMyLeave().done(function(data){	
+	$(document).displayMyLeave(data); 
+  });
 
   $(document).getEmployeeLeave().done(function(data){	
-	
 	$(document).displayEmployeeLeave(data); 
   });
 
@@ -462,6 +462,7 @@ $.fn.getEmployeeLeave=function(){
 
 // fetch_leave();
 fetch_overtime();
+
 // fetch_employee_overtime();
 fetch_admin_overtime();
 fetch_attendance();

@@ -72,18 +72,20 @@ $route['timesheet'] ='attendance/index';
 $route['leaves'] = 'attendance/leaves';
 $route['leave/employee'] ='attendance/leave_request';
 $route['eleave']='leaves/index';
+
+$route['get/leave/request']['GET']='leaves/fetch_leave_request';
+$route['get/leave']['GET'] = 'leaves/fetch_leave';
 $route['leaves/add']['POST']='leaves/insert_leave';
-$route['leaves/edit/(:any)']='leaves/update_leave/$1';
+$route['leaves/edit/(:any)']['POST']='leaves/update_leave/$1';
 $route['leaves/file']['POST']='leaves/leave_request';
-$route['get/leaveInfo']='leaves/get_leave';
+$route['get/leaveInfo']['GET']='leaves/get_leave';
 //Shift
 $route['shift'] = 'shift/index';
 $route['schedule'] = 'shift/schedule';
 $route['eschedule'] = 'shift/eschedule';
 // $route['calendar'] = 'attendance/calendar';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';
- $route['get/leave/(:any)'] = 'leaves/fetch_leave/$1';
- $route['get/leave/requests']['GET']='leaves/fetch_leave_request';
+
 //Overtime
 $route['overtime'] = 'attendance/overtime';
 $route['add/overtime'] = 'attendance/add_overtime';
