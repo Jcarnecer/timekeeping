@@ -34,6 +34,7 @@ body {
     background-color: $primary-color;
     border: none;
     color: $white;
+    font-size: 14px;
 
     &:hover {
         background-color: $secondary-color;
@@ -114,8 +115,8 @@ body {
         white-space: nowrap;
 
         &:hover {
-            background-color: $secondary-color;
-            border-left: 5px solid $primary-color;
+            background-color: $navy-blue;
+            border-left: 5px solid $secondary-color;
             text-decoration: none;
         }
 
@@ -355,11 +356,11 @@ body {
         }
 
         .leave-button {
-            background-position-x: 5.5em;
-            background-position-y: -20px;
+            background-position-x: 100px;
+            background-position-y: -15px;
             background-size: 60%;
             background-repeat: no-repeat;
-            font-size: 16px !important;
+            font-size: 24px !important;
             height: auto;
             width: 200px;
         }
@@ -367,7 +368,7 @@ body {
         .button-text {
             display: block;
             white-space: normal;
-            width: 50%;
+            width: 40%;
         }
     }
 }
@@ -410,7 +411,7 @@ body {
 }
 
 #shiftDock {
-    background: $secondary-color;
+    background: $dark-blue;
     border: none;
     bottom: 100px; 
     height: 510px;
