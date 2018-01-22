@@ -220,13 +220,15 @@ Class Leaves extends MY_Controller{
 
                 $user= $this->Crud_model->fetch_tag_row('*','users',$where_user);
                 $user_leave=$user->$leave_name;
-
+                
+                
                 if($result->duration < $user_leave){
                     // $end_date=new DateTime($this->input->post('end_date'));
                     // $start_date=new DateTime($this->input->post('start_date'));
                     // $end_date=$end_date->modify('+1 day');
                     // $period=new DatePeriod($start_date,new DateInt erval('P1D'),$end_date);
-                    $period=date_range($this->input->post('start_date'),$this->input->post('end_date'));   
+                    $end_date=date(strtotime($this->input->post('end_date')."+1 day"));
+                    $period=date_range($this->input->post('start_date'),$end_date);   
                     $deduct_leave=$user->$leave_name - $result->duration;
                     $update_status_leave=[ 
                         'status'=>'Approved'
@@ -246,11 +248,17 @@ Class Leaves extends MY_Controller{
                         else{
                             $date[]=$value->format('Y-m-d');    
                         }
-                      
-                        
+                      $data=[
+                            'user_id'    => $user->id,
+                               'date'    => $date[$key], 
+                             'status'    => $leave->leave_name,
+                         'created_at'    => $date[$key]
+                           
+                      ];
+                      $this->Crud_model->insert('timekeeping_record',$data);
                     }
-                    
-                     print_r($date);
+
+                     echo json_encode('success');
                 }
                 else {
                     echo json_encode("No available leave for this user");
