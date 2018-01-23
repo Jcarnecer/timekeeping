@@ -1,6 +1,7 @@
 
 <?php 
 $segment1 = $this->uri->segment(1);
+$segment2 = $this->uri->segment(2);
 if($segment1 == "timesheet"){
     if($this->user->info('position_id')  == '1' || $this->user->info('position_id')=='3'){
         $this->load->view('attendance/admin');
@@ -17,6 +18,8 @@ if($segment1 == "timesheet"){
     }elseif($this->user->info('position_id') == '2'){
         $this->load->view('attendance/employee_overtime');
     }
+}elseif($segment1=='leave'){
+    $this->load->view('attendance/employee_leave');
 }
 
 

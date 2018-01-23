@@ -77,7 +77,8 @@ class Profile extends MY_Controller {
                 'firstname' => $this->user->info('firstname'),
                 'lastname'  => $this->user->info('lastname'),
                 'email' => $this->user->info('email'),
-                'profile_picture'   => $this->user->info('profile_picture'),
+				'profile_picture'   => $this->user->info('profile_picture'),
+				
             ];
         }
         
