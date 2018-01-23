@@ -91,7 +91,7 @@ Class Leaves extends MY_Controller{
         $this->form_validation->set_rules('leave_id','Leave','required');
         $this->form_validation->set_rules('start','Start Date','required');
         $this->form_validation->set_rules('end','End Date','required');
-        $this->form_validation->set_rules('reason','Reason','required');
+       
         
         $where=['id'=>$this->input->post('user_id')];
         $user=$this->Crud_model->fetch_tag_row('*','users',$where);
@@ -102,29 +102,36 @@ Class Leaves extends MY_Controller{
         $leave_name=strtolower(str_replace(' ','_',$leave->leave_name));
 
         $user_leave=$user->$leave_name;
-        $duration= $this->getWorkingDays($this->input->post('start'),$this->input->post('end')); 
-        if($this->form_validation->run()==FALSE){
-            echo json_encode(validation_errors());
-        }
-        else{
-            if($duration>$user_leave){
-                echo json_encode('Insuffient Leave for '. $leave->leave_name);       
-            }    
+        $duration= $this->getWorkingDays($this->input->post('start'),$this->input->post('end'));
+        $validate=$this->validate_leave($this->input->post('user_id')); 
+        if(!$validate){
+            echo json_encode("Request cannot be processed");   
+       }
+       else{
+            if($this->form_validation->run()==FALSE){
+                echo json_encode(validation_errors());
+            }
             else{
-            $insert_request=[
-                'user_id'   =>  $this->input->post('user_id'),
-                'leave_id'  =>  $this->input->post('leave_id'),
-                'start_date'=>  $this->input->post('start'),
-                'end_date'  =>  $this->input->post('end'),
-                'reason'    =>  $this->input->post('reason'),
-                'status'    =>  'Pending',
-                'duration'  =>  $duration 
-            ]; 
-            
-            $this->Crud_model->insert('timekeeping_file_leave',$insert_request);
-            echo json_encode('success');
+                if($duration>$user_leave){
+                    echo json_encode('Insuffient Leave for '. $leave->leave_name);       
+                }    
+                else{
+                $insert_request=[
+                    'user_id'   =>  $this->input->post('user_id'),
+                    'leave_id'  =>  $this->input->post('leave_id'),
+                    'start_date'=>  $this->input->post('start'),
+                    'end_date'  =>  $this->input->post('end'),
+                    'reason'    =>  $this->input->post('reason'),
+                    'status'    =>  'Pending',
+                    'duration'  =>  $duration 
+                ]; 
+                
+                $this->Crud_model->insert('timekeeping_file_leave',$insert_request);
+                echo json_encode('success');
+                }
             }
         }
+
     }
 
 
@@ -215,72 +222,68 @@ Class Leaves extends MY_Controller{
                 $where_leave=['id'=>$result->leave_id];
                 $leave=$this->Crud_model->fetch_tag_row('*','timekeeping_leave',$where_leave);
                 $leave_name=strtolower(str_replace(' ','_',$leave->leave_name));
-
                 $where_user=['id'=>$result->user_id];
-
                 $user= $this->Crud_model->fetch_tag_row('*','users',$where_user);
                 $user_leave=$user->$leave_name;
-                
-                
-                if($result->duration < $user_leave){
-                    // $end_date=new DateTime($this->input->post('end_date'));
-                    // $start_date=new DateTime($this->input->post('start_date'));
-                    // $end_date=$end_date->modify('+1 day');
-                    // $period=new DatePeriod($start_date,new DateInt erval('P1D'),$end_date);
-                    $end_date=date(strtotime($this->input->post('end_date')."+1 day"));
-                    $period=date_range($this->input->post('start_date'),$end_date);   
-                    $deduct_leave=$user->$leave_name - $result->duration;
-                    $update_status_leave=[ 
-                        'status'=>'Approved'
-                    ];
-                    $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id]);
-                    $update_status=[
-                        $leave_name => $deduct_leave
-                    ];
-                    $this->Crud_model->update('users',$update_status,$where_user);
-                    $date=array();
-                    foreach($period as $key=>$value){
-                        $value=new DateTime($value);
 
-                        if($value->format('N')>=6){
-                               break; 
-                        }   
-                        else{
-                            $date[]=$value->format('Y-m-d');    
+                $end_date=date(strtotime($this->input->post('end_date')."+1 day"));
+                $validate=$this->validate_leave($result->user_id);
+                
+                    if($result->duration < $user_leave){
+                        // $end_date=new DateTime($this->input->post('end_date'));
+                        // $start_date=new DateTime($this->input->post('start_date'));
+                        // $end_date=$end_date->modify('+1 day');
+                        // $period=new DatePeriod($start_date,new DateInt erval('P1D'),$end_date);
+                        $end_date=date(strtotime($this->input->post('end_date')."+1 day"));
+                        $period=date_range($this->input->post('start_date'),$end_date);   
+                        $deduct_leave=$user->$leave_name - $result->duration;
+                        $update_status_leave=[ 
+                            'status'=>'Approved'
+                        ];
+                        $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id]);
+                        $update_status=[
+                            $leave_name => $deduct_leave
+                        ];
+                        $this->Crud_model->update('users',$update_status,$where_user);
+                        $date=array();
+                        foreach($period as $key=>$value){
+                            $value=new DateTime($value);
+
+                            if($value->format('N')>=6){
+                                break; 
+                            }   
+                            else{
+                                $date[]=$value->format('Y-m-d');    
+                            }
+                        $data=[
+                                'user_id'    => $user->id,
+                                'date'       => $date[$key], 
+                                'status'     => $leave->leave_name,
+                            'created_at'     => $date[$key]
+                            
+                        ];
+                        $this->Crud_model->insert('timekeeping_record',$data);
                         }
-                      $data=[
-                            'user_id'    => $user->id,
-                               'date'    => $date[$key], 
-                             'status'    => $leave->leave_name,
-                         'created_at'    => $date[$key]
-                           
-                      ];
-                      $this->Crud_model->insert('timekeeping_record',$data);
-                    }
 
-                     echo json_encode('success');
-                }
-                else {
-                    echo json_encode("No available leave for this user");
-                }
+                        echo json_encode('success');
+                    }
+                    else {
+                        echo json_encode("No available leave for this user");
+                    }
+                    
+                    
             }
 
-
-            
-
-
-
-
-
-
-            
-
-
-
-
-
-
-    
+            public function validate_leave($id){
+                // $period=date_range($start,$end);
+                $result=$this->Crud_model->check('timekeeping_file_leave',['user_id'=>$id,'status'=>'Pending']);
+                if($result){
+                    return FALSE;
+                }
+                else{
+                    return TRUE;   
+                }    
+            }
     }   
 
 

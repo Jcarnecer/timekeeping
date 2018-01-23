@@ -260,5 +260,35 @@ class Crud_model extends CI_Model{
 			$query = $this->db->get();
 			return $query->result();
 		}
+
 	
+	public function check($table,$where="",$limit="",$offset="",$order="",$where_in= false){
+			if (!empty($where)) {
+				$this->db->where($where);
+			}
+			if (!empty($limit)) {
+				if (!empty($offset)) {
+					$this->db->limit($limit, $offset);
+				}else{
+					$this->db->limit($limit);
+				}
+			}
+			if (!empty($order)) {
+				$this->db->order_by($order);
+			}
+	
+			if($where_in)
+			{
+				$this->db->where_in($where_in['name'], $where_in['values']);
+			}
+	
+	
+			$query = $this->db->get($table);
+			if ($query->num_rows() > 0) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}		
+		
+		}
 }
