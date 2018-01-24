@@ -7,7 +7,9 @@ function fetch_attendance(){
     success: function(data){
       $("#timesheet").html(data);
       $("#timesheet-table").DataTable({
-        "order": [[ 0, "desc" ],[ 1, "desc" ]]
+		"order": [[ 0, "desc" ],[ 1, "desc" ]],
+		"scrollY":"350px",
+        "scrollCollapse": true,
       });
     }
   })
@@ -20,7 +22,9 @@ function fetch_intern_attendance(){
 	  success: function(data){
 		$("#intern-timesheet").html(data);
 		$("#intern-timesheet-table").DataTable({
-		  "order": [[ 0, "desc" ],[ 1, "desc" ]]
+		  "order": [[ 0, "desc" ],[ 1, "desc" ]],
+		  "scrollY":"350px",
+		  "scrollCollapse": true,
 		});
 	  }
 	})
@@ -33,7 +37,9 @@ function fetch_employee_attendance() {
 		success: function(data){
 			$("#employee-attendance").html(data);
 			$("#employee-attendance-table").DataTable({
-				"order": [[ 1, "desc" ]]
+				"order": [[ 1, "desc" ]],
+				"scrollY":"350px",
+				"scrollCollapse": true,
 			});
 		}
 	})
@@ -346,7 +352,10 @@ $.fn.getMyLeave=function(){
 						</tr>`    
 				);
 	});
-	$("#table-my-leave").DataTable();
+	$("#table-my-leave").DataTable({
+		"scrollY":"350px",
+        "scrollCollapse": true,
+	});
    
   };
 
@@ -397,7 +406,10 @@ $.fn.getEmployeeLeave=function(){
 							
 						
 				});	
-				$("#employee-leave-table").DataTable();		
+				$("#employee-leave-table").DataTable({
+					"scrollY":"350px",
+					"scrollCollapse": true,
+				});		
   };
 
   $(document).on('click','#approve_leave',function(){
