@@ -471,9 +471,9 @@ $.fn.getEmployeeLeave=function(){
 	$(document).displayMyLeave(data); 
   });
 
-  $(document).getEmployeeLeave().done(function(data){	
-	$(document).displayEmployeeLeave(data); 
-  });
+//   $(document).getEmployeeLeave().done(function(data){	
+// 	$(document).displayEmployeeLeave(data); 
+//   });
 
 
  
