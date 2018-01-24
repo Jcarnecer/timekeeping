@@ -49,8 +49,8 @@
                 <h2>Leave</h2> 
                     <table class="table table-responsive">
                         <tbody>
-                        
-                        <?php foreach($leave as $row): 
+                        <?php if($leave==null){}else{
+                        foreach($leave as $row): 
                         $leave = strtolower(str_replace(' ','_',($row->leave_name))); 
                         $NoOfDays = $row->No_of_days;
                         ?>
@@ -67,6 +67,7 @@
             </div> 
         </div>
 					<?php } ?>
+          <?php } ?>
          </div>
           <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
               <div class="card">
