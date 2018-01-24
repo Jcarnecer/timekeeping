@@ -49,7 +49,11 @@
                 <h2>Leave</h2> 
                     <table class="table table-responsive">
                         <tbody>
-                        <?php if($leave==null){}else{
+                        <?php if($leave==null){?> 
+                          <tr>
+                            <td>No RecordS Found</td>
+                        </tr>
+                        <?php } else{
                         foreach($leave as $row): 
                         $leave = strtolower(str_replace(' ','_',($row->leave_name))); 
                         $NoOfDays = $row->No_of_days;
@@ -59,7 +63,7 @@
                             <h5></h5>
                             <td><?=$user->$leave?></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach;?>
 
                         </tbody>
                     </table>
