@@ -266,8 +266,7 @@ class Crud_model extends CI_Model{
 			$this->db->join('users','timekeeping_file_leave.user_id=users.id','inner');
 			$this->db->join('timekeeping_leave','timekeeping_file_leave.leave_id=timekeeping_leave.id','inner');
 			$query = $this->db->get();
-		
-				return $query->result();
+		    return $query->result();
 			
 			
 		}
