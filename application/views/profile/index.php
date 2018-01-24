@@ -51,7 +51,7 @@
                         <tbody>
                         <?php if($leave==null){?> 
                           <tr>
-                            <td>No RecordS Found</td>
+                            <td>No Record Found</td>
                         </tr>
                         <?php } else{
                         foreach($leave as $row): 
