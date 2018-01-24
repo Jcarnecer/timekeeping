@@ -1,4 +1,10 @@
-<h3>Shift Type</h3>
+
+<?php 
+$segment1 = $this->uri->segment(1);
+if($segment1 == 'schedule'){
+    $this->load->view('shift/admin');
+}elseif($segment1 == 'shift'){?>
+    <h3>Shift Type</h3>
         <br><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">
@@ -17,5 +23,13 @@
             </table>
         </div>
     </div>
-    <?php $this->load->view('shift/partials/edit_modal') ?>
+    <?php $this->load->view('shift/partials/edit_modal');
+}elseif($segment1 == 'eschedule'){
+    $this->load->view('shift/employee');
+}
+?>
+
+
+
+
 

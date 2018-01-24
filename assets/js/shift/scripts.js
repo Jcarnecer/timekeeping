@@ -9,6 +9,14 @@ function fetch_shift() {
     })
 }
 
+function change_shift(data) {
+    return $.ajax({
+        url: 'shift/change_shift',
+        type: 'POST',
+        data: data
+    });
+}
+
 $(document).on('click','.edit_shift',function(){
     var shift = $(this).data('shift');
     var start = $(this).data('start');
@@ -22,6 +30,12 @@ $(document).on('click','.edit_shift',function(){
 })
 
 $(document).ready(function() {
+    if ($('#shiftDock .card-deck').children().length == 0) {
+        $('#shiftDock').html(`
+            <h1 class="text-white text-center py-3">No Employee</h1>
+        `);
+    }
+
     $("#update-shift-form").on('submit',function(e){
         $.ajax({
             url: 'shift/edit_shift',
@@ -46,4 +60,46 @@ $(document).ready(function() {
 
         e.preventDefault();
     })
+
+    $('#shiftDock').on('mouseenter', (e) => {
+
+        $('#shiftDock').addClass('show');
+    })
+
+    $('#shiftDock').on('mouseleave', (e) => {
+
+        $('#shiftDock').removeClass('show');
+    })
 })
+
+function allowDrop(e) {
+    e.preventDefault();
+}
+
+function drag(e) {
+    e.dataTransfer.setData("text", e.target.id);
+}
+
+function drop(e) {
+    e.preventDefault();
+
+    var $shiftColumn = $(`#${e.target.id}`);
+    var $userCard = $(`#${e.dataTransfer.getData("text")}`);
+    // var $data = $(`#${e.dataTransfer.getData("text")}`);
+    // e.target.appendChild(document.getElementById(e.dataTransfer.getData("text")));
+    $shiftColumn.append($userCard);
+
+    var data = {
+        user_id: $userCard.data('id'),
+        shift_id: $shiftColumn.closest('.shift-card').data('id')
+    };
+
+    change_shift(data).done(function(response) {
+      
+        if(response) {
+            console.log('Transfer Successful');
+        } else {
+            console.log('Transfer Successful');
+        }
+    });
+}

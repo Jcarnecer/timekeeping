@@ -70,15 +70,31 @@ $route['add/attendance'] = 'attendance/add_timesheet';
 $route['get/attendance'] = 'attendance/get_timesheet';
 $route['timesheet'] ='attendance/index';
 $route['leaves'] = 'attendance/leaves';
+$route['leave/employee'] ='attendance/leave_request';
+$route['eleave']='leaves/index';
+
+$route['get/leave/request']['GET']='leaves/fetch_leave_request';
+$route['get/leave/request/(:any)']['GET']='leaves/fetch_leave_request/$1';
+$route['get/leave']['GET'] = 'leaves/fetch_leave';
+$route['leaves/add']['POST']='leaves/insert_leave';
+$route['leaves/edit/(:any)']['POST']='leaves/update_leave/$1';
+$route['leaves/file']['POST']='leaves/leave_request';
+$route['get/leaveInfo']['GET']='leaves/get_leave';
+//Shift
+$route['shift'] = 'shift/index';
+$route['schedule'] = 'shift/schedule';
+$route['eschedule'] = 'shift/eschedule';
 // $route['calendar'] = 'attendance/calendar';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';
-$route['get/leave'] = 'attendance/get_leave';
+
 //Overtime
 $route['overtime'] = 'attendance/overtime';
 $route['add/overtime'] = 'attendance/add_overtime';
 $route['get/admin_overtime'] = 'attendance/get_admin_overtime';
 $route['get/emp_overtime'] = 'attendance/get_employee_overtime';
-
+$route['leave/reset']='leaves/approved_reset';
+$route['leave/approve/(:any)']['POST']='leaves/approve_leave/$1';
+$route['leave/reject/(:any)']['POST']='leaves/reject_leave/$2';
 //email confirmation
 $route['auth/account/verification/(:any)/(:any)'] = 'email/verifykey/$1/$2';
 $route['auth/reset/verification/(:any)/(:any)'] = 'email/resetkey/$1/$2';

@@ -133,6 +133,14 @@ class Crud_model extends CI_Model{
 		return $q->row();
 	}
 
+	public function get_users(){
+		return $this->db->select('*')
+			->from('users')
+			->join('user_details', 'users.id = user_details.user_id')
+			->get()
+			->result();
+	}
+
 	public function join_user_record_row($id){
 		$this->db->select('users.id,first_name,last_name,email,username,role,profile_picture,employee_number');
 		$this->db->from('users');
@@ -247,5 +255,55 @@ class Crud_model extends CI_Model{
     public function delete_event($id) 
     {
         $this->db->where("id", $id)->delete("calendar_events");
-    }
+	}
+	
+   public function fetch_leave($user_id){
+	   if(!empty($user_id)){
+			$this->db->where($user_id);
+	  	 }
+			$this->db->select('timekeeping_file_leave.id,timekeeping_leave.leave_name,timekeeping_file_leave.start_date,timekeeping_file_leave.end_date,timekeeping_file_leave.duration,users.firstname,users.lastname,timekeeping_file_leave.status,timekeeping_file_leave.reason');
+			$this->db->from('timekeeping_file_leave');
+			$this->db->join('users','timekeeping_file_leave.user_id=users.id','inner');
+			$this->db->join('timekeeping_leave','timekeeping_file_leave.leave_id=timekeeping_leave.id','inner');
+			$query = $this->db->get();
+			if($query->num_rows()>1){
+				
+				return $query->result();		
+			}
+			else{
+				return $query->row();
+			}
+			
+		}
+
+	
+	public function check($table,$where="",$limit="",$offset="",$order="",$where_in= false){
+			if (!empty($where)) {
+				$this->db->where($where);
+			}
+			if (!empty($limit)) {
+				if (!empty($offset)) {
+					$this->db->limit($limit, $offset);
+				}else{
+					$this->db->limit($limit);
+				}
+			}
+			if (!empty($order)) {
+				$this->db->order_by($order);
+			}
+	
+			if($where_in)
+			{
+				$this->db->where_in($where_in['name'], $where_in['values']);
+			}
+	
+	
+			$query = $this->db->get($table);
+			if ($query->num_rows() > 0) {
+				return TRUE;
+			}else{
+				return FALSE;
+			}		
+		
+		}
 }

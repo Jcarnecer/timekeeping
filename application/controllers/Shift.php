@@ -4,11 +4,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Shift extends MY_Controller {
 
 	public function index() {
-       $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
         parent::mainpage('shift/index',
             [
                 'title' => 'Shift List',
                 'all_shift' => $get_all_shift
+            ]
+        );
+    }
+
+    public function schedule() {
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+
+        # ---------------------------------------------------------------------------------------------------------------
+        
+        $get_all_employee = $this->Crud_model->get_users();
+        // $get_all_employee = $this->Crud_model->fetch('users');
+
+        # ---------------------------------------------------------------------------------------------------------------
+        
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Schedule',
+                'all_shift' => $get_all_shift,
+                'all_employee' => $get_all_employee
+            ]
+        );
+    }
+    public function eschedule() {
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+
+        $get_all_employee = $this->Crud_model->fetch('users');
+
+        $get_all_emp_shift = $this->Crud_model->fetch('user_details');
+
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Schedule',
+                'all_shift' => $get_all_shift,
+                'all_employee' => $get_all_employee,
+                'all_emp_shift' => $get_all_emp_shift
             ]
         );
     }
@@ -75,5 +110,11 @@ class Shift extends MY_Controller {
 			);
             echo json_encode($success);
         }
+    }
+
+    public function change_shift() {
+        echo json_encode($this->Crud_model->update('user_details', 
+            ['shift_id' => $this->input->post('shift_id')], 
+            ['user_id' => $this->input->post('user_id')]));
     }
 }
