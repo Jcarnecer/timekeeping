@@ -74,6 +74,7 @@ $route['leave/employee'] ='attendance/leave_request';
 $route['eleave']='leaves/index';
 
 $route['get/leave/request']['GET']='leaves/fetch_leave_request';
+$route['get/leave/request/(:any)']['GET']='leaves/fetch_leave_request/$1';
 $route['get/leave']['GET'] = 'leaves/fetch_leave';
 $route['leaves/add']['POST']='leaves/insert_leave';
 $route['leaves/edit/(:any)']['POST']='leaves/update_leave/$1';

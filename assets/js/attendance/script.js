@@ -353,6 +353,7 @@ $.fn.getMyLeave=function(){
   
   
 $.fn.getEmployeeLeave=function(){
+	$id=" ";
     var $url = "get/leave/request";
    return $.ajax({
       url:$url,
@@ -383,11 +384,11 @@ $.fn.getEmployeeLeave=function(){
  
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown">
 													${item['status']=="Pending"?
-														`<a class="dropdown-item" href=>View</a>
+														`<a class="dropdown-item" data-toggle="modal" data-target="#view-file-leave-modal" id="btn-view" data-id="${item['id']}">View</a>
 														 <a class="dropdown-item" data-id="${item['id']}"  id="approve_leave" data-start="${item['start_date']}" data-end="${item['end_date']}">Approve</a>
 														 <a class="dropdown-item" data-id="${item['id']}"  id="reject_leave">Reject</a>`
 														 :
-														`<a class="dropdown-item">View</a>`}
+														`<a class="dropdown-item" data-toggle="modal" data-target="#view-file-leave-modal" id="btn-view" data-id="${item['id']}">View</a>`}
 											</div>
 										</div>  
 								  	 </td>
@@ -446,6 +447,25 @@ $.fn.getEmployeeLeave=function(){
   });	
 
  
+  $(document).on('click','#btn-view',function(){
+	$id=$(this).attr('data-id');
+	$.ajax({
+		url: 'get/leave/request'+ $id,
+		type: "GET",
+		success: function(data){
+			var result=JSON.parse(data);
+			$('#view-file-leave_modal').find("#leave_name").val(result.leave_name);
+			$("#start_date").val(result.start_date);		
+			$("#end_date").val(result.end_date);		
+			$("#duration").val(result.duration);		
+			$("#status").val(result.status);
+			$("#reason").val(result.reason);				
+		}
+	});
+
+  });
+
+
   $(document).getMyLeave().done(function(data){	
 	$(document).displayMyLeave(data); 
   });

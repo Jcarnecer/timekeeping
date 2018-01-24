@@ -1,3 +1,7 @@
+
+<?php
+$this->load->view('attendance/partials/view_file_leave_modal.php'); 
+?>
 <div class="row">
   <div class="col-md-12">
       <h3>Employee Leave</h3>
