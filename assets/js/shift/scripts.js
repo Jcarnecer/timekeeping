@@ -5,7 +5,7 @@ function fetch_shift() {
         success: function(data) {
             $("#shiftdata").html(data);
             $("#tktbl").DataTable({
-                "scrollY":"350px",
+                "scrollY":"200px",
                 "scrollCollapse": true,
             });
         }

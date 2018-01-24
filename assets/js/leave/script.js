@@ -98,7 +98,7 @@ $.fn.getLeaveInfo=function(){
             );
 		});
 		$("#table-leaves").DataTable({
-            "scrollY": "350px",
+            "scrollY": "200px",
             "scrollCollapse": true,
         });
   };

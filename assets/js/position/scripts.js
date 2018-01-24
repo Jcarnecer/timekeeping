@@ -5,7 +5,7 @@ function fetch_positions() {
         success: function(data) {
             $("#positiondata").html(data);
             $("#tktbl").DataTable({
-                "scrollY":"350px",
+                "scrollY":"200px",
                 "scrollCollapse": true,
             });
         }
