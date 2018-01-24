@@ -97,7 +97,10 @@ $.fn.getLeaveInfo=function(){
                     </tr>`    
             );
 		});
-		$("#table-leaves").DataTable();
+		$("#table-leaves").DataTable({
+            "scrollY": "350px",
+            "scrollCollapse": true,
+        });
   };
 
   $(document).on('click','#btn-reset-leave',function(){

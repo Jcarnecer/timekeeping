@@ -4,7 +4,10 @@ function fetch_shift() {
         type: "POST",
         success: function(data) {
             $("#shiftdata").html(data);
-            $("#tktbl").DataTable();
+            $("#tktbl").DataTable({
+                "scrollY":"350px",
+                "scrollCollapse": true,
+            });
         }
     })
 }
