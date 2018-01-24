@@ -4,7 +4,10 @@ function fetch_users() {
         type: "POST",
         success: function(data) {
             $("#userdata").html(data);
-            $("#tktbl").DataTable();
+            $("#tktbl").DataTable({
+                "scrollY":"350px",
+                "scrollCollapse": true,
+            });
         }
     })
 }

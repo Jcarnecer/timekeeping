@@ -4,7 +4,10 @@ function fetch_positions() {
         type: "POST",
         success: function(data) {
             $("#positiondata").html(data);
-            $("#tktbl").DataTable();
+            $("#tktbl").DataTable({
+                "scrollY":"350px",
+                "scrollCollapse": true,
+            });
         }
     })
 }
