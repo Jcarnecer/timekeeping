@@ -200,10 +200,16 @@ Class Leaves extends MY_Controller{
              
             }
 
-            public function fetch_leave_request(){
+            public function fetch_leave_request($id=null){
+               if(!$id==null){
+                $leave_request=$this->Crud_model->fetch_leave(['timekeeping_file_leave.id'=>$id]);
+                echo json_encode($leave_request);
                 
+               }
+               else if(empty($id)){
                 $leave_request=$this->Crud_model->fetch_leave("");
                 echo json_encode($leave_request);
+               }
                 
             }
 

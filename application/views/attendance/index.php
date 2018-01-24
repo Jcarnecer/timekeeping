@@ -20,8 +20,10 @@ if($segment1 == "timesheet"){
     }
 }elseif($segment1=='leave'){
     $this->load->view('attendance/employee_leave');
+    
 }
 
 
 $this->load->view('attendance/partials/attendance_modal');
+    
 ?>

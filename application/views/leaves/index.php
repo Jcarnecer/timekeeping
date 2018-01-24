@@ -6,5 +6,6 @@
     }
     $this->load->view('leaves/partials/reset_leave');    
     $this->load->view('leaves/partials/leave_modal');
+    
   
 ?>
