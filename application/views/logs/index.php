@@ -1,6 +1,9 @@
 <script>
 $(function(){
-    $("#myTable").DataTable();
+    $("#myTable").DataTable({
+        "scrollY":"200px",
+        "scrollCollapse": true,
+    });
 })
 
 </script>
