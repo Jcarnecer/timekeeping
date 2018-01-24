@@ -18,16 +18,16 @@ $leave=$this->Crud_model->fetch('timekeeping_leave');
           <div class="form-group">
           <h5 class="text-danger" id="error-message"></h5>
             <label for="">Leave</label>
-            <input type="text" name="leave_name" class="form-control" value="Adsadd"  id="leave_name"disabled>
+            <input type="text" name="leave_name" class="form-control"   id="leave_name"disabled>
           </div>
           
           <div class="row">
-            <div class="form-group col-6">
+            <div class="form-group col-12 col-md-6">
                 <label for="">From</label>
                 <input type="date" name="start" class="form-control" id="start_date"disabled>
             </div>
            
-              <div class="form-group col-6">   
+              <div class="form-group col-12 col-md-6">   
                 <label for="">To</label>
                 <input type="date" name="end" class="form-control" id="end_date"disabled>
             </div>

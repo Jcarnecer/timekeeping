@@ -450,16 +450,17 @@ $.fn.getEmployeeLeave=function(){
   $(document).on('click','#btn-view',function(){
 	$id=$(this).attr('data-id');
 	$.ajax({
-		url: 'get/leave/request'+ $id,
+		url: 'get/leave/request/'+ $id,
 		type: "GET",
+		dataType: "JSON",
 		success: function(data){
-			var result=JSON.parse(data);
-			$('#view-file-leave_modal').find("#leave_name").val(result.leave_name);
-			$("#start_date").val(result.start_date);		
-			$("#end_date").val(result.end_date);		
-			$("#duration").val(result.duration);		
-			$("#status").val(result.status);
-			$("#reason").val(result.reason);				
+			$("#view-file-leave-modal").find('.modal-title').html("Filed By:" + data.lastname +","+data.firstname);
+			$('#leave_name').val(data.leave_name);
+			$("#start_date").val(data.start_date);		
+			$("#end_date").val(data.end_date);		
+			$("#duration").val(data.duration);		
+			$("#status").val(data.status);
+			$("#reason").val(data.reason);				
 		}
 	});
 
