@@ -106,9 +106,13 @@ body {
 #nav-icon-close {
   float: right;
   margin: 10px; }
+  #nav-icon-close span {
+    background: #ffffff; }
 
 #nav-icon-open {
   margin-right: 10px; }
+  #nav-icon-open span {
+    background: #626262; }
 
 .custom-toggle {
   cursor: pointer;
@@ -117,7 +121,6 @@ body {
   width: 30px; }
 
 .custom-toggle span {
-  background: #38b5ff;
   border-radius: 9px;
   display: block;
   height: 3px;

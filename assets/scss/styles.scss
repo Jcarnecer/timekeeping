@@ -161,10 +161,18 @@ body {
 #nav-icon-close {
     float: right;
     margin: 10px;
+    
+    span {
+        background: $white;
+    }
 }
 
 #nav-icon-open {
     margin-right: 10px;
+
+    span {
+        background: $dark-gray;
+    }
 }
 
 .custom-toggle {
@@ -175,7 +183,6 @@ body {
 }
   
 .custom-toggle span {
-    background: $primary-color;
     border-radius: 9px;
     display: block;
     height: 3px;
