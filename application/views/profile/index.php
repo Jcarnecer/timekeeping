@@ -2,6 +2,7 @@
   $id = $this->user->info('id');
   $where = ['id'  => $id];
   $user = $this->Crud_model->fetch_tag_row('*','users',$where);
+  $leave=  $this->Crud_model->fetch('timekeeping_leave');
 ?>
 
 <?php $this->load->view('profile/partials/picture_modal') ?>
@@ -31,16 +32,40 @@
           <button class="btn custom-button edit-button" data-toggle="modal" href="#edit-profile-modal">Edit Account Info</button>
         </div>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
-          <h2>Other Information</h2>
+          <!-- <h2>Other Information</h2> -->
           <?php if($this->user->info('position_id') == 4){ ?>
+            <h2>Other Information</h2>
             <h5 >School: <span id="profile-school"></span></h5>
             <h5>Course: <span  id="profile-course"></span></h5>
             <h5>School Year: <span id="profile-year"></span></h5>
             <h5>Total Number of Hours: <span id="profile-total-num-hrs"></span></h5>
           <?php }else{ ?>
-						<h5 >SSS No.: <span id="profile-sss"></span></h5>
+						<!-- <h5 >SSS No.: <span id="profile-sss"></span></h5>
             <h5>Tin No.: <span  id="profile-tin"></span></h5>
-            <h5>Phil Heath: <span id="profile-philhealth"></span></h5>
+            <h5>Phil Heath: <span id="profile-philhealth"></span></h5> -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <!-- <h3>Total Reimbursement Claimed</h3> -->
+                <h2>Leave</h2> 
+                    <table class="table table-responsive">
+                        <tbody>
+                        
+                        <?php foreach($leave as $row): 
+                        $leave = strtolower(str_replace(' ','_',($row->leave_name))); 
+                        $NoOfDays = $row->No_of_days;
+                        ?>
+                        <tr>
+                            <th scope="row"><?= $row->leave_name?></th>
+                            <h5></h5>
+                            <td><?=$user->$leave?></td>
+                        </tr>
+                        <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
 					<?php } ?>
          </div>
           <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">

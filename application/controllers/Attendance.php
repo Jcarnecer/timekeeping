@@ -46,6 +46,14 @@ class Attendance extends MY_Controller {
         
     }
 
+    public function leave_request(){
+        parent::mainpage('attendance/employee_leave',
+        [
+            'title' => 'Employee Leave',
+        ]
+    );
+    }
+
     public function add_timesheet(){
         $now = new DateTime();
         $now->setTimezone(new DateTimezone('Asia/Manila'));
@@ -332,36 +340,7 @@ class Attendance extends MY_Controller {
         }
     }
 
-    public function get_leave() {
-        // $order_by = "id desc";
-        $user_id = $this->user->info('id');
-        $where = ['user_id' => $user_id];
-        $where_in = ['name' => 'status', 'values' => ['Sick Leave', 'Vacation Leave']];
-        $leave = $this->Crud_model->fetch('timekeeping_record',$where,"","","", $where_in); 
-        ?>
-            <table class="table table-bordered" id="leave-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                <tbody>
-            <?php 
-            if(!$leave == NULL){
-                foreach ($leave as $row):
-                ?>
-                    <tr>
-                        <td><?= $row->date?></td>
-                        <td><?= $row->status?></td>
-                    </tr>
-        <?php   endforeach; ?>
-                </tbody>
-                </table>
-    <?php   } 
     
-    }
-
     //Overtime
     public function add_overtime(){
         $now = new DateTime();

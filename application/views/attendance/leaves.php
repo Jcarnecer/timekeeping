@@ -2,10 +2,12 @@
   <div class="col-md-12">
       <h3>My Leaves</h3>
       <hr>
+      <input type="hidden" name="user_id" id="my_leave" value="<?=$this->user->info('id');?>" data-id="<?=$this->user->info('id');?>">
+      <button class="btn intern-attendance-button" data-toggle="modal" data-target="#file-leave-modal">File Leave</button>
   </div>
 </div>
 
-  <div class="row" id="DateTime">
+  <!-- <div class="row" id="DateTime">
     <div class="col-md-12">
       <div class="form-container">
 
@@ -27,10 +29,24 @@
 
       </div>
     </div>
-  </div>
-
-
+  </div> -->
 <div class="table-responsive" id="leave-data">
+<table class="table table-bordered table-responsive-xl" id="table-my-leave" > 
+
+        <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                  
+                </tr>
+        </thead>
+      <tbody id="tbody-my-leave">
+
+      </tbody> 
+</table>
 </div>
 <?php 
-$this->load->view('attendance/partials/attendance_modal'); ?>
+$this->load->view('attendance/partials/file_leave_modal'); ?>
