@@ -5,7 +5,7 @@
             <h2 class="d-inline-block m-0"><?= $shift->shift_type ?></h2>
             <p class="d-inline-block text-muted m-0"><?= $shift->start_time . ' - ' . $shift->end_time ?></p>
         </div>
-        <div id="shift-<?= $shift->id ?>" class="card-body shift-table" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div id="shift-<?= $shift->id ?>" class="card-body shift-table" ondrop="drop(event)" ondragover="allowDrop(event)" style="overflow-y: auto;">
         	<?php foreach($all_employee as $employee):
         			$e_shift=null;
         			foreach ($all_emp_shift as $emp_shift)
