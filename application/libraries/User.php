@@ -20,5 +20,6 @@ class User {
         if(!$userinfo == NULL) {
             return $userinfo->$col;
         }
+       
     }
 }

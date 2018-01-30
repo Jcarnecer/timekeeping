@@ -1,13 +1,14 @@
 <?php
-$pos_id = $this->user->info('position_id');
-$where = ['id'	=> $pos_id];
-$position = $this->Crud_model->fetch_tag_row('*','position',$where);
+// $pos_id = $this->user->info('position_id');
+// $where = ['id'	=> $pos_id];
+// $position = $this->Crud_model->fetch_tag_row('*','position',$where);
 
-if($position->name == 'Intern'){
-	$this->load->view('dashboard/partials/intern');
-}else{
-	$this->load->view('dashboard/partials/employee');
-}
+// if($position->name == 'Intern'){
+// 	$this->load->view('dashboard/partials/intern');
+// }else{
+// 	$this->load->view('dashboard/partials/employee');
+// }
 
 
+echo $this->session->has_userdata('user');
 ?>

@@ -300,4 +300,8 @@ class Crud_model extends CI_Model{
 			}		
 		
 		}
+
+		public function is_login(){
+			return $this->session->has_userdata('user');
+		}
 }
