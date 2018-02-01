@@ -8,12 +8,8 @@ function fetch_attendance(){
       $("#timesheet").html(data);
       $("#timesheet-table").DataTable({
 		"order": [[ 0, "desc" ],[ 1, "desc" ]],
-<<<<<<< HEAD
-		"scrollY":"200px",
-=======
 		"retrieve":true,
 		"scrollY":"350px",
->>>>>>> alpha-2.0
         "scrollCollapse": true,
       });
     }
@@ -28,12 +24,8 @@ function fetch_intern_attendance(){
 		$("#intern-timesheet").html(data);
 		$("#intern-timesheet-table").DataTable({
 		  "order": [[ 0, "desc" ],[ 1, "desc" ]],
-<<<<<<< HEAD
-		  "scrollY":"200px",
-=======
 		  "retrieve":true,
 		  "scrollY":"350px",
->>>>>>> alpha-2.0
 		  "scrollCollapse": true,
 		});
 	  }
@@ -48,12 +40,8 @@ function fetch_employee_attendance() {
 			$("#employee-attendance").html(data);
 			$("#employee-attendance-table").DataTable({
 				"order": [[ 1, "desc" ]],
-<<<<<<< HEAD
-				"scrollY":"200px",
-=======
 				"retrieve":true,
 				"scrollY":"350px",
->>>>>>> alpha-2.0
 				"scrollCollapse": true,
 			});
 		}
@@ -367,15 +355,6 @@ $.fn.getMyLeave=function(){
 						</tr>`    
 				);
 	});
-<<<<<<< HEAD
-	$("#table-my-leave").DataTable({
-		"scrollY":"200px",
-        "scrollCollapse": true,
-	});
-   
-=======
-
->>>>>>> alpha-2.0
   };
 
   
@@ -425,14 +404,7 @@ $.fn.getEmployeeLeave=function(){
 							
 						
 				});	
-<<<<<<< HEAD
-				$("#employee-leave-table").DataTable({
-					"scrollY":"200px",
-					"scrollCollapse": true,
-				});		
-=======
 			
->>>>>>> alpha-2.0
   };
 
   $(document).on('click','#approve_leave',function(){
@@ -513,10 +485,6 @@ $.fn.getEmployeeLeave=function(){
   });
 
   $(document).getEmployeeLeave().done(function(data){	
-<<<<<<< HEAD
- 	$(document).displayEmployeeLeave(data); 
-   });
-=======
 	$(document).displayEmployeeLeave(data); 
 	$("#employee-leave-table").DataTable({
 		"retrieve":true,
@@ -524,7 +492,6 @@ $.fn.getEmployeeLeave=function(){
 		"scrollCollapse": true,
 	});		
   });
->>>>>>> alpha-2.0
 
 
  

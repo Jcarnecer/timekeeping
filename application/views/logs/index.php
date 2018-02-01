@@ -1,14 +1,9 @@
 <script>
 $(function(){
     $("#myTable").DataTable({
-<<<<<<< HEAD
-        "scrollY":"200px",
-        "scrollCollapse": true,
-=======
         "retrieve":true,
 		"scrollY":"350px",
 		"scrollCollapse": true,
->>>>>>> alpha-2.0
     });
 })
 

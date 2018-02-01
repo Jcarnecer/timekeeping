@@ -5,12 +5,8 @@ function fetch_users() {
         success: function(data) {
             $("#userdata").html(data);
             $("#tktbl").DataTable({
-<<<<<<< HEAD
-                "scrollY":"200px",
-=======
                 "retrieve":true,
                 "scrollY":"350px",
->>>>>>> alpha-2.0
                 "scrollCollapse": true,
             });
         }
