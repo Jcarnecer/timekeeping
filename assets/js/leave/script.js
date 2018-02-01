@@ -133,6 +133,11 @@ $.fn.getLeaveInfo=function(){
 
 
   $(document).getLeaveInfo().done(function(data){	
-	  $(document).displayLeaveInfo(data); 
+      $(document).displayLeaveInfo(data); 
+      $("#table-leaves").DataTable({
+        "retrieve":true,
+        "scrollY": "350px",
+        "scrollCollapse": true,
+    });
 	});
 
