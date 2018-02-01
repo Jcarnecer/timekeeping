@@ -1,6 +1,10 @@
 <script>
 $(function(){
-    $("#myTable").DataTable();
+    $("#myTable").DataTable({
+        "retrieve":true,
+		"scrollY":"350px",
+		"scrollCollapse": true,
+    });
 })
 
 </script>

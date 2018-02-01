@@ -5,6 +5,7 @@ function fetch_users() {
         success: function(data) {
             $("#userdata").html(data);
             $("#tktbl").DataTable({
+                "retrieve":true,
                 "scrollY":"350px",
                 "scrollCollapse": true,
             });

@@ -5,6 +5,7 @@ function fetch_positions() {
         success: function(data) {
             $("#positiondata").html(data);
             $("#tktbl").DataTable({
+                "retrieve":true,
                 "scrollY":"350px",
                 "scrollCollapse": true,
             });
