@@ -136,7 +136,7 @@ class Crud_model extends CI_Model{
 	public function get_users(){
 		return $this->db->select('*')
 			->from('users')
-			->join('user_details', 'users.id = user_details.user_id')
+			->join('timekeeping_users_shift', 'users.id = timekeeping_users_shift.users_id')
 			->get()
 			->result();
 	}

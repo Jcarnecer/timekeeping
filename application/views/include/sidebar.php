@@ -1,15 +1,17 @@
 <?php
-      $position = $this->user->info('role');
-      $where = array('id' => $position);
-      $users_position = $this->Crud_model->fetch_tag_row('*','position',$where);
+	 $position = $this->user->info('role');
+      $where = array('role_id' => $position);
+	  $users_position = $this->Crud_model->fetch_tag_row('*','timekeeping_permissions',$where);	
       $privilege = $users_position->privileges;
 	  $menu = $this->Crud_model->fetch('timekeeping_menu');
-	  $explode = explode(',',$privilege);
+      $explode = explode(',',$privilege);
 	  
-	//   $submenu = $this->Crud_model->fetch('sub_menu');
+	  $submenu = $this->Crud_model->fetch('timekeeping_sub_menu');
 	  $sub_privilege = $users_position->privilege_sub_menu;
 	  $submenu = $this->Crud_model->fetch('timekeeping_sub_menu');
-	  $sub_explode = explode(',',$sub_privilege);	
+	  $sub_explode = explode(',',$sub_privilege);
+	
+	// $position = $this->user->info('role');
 	
 ?>
 <div id="sidebar">

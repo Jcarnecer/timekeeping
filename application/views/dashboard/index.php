@@ -9,6 +9,4 @@
 // 	$this->load->view('dashboard/partials/employee');
 // }
 
-
-echo $this->session->has_userdata('user');
 ?>

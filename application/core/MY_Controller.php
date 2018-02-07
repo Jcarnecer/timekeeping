@@ -8,7 +8,7 @@ class MY_Controller	extends CI_Controller
 		$this->load->helper('date');
 		$this->load->model('Crud_model');
 		$this->load->library('authenticate');
-		// $this->load->library('user');
+		$this->load->library('user');
 		$this->load->dbforge();
 		// $this->userinfo();
 		// if(!$this->session->userdata('user_logged_in')){
@@ -18,7 +18,7 @@ class MY_Controller	extends CI_Controller
 		// }
 		
 	}
-
+	
 	
 	private function no_session() {
         if(!$this->session->userdata('user')) {

@@ -36,7 +36,7 @@ class Shift extends MY_Controller {
 
         $get_all_employee = $this->Crud_model->fetch('users');
 
-        $get_all_emp_shift = $this->Crud_model->fetch('user_details');
+        $get_all_emp_shift = $this->Crud_model->fetch('timekeeping_users_shift');
 
         parent::mainpage('shift/index',
             [

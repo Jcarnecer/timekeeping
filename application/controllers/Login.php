@@ -83,7 +83,7 @@ class Login extends MY_Controller
             if($user != null) {
                 
                 $this->session->set_userdata('user', $user);
-                redirect();
+                redirect('');
             }
         }
 
@@ -94,18 +94,18 @@ class Login extends MY_Controller
 
 
     public function logout() {
-        $position_id = $this->user->info('position_id');
-        $pos_where = ['id'  => $position_id];
-        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-        parent::audittrail(
-            'Account Access',
-            'Account Logout ',
-            $this->user->info('firstname') .' '. $this->user->info('lastname'),
-            $position->name,
-            $this->input->ip_address()
-        );
+        // $position_id = $this->user->info('position_id');
+        // $pos_where = ['id'  => $position_id];
+        // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        // parent::audittrail(
+        //     'Account Access',
+        //     'Account Logout ',
+        //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+        //     $position->name,
+        //     $this->input->ip_address()
+        // );
         $this->session->sess_destroy();
-        redirect('');
+        return redirect('http://localhost/main');
     }
 
 }
