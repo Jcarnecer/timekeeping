@@ -261,7 +261,7 @@ class Crud_model extends CI_Model{
 	   if(!empty($user_id)){
 			$this->db->where($user_id);
 	  	 }
-			$this->db->select('timekeeping_file_leave.id,timekeeping_leave.leave_name,timekeeping_file_leave.start_date,timekeeping_file_leave.end_date,timekeeping_file_leave.duration,users.firstname,users.lastname,timekeeping_file_leave.status,timekeeping_file_leave.reason');
+			$this->db->select('timekeeping_file_leave.id,timekeeping_leave.leave_name,timekeeping_file_leave.start_date,timekeeping_file_leave.end_date,timekeeping_file_leave.duration,users.first_name,users.last_name,timekeeping_file_leave.status,timekeeping_file_leave.reason');
 			$this->db->from('timekeeping_file_leave');
 			$this->db->join('users','timekeeping_file_leave.user_id=users.id','inner');
 			$this->db->join('timekeeping_leave','timekeeping_file_leave.leave_id=timekeeping_leave.id','inner');

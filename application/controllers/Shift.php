@@ -19,6 +19,9 @@ class Shift extends MY_Controller {
         # ---------------------------------------------------------------------------------------------------------------
         
         $get_all_employee = $this->Crud_model->get_users();
+
+        // print_r($get_all_employee);
+    
         // $get_all_employee = $this->Crud_model->fetch('users');
 
         # ---------------------------------------------------------------------------------------------------------------
@@ -91,14 +94,14 @@ class Shift extends MY_Controller {
                 'start_time'    =>    clean_data($this->input->post('start')),
                 'end_time'    =>    clean_data($this->input->post('end'))
             ];
-            $this->Crud_model->update('shift',$update,$where);
+            $this->Crud_model->update('timkeeping_shift',$update,$where);
             $success = [
                 'success'   =>    1,
                 'shift'    => clean_data($this->input->post('shift'))    
             ];
 
             //position
-			$position_id = $this->user->info('position_id');
+			$position_id = $this->user->info('role');
 			$pos_where = ['id'  => $position_id];
 			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
 			parent::audittrail(
@@ -113,8 +116,8 @@ class Shift extends MY_Controller {
     }
 
     public function change_shift() {
-        echo json_encode($this->Crud_model->update('user_details', 
+        echo json_encode($this->Crud_model->update('timekeeping_users_shift', 
             ['shift_id' => $this->input->post('shift_id')], 
-            ['user_id' => $this->input->post('user_id')]));
+            ['users_id' => $this->input->post('user_id')]));
     }
 }

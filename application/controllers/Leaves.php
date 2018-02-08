@@ -29,7 +29,7 @@ Class Leaves extends MY_Controller{
             ],
         ];
         
-        $this->dbforge->add_column('users',$insert_column);
+        $this->dbforge->add_column('timekeeping_users_leave',$insert_column);
 
 
            $insert_leave=[
@@ -68,7 +68,7 @@ Class Leaves extends MY_Controller{
                         'type'	=> 'float(8,1)' 
                     ],
                 ];
-                $this->dbforge->modify_column('users',$modify);
+                $this->dbforge->modify_column('timekeeping_users_leave',$modify);
                 $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id]);
                 echo json_encode('success');
             }
