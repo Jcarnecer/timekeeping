@@ -90,7 +90,7 @@ body {
     height: 100%;
     position: fixed;
     background: $dark-blue;
-    overflow-y: scroll;
+    overflow-y: auto;
     transition: .5s;
     -webkit-transition: .5s;
     -moz-transition: .5s;
