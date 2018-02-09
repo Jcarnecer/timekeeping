@@ -5,9 +5,11 @@ class MY_Controller	extends CI_Controller
 
 		parent::__construct();
 		$this->load->helper('encryption');
+		$this->load->helper('date');
 		$this->load->model('Crud_model');
 		$this->load->library('authenticate');
 		$this->load->library('user');
+		$this->load->dbforge();
 		// $this->userinfo();
 		// if(!$this->session->userdata('user_logged_in')){
 		// 	redirect('login');
@@ -16,7 +18,7 @@ class MY_Controller	extends CI_Controller
 		// }
 		
 	}
-
+	
 	
 	private function no_session() {
         if(!$this->session->userdata('user')) {
@@ -24,9 +26,9 @@ class MY_Controller	extends CI_Controller
         }
     }
 	
-    private function with_session() {
-    	if($this->session->userdata('user')) {
-            redirect('dashboard');
+    public function with_session() {
+    	if($this->session->has_userdata('user')) {
+            return redirect('dashboard');
         }
 	}
 

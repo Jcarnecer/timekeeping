@@ -78,10 +78,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php }elseif ($segment == 'timesheet' || 
 					   $segment == 'leaves' ||
 					   $segment == 'overtime' || 
-					   $segment2 = 'employee') { ?>
+					   $segment2=='request'||  $segment2 == 'employee') { ?>
 			<script src="assets/js/attendance/script.js"></script>
-		<?php } ?>
-
+		<?php }elseif($segment=='eleave'){ ?>
+			<script src="assets/js/leave/script.js"></script>
+		<?php } ?>	
 		<script type="text/javascript">
 			function DisplayTime(){
 			if (!document.all && !document.getElementById)

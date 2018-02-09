@@ -46,6 +46,14 @@ class Attendance extends MY_Controller {
         
     }
 
+    public function leave_request(){
+        parent::mainpage('attendance/employee_leave',
+        [
+            'title' => 'Employee Leave',
+        ]
+    );
+    }
+
     public function add_timesheet(){
         $now = new DateTime();
         $now->setTimezone(new DateTimezone('Asia/Manila'));
@@ -72,16 +80,16 @@ class Attendance extends MY_Controller {
             }else{
                 $recent = $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
-                $pos_where = ['id'  => $position_id];
-                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-                parent::audittrail(
-                    'User Time-in / Time-out',
-                    '4 Hours',
-                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
-                    $position->name,
-                    $this->input->ip_address()
-                );
+                // $position_id = $this->user->info('position_id');
+                // $pos_where = ['id'  => $position_id];
+                // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                // parent::audittrail(
+                //     'User Time-in / Time-out',
+                //     '4 Hours',
+                //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                //     $position->name,
+                //     $this->input->ip_address()
+                // );
                 echo json_encode($insert);
             }
 
@@ -102,17 +110,17 @@ class Attendance extends MY_Controller {
                 echo json_encode("You already have attendance today");
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
-                //position
-                $position_id = $this->user->info('position_id');
-                $pos_where = ['id'  => $position_id];
-                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-                parent::audittrail(
-                    'User Time-in / Time-out',
-                    '8 Hours',
-                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
-                    $position->name,
-                    $this->input->ip_address()
-                );
+                // //position
+                // $position_id = $this->user->info('position_id');
+                // $pos_where = ['id'  => $position_id];
+                // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                // parent::audittrail(
+                //     'User Time-in / Time-out',
+                //     '8 Hours',
+                //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                //     $position->name,
+                //     $this->input->ip_address()
+                // );
                 echo json_encode($insert);
             }
 
@@ -134,49 +142,49 @@ class Attendance extends MY_Controller {
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
-                $pos_where = ['id'  => $position_id];
-                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-                parent::audittrail(
-                    'User Leave',
-                    'Sick Leave',
-                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
-                    $position->name,
-                    $this->input->ip_address()
-                );
+                // $position_id = $this->user->info('position_id');
+                // $pos_where = ['id'  => $position_id];
+                // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                // parent::audittrail(
+                //     'User Leave',
+                //     'Sick Leave',
+                //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                //     $position->name,
+                //     $this->input->ip_address()
+                // );
                 echo json_encode($insert);
             }
 
         }elseif($this->input->post('vacation')){
 
-            $status = "Vacation Leave";
-            $insert =[
-                'user_id' => $id,
-                'date' => $date_now,
-                'time_in' => NULL,
-                'time_out' => NULL,
-                'status' => $status,
-            ];
-            $user_id = $this->user->info('id');
-            $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
-            $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
-            if($check_date == TRUE){
-                echo json_encode("You already have attendance today");
-            }else{
-                $this->Crud_model->insert('timekeeping_record',$insert);
-                //position
-                $position_id = $this->user->info('position_id');
-                $pos_where = ['id'  => $position_id];
-                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-                parent::audittrail(
-                    'User Leave',
-                    'Vacation Leave',
-                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
-                    $position->name,
-                    $this->input->ip_address()
-                );
-                echo json_encode($insert);
-            }
+            // $status = "Vacation Leave";
+            // $insert =[
+            //     'user_id' => $id,
+            //     'date' => $date_now,
+            //     'time_in' => NULL,
+            //     'time_out' => NULL,
+            //     'status' => $status,
+            // ];
+            // $user_id = $this->user->info('id');
+            // $where = ['user_id' => $user_id , 'date' => date('Y-m-d')];
+            // $check_date = $this->Crud_model->fetch('timekeeping_record',$where);
+            // if($check_date == TRUE){
+            //     echo json_encode("You already have attendance today");
+            // }else{
+            //     $this->Crud_model->insert('timekeeping_record',$insert);
+            //     //position
+            //     $position_id = $this->user->info('position_id');
+            //     $pos_where = ['id'  => $position_id];
+            //     $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+            //     parent::audittrail(
+            //         'User Leave',
+            //         'Vacation Leave',
+            //         $this->user->info('firstname') .' '. $this->user->info('lastname'),
+            //         $position->name,
+            //         $this->input->ip_address()
+            //     );
+            //     echo json_encode($insert);
+            
 
         }elseif($this->input->post('wfh')){
             $time = date('H:i:s',strtotime('+8 hour',strtotime($time)));
@@ -196,16 +204,16 @@ class Attendance extends MY_Controller {
             }else{
                 $this->Crud_model->insert('timekeeping_record',$insert);
                 //position
-                $position_id = $this->user->info('position_id');
-                $pos_where = ['id'  => $position_id];
-                $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-                parent::audittrail(
-                    'User Time-in / Time-out',
-                    'Work From Home',
-                    $this->user->info('firstname') .' '. $this->user->info('lastname'),
-                    $position->name,
-                    $this->input->ip_address()
-                );
+                // $position_id = $this->user->info('role');
+                // $pos_where = ['id'  => $position_id];
+                // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+                // parent::audittrail(
+                //     'User Time-in / Time-out',
+                //     'Work From Home',
+                //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+                //     $position->name,
+                //     $this->input->ip_address()
+                // );
                 echo json_encode($insert);
             }
         }elseif($this->input->post('intern')){
@@ -314,14 +322,14 @@ class Attendance extends MY_Controller {
     }
 
     public function get_employee_attendance() {
-        $order_by = "lastname desc";
-        $timesheet = $this->Crud_model->join_tag_result('users.*,timekeeping_record.*,timekeeping_record.id AS rid,users.id AS uid','users','','timekeeping_record','users.id = timekeeping_record.user_id ',"inner",$order_by);
+        // $order_by = "lastname desc";
+        $timesheet = $this->Crud_model->join_tag_result('users.*,timekeeping_record.*,timekeeping_record.id AS rid,users.id AS uid','users','','timekeeping_record','users.id = timekeeping_record.user_id ',"inner");
         // print_r($timesheet);die;
         if(!$timesheet == NULL){
             foreach ($timesheet as $row) :
         ?>
             <tr>
-                <td><?= $row->firstname.' '.$row->lastname ?></td>
+                <td><?= $row->email_address?></td>
                 <td><?= $row->date?></td>
                 <td><?= $row->time_in?></td>
                 <td><?= $row->time_out?></td>
@@ -332,36 +340,7 @@ class Attendance extends MY_Controller {
         }
     }
 
-    public function get_leave() {
-        // $order_by = "id desc";
-        $user_id = $this->user->info('id');
-        $where = ['user_id' => $user_id];
-        $where_in = ['name' => 'status', 'values' => ['Sick Leave', 'Vacation Leave']];
-        $leave = $this->Crud_model->fetch('timekeeping_record',$where,"","","", $where_in); 
-        ?>
-            <table class="table table-bordered" id="leave-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                <tbody>
-            <?php 
-            if(!$leave == NULL){
-                foreach ($leave as $row):
-                ?>
-                    <tr>
-                        <td><?= $row->date?></td>
-                        <td><?= $row->status?></td>
-                    </tr>
-        <?php   endforeach; ?>
-                </tbody>
-                </table>
-    <?php   } 
     
-    }
-
     //Overtime
     public function add_overtime(){
         $now = new DateTime();
@@ -401,7 +380,7 @@ class Attendance extends MY_Controller {
           foreach ($overtime as $row) :
       ?>
       <tr>
-        <td><?= $row->firstname?> <?= $row->lastname?></td>
+        <td><?= $row->email_address?></td>
         <td><?= $row->date_submitted?></td>
         <td>
           <?php
