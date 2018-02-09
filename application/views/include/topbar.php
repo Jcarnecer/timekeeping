@@ -10,7 +10,7 @@
 				<span></span>
 				<span></span>
 			</div>
-			<a class="navbar-brand mr-auto" href="#">Payak Apps</a>
+			<a class="navbar-brand mr-auto" href="#">Payak</a>
 			<!-- <a class="nav-link" href="profile">My Profile</a> -->
 			<a class="nav-text" href="login/logout">Logout</a>
 		</nav>
