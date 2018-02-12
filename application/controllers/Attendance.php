@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Attendance extends MY_Controller {
 
     public function index() {
-        parent::mainpage('attendance/index',
+      return parent::mainpage('attendance/index',
             [
                 'title' => 'Timesheet',
                 'record'	=> $this->Crud_model->fetch('timekeeping_record'),

@@ -82,6 +82,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<script src="assets/js/attendance/script.js"></script>
 		<?php }elseif($segment=='eleave'){ ?>
 			<script src="assets/js/leave/script.js"></script>
+		<?php }else{?>
+			<script src="assets/js/attendance/script.js"></script>
 		<?php } ?>	
 		<script type="text/javascript">
 			function DisplayTime(){

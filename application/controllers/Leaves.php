@@ -10,6 +10,7 @@ Class Leaves extends MY_Controller{
                 'leave'=>$this->Crud_model->fetch('timekeeping_leave'),
             ]
         );
+      
        
     }
 
@@ -20,24 +21,36 @@ Class Leaves extends MY_Controller{
        else{
         $leave_column=clean_data(str_replace(' ','_',$this->input->post('leave_name')));
 
-        $insert_column = [
-            clean_data(strtolower($leave_column)) 
-            => 
-            [
-                'type'  => 'float(8,1)',
-                'null'  => TRUE
-            ],
-        ];
+        // $insert_column = [
+        //     clean_data(strtolower($leave_column)) 
+        //     => 
+        //     [
+        //         'type'  => 'float(8,1)',
+        //         'null'  => TRUE
+        //     ],
+        // ];
         
-        $this->dbforge->add_column('timekeeping_users_leave',$insert_column);
+        // $this->dbforge->add_column('timekeeping_users_leave',$insert_column);
 
 
            $insert_leave=[
                'leave_name'=>clean_data($this->input->post('leave_name')),
                'No_of_days'=>clean_data($this->input->post('days'))
            ];
+       
+           $leave=$this->Crud_model->last_inserted_row('timekeeping_leave',$insert_leave);
+           $users=$this->Crud_model->fetch('users',['company_id'=>$this->session->user->company_id]);
+           foreach($users as $row){
+                
+           $insert_users_leave=[
+                'user_id'=>$row->id,
+                'leave_id' =>$leave->id,
+                'remaining_leave'=>clean_data($this->input->post('days'))
+           ];
+           $this->Crud_model->insert('timekeeping_users_leave',$insert_users_leave);
+        }
 
-           $this->Crud_model->insert('timekeeping_leave',$insert_leave);
+        //    $this->Crud_model->insert('timekeeping_users_leave',)
            echo json_encode('success');
        }
     }
@@ -69,6 +82,9 @@ Class Leaves extends MY_Controller{
                     ],
                 ];
                 $this->dbforge->modify_column('timekeeping_users_leave',$modify);
+
+
+                
                 $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id]);
                 echo json_encode('success');
             }
@@ -82,9 +98,14 @@ Class Leaves extends MY_Controller{
             $leave_name = strtolower(str_replace(' ','_',$employee_leave->leave_name));
             $No_of_days = $employee_leave->No_of_days;
             $update_user = [
-                $leave_name => $No_of_days
+                'leave_id'=>$employee_leave->id,
+                'remaining_leave'=>$No_of_days,
             ];
-            $this->Crud_model->update('users',$update_user);
+            // $this->Crud_model->update('users',$update_user);
+                      
+   
+           $this->Crud_model->update('timekeeping_users_leave',$update_user);     
+
     }
 
     public function leave_request(){
@@ -93,15 +114,15 @@ Class Leaves extends MY_Controller{
         $this->form_validation->set_rules('end','End Date','required');
        
         
-        $where=['id'=>$this->input->post('user_id')];
-        $user=$this->Crud_model->fetch_tag_row('*','users',$where);
+        $where=['user_id'=>$this->input->post('user_id')];
+        $user=$this->Crud_model->fetch_tag_row('*','timekeeping_users_leave',$where);
 
         $leave_where=['id'=>$this->input->post('leave_id')];
         $leave=$this->Crud_model->fetch_tag_row('*','timekeeping_leave',$leave_where);
         
         $leave_name=strtolower(str_replace(' ','_',$leave->leave_name));
 
-        $user_leave=$user->$leave_name;
+        $user_leave=$user->remaining_leave;
         $duration= $this->getWorkingDays($this->input->post('start'),$this->input->post('end'));
         $validate=$this->validate_leave($this->input->post('user_id')); 
         if(!$validate){
@@ -227,10 +248,10 @@ Class Leaves extends MY_Controller{
                 $result=$this->Crud_model->fetch_tag_row('*','timekeeping_file_leave',['id'=>$id]);
                 $where_leave=['id'=>$result->leave_id];
                 $leave=$this->Crud_model->fetch_tag_row('*','timekeeping_leave',$where_leave);
-                $leave_name=strtolower(str_replace(' ','_',$leave->leave_name));
-                $where_user=['id'=>$result->user_id];
-                $user= $this->Crud_model->fetch_tag_row('*','users',$where_user);
-                $user_leave=$user->$leave_name;
+                $leave_name=$leave->id;
+                $where_user=['user_id'=>$result->user_id];
+                $user= $this->Crud_model->fetch_tag_row('*','timekeeping_users_leave',$where_user);
+                $user_leave=$user->remaining_leave;
 
                 $end_date=date(strtotime($this->input->post('end_date')."+1 day"));
                 $validate=$this->validate_leave($result->user_id);
@@ -242,15 +263,15 @@ Class Leaves extends MY_Controller{
                         // $period=new DatePeriod($start_date,new DateInt erval('P1D'),$end_date);
                         $end_date=date(strtotime($this->input->post('end_date')."+1 day"));
                         $period=date_range($this->input->post('start_date'),$end_date);   
-                        $deduct_leave=$user->$leave_name - $result->duration;
+                        $deduct_leave=$user_leave - $result->duration;
                         $update_status_leave=[ 
                             'status'=>'Approved'
                         ];
                         $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id]);
                         $update_status=[
-                            $leave_name => $deduct_leave
+                            'remaining_leave' => $deduct_leave
                         ];
-                        $this->Crud_model->update('users',$update_status,$where_user);
+                        $this->Crud_model->update('timekeeping_users_leave',$update_status,$where_user);
                         $date=array();
                         foreach($period as $key=>$value){
                             $value=new DateTime($value);
@@ -262,10 +283,10 @@ Class Leaves extends MY_Controller{
                                 $date[]=$value->format('Y-m-d');    
                             }
                         $data=[
-                                'user_id'    => $user->id,
+                                'user_id'    => $user->user_id,
                                 'date'       => $date[$key], 
                                 'status'     => $leave->leave_name,
-                            'created_at'     => $date[$key]
+                                'created_at'     => $date[$key]
                             
                         ];
                         $this->Crud_model->insert('timekeeping_record',$data);

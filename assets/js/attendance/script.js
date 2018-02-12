@@ -363,7 +363,8 @@ $.fn.getMyLeave=function(){
   
 $.fn.getEmployeeLeave=function(){
 	$id=" ";
-    var $url = "get/leave/request";
+	var $url = "get/leave/request";
+	
    return $.ajax({
       url:$url,
       type:"GET",
@@ -382,7 +383,7 @@ $.fn.getEmployeeLeave=function(){
 										<td>${item['start_date']}</td>
 										<td>${item['end_date']}</td>
 										<td>${item['duration']} Days </td>
-										<td>${item['lastname']} ${item['firstname']}</td>
+										<td>${item['last_name']} ${item['first_name']}</td>
 										<td>${item['status']}</td>
 										
 										<td>

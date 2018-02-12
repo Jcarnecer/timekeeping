@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 //users controller
+$route['default_controller'] = 'dashboard';
 $route['add/user'] = 'users/add_user';
 $route['get/users'] = 'users/get_users';
 $route['activate/user'] = 'users/activate';
@@ -103,6 +104,5 @@ $route['auth/reset/verification/(:any)/(:any)'] = 'email/resetkey/$1/$2';
 
 $route['404'] = 'errors/error_404';
 
-$route['default_controller'] = 'dashboard';
 $route['404_override'] = 'errors/error_404';
 $route['translate_uri_dashes'] = FALSE;

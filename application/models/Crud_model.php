@@ -1,6 +1,11 @@
 <?php
 class Crud_model extends CI_Model{
 
+	public function __construct() {
+		parent::__construct();
+	}
+
+
 	public function fetch($table,$where="",$limit="",$offset="",$order="",$where_in= false){
 		if (!empty($where)) {
 			$this->db->where($where);
