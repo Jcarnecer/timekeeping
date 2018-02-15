@@ -74,14 +74,14 @@ Class Leaves extends MY_Controller{
                 $old_leave=str_replace(" ","_",$get_old_leave->leave_name);
                 $leave_column=clean_data(str_replace(' ','_',$this->input->post('leave_name')));
 
-                $modify = [
-                    $old_leave => [
-                        'name'	=> strtolower($leave_column),
-                        // 'type'	=> 'varchar(100)'
-                        'type'	=> 'float(8,1)' 
-                    ],
-                ];
-                $this->dbforge->modify_column('timekeeping_users_leave',$modify);
+                // $modify = [
+                //     $old_leave => [
+                //         'name'	=> strtolower($leave_column),
+                //         // 'type'	=> 'varchar(100)'
+                //         'type'	=> 'float(8,1)' 
+                //     ],
+                // ];
+                // $this->dbforge->modify_column('timekeeping_users_leave',$modify);
 
 
                 
