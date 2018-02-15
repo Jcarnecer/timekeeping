@@ -10,15 +10,15 @@
       </div>
       <div class="modal-body">
         <form id="user-activated-form" method="post">
-            <h5 id="activate-confirm-message"></h5>
-            <input type="hidden" id="u-a-id" name="id" />
-            <input type="hidden" id="u-a-name" name="name" />
+          <h5 id="activate-confirm-message"></h5>
+          <input type="hidden" id="u-a-id" name="id" />
+          <input type="hidden" id="u-a-name" name="name" />
+
       </div>
       <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Yes</button>
-          </form>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          
+          <button type="submit" class="btn custom-button">Yes</button>
+        </form>
       </div>
     </div>
   </div>

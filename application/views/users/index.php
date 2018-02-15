@@ -1,9 +1,9 @@
-<div class="container">
-    <h3>Users Management</h3>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-users-modal">
+
+    <h3 class="title">Users Management</h3>
+    <button type="button" class="btn custom-button float-right" data-toggle="modal" data-target="#add-users-modal">
         Add Users
     </button>
-        <br><hr>
+    <hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">
                 <thead>
@@ -22,7 +22,9 @@
             </table>
         </div>
     </div>
-    <?php $this->load->view('users/partials/add_users_modal'); ?>
-    <?php $this->load->view('users/partials/activate_modal'); ?>
-    <?php $this->load->view('users/partials/deactivate_modal'); ?>
-
+    <?php 
+    $this->load->view('users/partials/add_users_modal'); 
+    $this->load->view('users/partials/activate_modal'); 
+    $this->load->view('users/partials/deactivate_modal'); 
+    $this->load->view('users/partials/reset_password');
+    ?>

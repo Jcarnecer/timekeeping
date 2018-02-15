@@ -5,23 +5,32 @@ class MY_Controller	extends CI_Controller
 
 		parent::__construct();
 		$this->load->helper('encryption');
+		$this->load->helper('date');
 		$this->load->model('Crud_model');
 		$this->load->library('authenticate');
 		$this->load->library('user');
+		$this->load->dbforge();
 		// $this->userinfo();
+		// if(!$this->session->userdata('user_logged_in')){
+		// 	redirect('login');
+		// }else{
+		// 	base_url();
+		// }
+		
 	}
 	
+	
 	private function no_session() {
-        if(!$this->session->userdata('user_logged_in')) {
+        if(!$this->session->userdata('user')) {
             redirect('login');
         }
     }
 	
-    private function with_session() {
-    	if($this->session->userdata('user_logged_in')) {
-            redirect('dashboard');
+    public function with_session() {
+    	if($this->session->has_userdata('user')) {
+            return redirect('dashboard');
         }
-    }
+	}
 
 	function mainpage($location,$data=array()) {
 		$this->no_session();
@@ -38,5 +47,23 @@ class MY_Controller	extends CI_Controller
 		$this->load->view($location);
 		$this->load->view('login/include/footer');
 	}
+
+	function resetpage($location,$data=array()) {
+		$this->load->view('login/include/header',$data);
+		$this->load->view($location);
+		$this->load->view('login/include/footer');
+	}
+
+	function audittrail($action, $description, $user, $position = null,$ip){
+        $dat = array(
+            'action'		=> $action,
+            'description'	=> $description,
+            'user'			=> $user,
+            'position' 		=> $position,
+			'ip_address' 	=> $ip,
+			'date'			=> (date('Y-m-d H:i:s'))
+        );
+        $this->Crud_model->insert('timekeeping_logs',$dat);
+    }
 
 }

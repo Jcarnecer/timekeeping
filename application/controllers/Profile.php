@@ -29,18 +29,59 @@ class Profile extends MY_Controller {
 			];
 			$where = array('id' => $this->user->info('id'));
 			$this->Crud_model->update('users',$profile,$where);
-
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
     }
     
     public function get_user() {
-        $info = [
-            'firstname' => $this->user->info('firstname'),
-            'lastname'  => $this->user->info('lastname'),
-            'email' => $this->user->info('email'),
-            'profile_picture'   => $this->user->info('profile_picture'),
-        ];
+        $user = $this->user->info('id');
+        
+		$position_where = ['id' =>  $this->user->info('position_id')];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
+        
+        // $intern_where = ['user_id' => $user];
+        // $intern_info = $this->Crud_model->fetch_tag_row('*','intern',$intern_where);
+		$employee_where = ['user_id'=> $user];
+		$user_details = $this->Crud_model->fetch_tag_row('*','user_details',$employee_where);
+
+        if($position->name == 'Intern') {
+            $info = [
+				'position'	=> $position->name,
+                'no_of_hrs' => $user_details->no_of_hrs, 
+				'school'	=> $user_details->school,
+				'course'	=> $user_details->course,
+				'year'		=> $user_details->year,
+				'remaining'	=> $user_details->remaining,
+                'firstname' => $this->user->info('firstname'),
+                'lastname'  => $this->user->info('lastname'),
+                'email' => $this->user->info('email'),
+				'profile_picture'   => $this->user->info('profile_picture'),
+            ];
+        }else{
+            $info = [
+				'position'	=> $position->name,
+				'sss_no'	=> $user_details->sss_no,
+				'tin_no'	=> $user_details->tin_no,
+				'ph_health'	=> $user_details->phil_health,
+                'firstname' => $this->user->info('firstname'),
+                'lastname'  => $this->user->info('lastname'),
+                'email' => $this->user->info('email'),
+				'profile_picture'   => $this->user->info('profile_picture'),
+				
+            ];
+        }
+        
         echo json_encode($info);
     }
 
@@ -63,7 +104,17 @@ class Profile extends MY_Controller {
             );
             $where = array('id' => $this->user->info('id'));
             $this->Crud_model->update('users',$newpass,$where);
-
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Change Password',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
             echo json_encode("success");
         }
 	}
@@ -100,8 +151,19 @@ class Profile extends MY_Controller {
 			$update = [
 				'profile_picture' => $this->upload->data('file_name'),
 			];
-			$where = array('id' => $this->user->info('id'));
-			$this->Crud_model->update('users',$update,$where);
+			$where = array('user_id' => $this->user->info('id'));
+            $this->Crud_model->update('user_details',$update,$where);
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update Profile Picture',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}

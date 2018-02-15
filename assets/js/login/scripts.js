@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#login-form").on('submit',function(e){
         $.ajax({
-            url: base_url + 'auth/login',
+            url: 'auth/login',
             data: $(this).serialize(),
             type: "POST",
             success: function(data)
@@ -9,7 +9,7 @@ $(document).ready(function(){
                 var result = JSON.parse(data);
                 if(result === "success"){
                     $("#alert-login").html("");
-                    window.location.href=base_url+"dashboard";
+                    window.location.href="dashboard";
                 }
                 else{
                     error_message("#alert-login",result)
@@ -23,3 +23,38 @@ $(document).ready(function(){
       e.preventDefault();
     });
   });
+
+  $(document).ready(function(){
+    $("#reset-form").on('submit',function(e){
+      $.ajax({
+        url: 'reset/authreset',
+        data: $(this).serialize(),
+        type: "POST",
+        success: function(data)
+        {
+          var result = JSON.parse(data);
+          if(result === "success"){
+            $("#old_err").html("");
+            $("#new_err").html("");
+            $("#con_err").html("");
+            $("input").val("");
+            $("#alert-reset").show();
+            $("#alert-reset").html("Account is now activated");
+            window.setTimeout(function(){location.href=base_url+""},3000);
+          }
+          else{
+            $("#alert-reset").hide();
+            $("#old_err").html(result.old_err);
+            $("#new_err").html(result.new_err);
+            $("#con_err").html(result.con_err);
+          }
+        },
+        error: function(data)
+        {
+          alert('Opps! Something went wrong. please contact the administrator. ');
+        },
+      })
+      e.preventDefault();
+    });
+  });
+  

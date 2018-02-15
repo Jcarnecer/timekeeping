@@ -8,7 +8,7 @@ class Position extends MY_Controller {
         parent::mainpage('position/index',
             [
                 'title' => 'Position',
-                'menu'  => $this->Crud_model->fetch('menu')
+                'menu'  => $this->Crud_model->fetch('timekeeping_menu')
             ]
         );
     }
@@ -33,6 +33,18 @@ class Position extends MY_Controller {
                 'success' => 1,
                 'name'  => $position
             ];
+
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Add Position',
+				'Added Position '.$insert_position['name'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
             echo json_encode($success);
         }
     }
@@ -64,6 +76,18 @@ class Position extends MY_Controller {
                 'success' => 1,
                 'name'  => clean_data(ucwords($this->input->post('position')))
             ];
+
+            //position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Edit Position',
+				'Update Position '.$insert_position['name'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
           
             echo json_encode($success);
         }
@@ -80,7 +104,7 @@ class Position extends MY_Controller {
                 $y = 0;
                 while($y < count($privileges_array)){
                   $filter = array('id'=> $privileges_array[$y]);
-                  $menu = $this->Crud_model->fetch_tag_row('name','menu',$filter);
+                  $menu = $this->Crud_model->fetch_tag_row('name','timekeeping_menu',$filter);
                   array_push($privileges2_array,$menu->name);
                   $y++;
                 }
@@ -92,7 +116,7 @@ class Position extends MY_Controller {
                 <td><?= $privileges ?></td>
                 <td>
                 <div class="dropdown show">
-						<button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn custom-button dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Action
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

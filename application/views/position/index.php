@@ -1,9 +1,8 @@
-<div class="container">
-    <h3>Position Management</h3>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-position-modal">
+    <h3 class="title">Position Management</h3>
+    <button type="button" class="btn custom-button float-right" data-toggle="modal" data-target="#add-position-modal">
         Add Position
     </button>
-        <br><hr>
+    <hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">
                 <thead>

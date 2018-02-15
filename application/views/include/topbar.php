@@ -1,36 +1,23 @@
-<div class="main-content">
-			<div class="topbar">
-				<nav class="navbar navbar-expand-lg navbar-light navbar-custom-bg">
-				<div id="nav-icon3" class="toggle-show">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-					<a class="navbar-brand" href="#">Navbar</a>
-					<!-- <button class="btn btn-default toggle-button" type="button" >
-						<span class="navbar-toggler-icon"></span>
-					</button> -->
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					
-					<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="profile">My Profile</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="login/logout">Logout</a>
-						</li>
-						</ul>
-						<form class="form-inline my-2 my-lg-0">
-						<input class="form-control mr-sm-2" type="text" placeholder="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-						</form>
-					</div>
-				</nav>
+<div class="main-content h-100">
+	<?php if($this->uri->segment(1) == 'schedule'): ?>
+	<div class="topbar">
+	<?php else: ?>
+	<div class="topbar">
+	<?php endif; ?>
+		<nav class="navbar navbar-custom">
+			<div id="nav-icon-open" class="custom-toggle hidden-toggle">
+				<span></span>
+				<span></span>
+				<span></span>
 			</div>
+			<a class="navbar-brand mr-auto" href="#">Payak</a>
+			<!-- <a class="nav-link" href="profile">My Profile</a> -->
+			<a class="nav-text" href="login/logout">Logout</a>
+		</nav>
+	</div>
+
+	<?php if($this->uri->segment(1) == 'schedule'): ?>
+	<div class="container-fluid" style="height: calc(100% - 56px);">
+	<?php else: ?>
+	<div class="container-fluid">
+	<?php endif; ?>

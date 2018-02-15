@@ -11,11 +11,17 @@ class User {
     }
 
     public function info($col) {
-        $sess = $this->CI->session->userdata('user_logged_in');
-        $where = [ 'id' => $sess['id'] ];
-        $userinfo = $this->CI->Crud_model->fetch_tag_row('*','users',$where);
+        $sess = $this->CI->session->userdata('user');
+        $where = [ 'users.id' => $sess->id ];
+		// $userinfo = $this->CI->Crud_model
+		// 	->join_tag_row('users.*,user_details.*,users.id AS u_id, user_details.id ud_id',
+		// 				'users',$where,'user_details',
+        // 				'users.id = user_details.user_id','inner');
+        
+        $userinfo=$this->CI->Crud_model->fetch('users',$where)[0];
         if(!$userinfo == NULL) {
-            return $userinfo->$col; 
-        }
+            return $userinfo->$col;
+        }   
+       
     }
 }

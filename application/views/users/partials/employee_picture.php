@@ -1,4 +1,3 @@
-
 <!-- Modal -->
 <div id="employee-picture-modal" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -7,6 +6,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Profile Picture</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
         <form id="employee-picture-form" method="post">
@@ -16,9 +18,9 @@
           <input type="file" id="profile_pic" class="form-control" name="profile_pic">
       </div>
       <div class="modal-footer">
-      <button type="submit" class="btn btn-default">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn custom-button">Submit</button>
         </form>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

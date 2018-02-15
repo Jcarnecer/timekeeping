@@ -1,26 +1,50 @@
-$(document).ready(toggle());
-
-function toggle(){
-	var hide = true;
-    $('#nav-icon3').on('click',function (event){
-    	if (hide) {
-            $(this).toggleClass('open');
-            // $('#sidebar').addClass("corp-show");
-            $('.main-content').addClass("animation");
-            $('.toggle-show').show();
-    		hide = false;
-    	} else {
-            $(this).toggleClass('open');
-            $('#sidebar').hide();
-            $('#sidebar').removeClass("corp-show");
-            // $('.main-content').css("");
-    		hide = true;
-    	}
-	});
-}
-
-// $(document).ready(function(){
-// 	$('#nav-icon3').click(function(){
-// 		$(this).toggleClass('open');
-// 	});
-// });
+function browserWidth(){
+    var width = $(window).width();
+    var height = $(window).height();
+  
+    return width;
+  };
+  
+  function toggle(){
+    var hide = true;
+    $(".custom-toggle").click(function() {
+      if(browserWidth() < 768) {
+        if (hide) {
+          $('#sidebar').css({'margin-left' : '0px'});
+          hide = false;
+        } else {
+          $('#sidebar').css({'margin-left' : '-210px'});
+          hide = true;
+        }
+      } else {
+        if (hide) {
+          $('#sidebar').css({'margin-left' : '-210px'});
+          $('.main-content').css({'margin-left' : '0px'});
+          $('.hidden-toggle').css({'display' : 'block'});
+          hide = false;
+        } else {
+          $('#sidebar').css({'margin-left' : '0px'});
+          $('.main-content').css({'margin-left' : '210px'});
+          $('.hidden-toggle').css({'display' : 'none'});
+          hide = true;
+        }
+      }
+    });
+  }
+  
+  $(document).ready(toggle());
+  
+  $(window).resize(function() {
+    
+    if(browserWidth() < 768) {
+      $('#sidebar').css({'margin-left' : ''});
+      $('.main-content').css({'margin-left' : ''});
+      $('.hidden-toggle').css({'display' : ''});
+    } else {
+      // $('#sidebar').css({'margin-left' : ''});
+      // $('.main-content').css({'margin-left' : ''});
+    }
+    
+    toggle();
+    
+  });

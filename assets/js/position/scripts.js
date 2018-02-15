@@ -1,10 +1,13 @@
 function fetch_positions() {
     $.ajax({
-        url: base_url + "get/position",
+        url: "get/position",
         type: "POST",
         success: function(data) {
             $("#positiondata").html(data);
-            $("#tktbl").DataTable();
+            $("#tktbl").DataTable({
+                "scrollY":"350px",
+                "scrollCollapse": true,
+            });
         }
     })
 }
@@ -12,7 +15,7 @@ function fetch_positions() {
 $(document).ready(function() {
     $("#add-position-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "add/position",
+            url: "add/position",
             method: "POST",
             data: $(this).serialize(),
             success:function(data){
@@ -52,7 +55,7 @@ $(document).on('click','.edit-pos-modal',function() {
 $(document).ready(function() {
     $("#update-position-form").on('submit',function(e){
         $.ajax({
-            url: base_url + "edit/position",
+            url: "edit/position",
             type: "POST",
             data: $("#update-position-form").serialize(),
             success:function(data) {

@@ -19,58 +19,119 @@ class Users extends MY_Controller
 				'lname_error'    =>    form_error('lname'),
 				'mname_error'	 =>    form_error('mname'),
 				'email_error'	 =>    form_error('emailadd'),
-				'pos_error'      =>    form_error('pos')
+				'pos_error'      =>    form_error('pos'),
+				'sd_error'	=>	   form_error('start_date')
 			];
 
 			echo json_encode($error);
-		}else{
-			$generate_password 	= 	"timekeeping";
-			$generate_key		=	'_'.random_string('alnum',10).'_'; // generates "_10alnumstring_"
 
+		}else{
+			$generate_password 	= 	"password";
+			
+			// generates "_10alnumstring_"
+			$generate_key		=	'_'.random_string('alnum',15).'_'; 
 			$insert = [
 				'firstname'    		=>    clean_data(ucwords($this->input->post('fname'))),
 				'lastname'    		=>    clean_data(ucwords($this->input->post('lname'))),
 				'middlename'    	=>    clean_data(ucwords($this->input->post('mname'))),
 				'position_id'   	=>    clean_data($this->input->post('pos')),
 				'email'				=>    clean_data($this->input->post('emailadd')),
-				'password'			=>   hash_password($generate_password),
-				'reg_key'			=> $generate_key,
-				'profile_picture'		=> 'no_image.jpg',
-				'status'			=> 0, // not activated 
-				'verified_email' 	=> 0, // for email confirmation 
+				'password'			=>    hash_password($generate_password),
 			];
 			$get_rowid = $this->Crud_model->last_inserted_row('users',$insert);
+			
+			$insert_user_details = [
+				'school'	=> clean_data($this->input->post('school')),
+				'sss_no'	=> clean_data($this->input->post('sss')),
+				'tin_no'	=> clean_data($this->input->post('tin')),
+				'phil_health'	=> clean_data($this->input->post('phil_health')),
+				'year'	=> clean_data($this->input->post('sy')),
+				'course'	=> clean_data($this->input->post('course')),
+				'no_of_hrs'	=>  clean_data($this->input->post('num_hrs')),
+				'user_id'	=>    $get_rowid->id,
+				'reg_key'			=>    $generate_key,
+				'profile_picture'	=>    'no_image.jpg',
+				'status'			=> 0, // account not activate
+				'verified_email' 	=> 0, // for email confirmation
+				'start_date'		=> clean_data($this->input->post('start_date')),
+				'shift_id'			=> clean_data($this->input->post('shift')),
+				'remaining'	=>  clean_data($this->input->post('num_hrs'))
+			];
+			$this->Crud_model->insert('user_details',$insert_user_details);
+		
 
-			if($this->input->post('pos') == 2 || $this->input->post('pos')==3){
-				$insert_employee = [
-					'user_id'	=>    $get_rowid->id
-				];
-				$this->Crud_model->insert('employee',$insert_employee);
-			}elseif($this->input->post('pos')==4) {
-				$insert_intern = [
-					'user_id'	=> 	  $get_rowid->id
-				];
-				$this->Crud_model->insert('intern',$insert_intern);
-			}
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Add User',
+				'Added User '.$insert['firstname'].' '.$insert['lastname'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
+			
+			// $config = array(
+			// 	'smtp_timeout' => '4',
+			// 	'charset' => 'utf-8',
+			// 	'mailtype'=> 'html',
+			// );
 
+			// $this->load->initialize($config);
+
+			// $from="jun.carnecer@astridtechnologies.com";
+			// $to = $this->input->post('emailadd');
+			// $subject = "Account Activation";
+			// $data = [	
+			// 			'id'	=> secret_url('encrypt',$get_rowid->id),
+			// 			'name'	=>	$insert['firstname'].' '.$insert['lastname'], 
+			// 			'reg_key' => $insert_user_details['reg_key'],
+			// 			'email'	=> $to,
+			// 			'password'	=> $generate_password,
+			// 			'verified_email'	=> $insert_user_details['verified_email'],
+			// 		];
+			
+			// $message = $this->load->view('email/account_verify',$data,TRUE);
+
+			// $this->load->library('email');
+			// $this->email->clear();
+			// $this->email->from($from, 'Timekeeping');
+			// $this->email->to($to);
+			// $this->email->set_newline("\n");
+			// $this->email->subject($subject);
+			// $this->email->message($message);
+			// $this->email->set_mailtype('html');
+			// $this->email->send();
+			
 			$success = [
 				'success' => 1,
 				'name'	=> clean_data(ucwords($this->input->post('fname'))) .' '. clean_data(ucwords($this->input->post('lname'))),
 			];
+			
 			echo json_encode($success);
+			// $this->load->view('email/account_verify',$data);
+
 		}
 	}
 
 	public function get_users() {
 		$order_by = "lastname asc";
-		$where = ['position_id >' => '1']; //not include admin
+		if($this->user->info('position_id') == "1"){
+			$where = NULL;
+		}else{
+			$where = ['position_id >' => 1]; //not include admin
+		}
 		$users = $this->Crud_model->fetch('users',$where,'','',$order_by);
 		$x = 1;
 		if(!$users == NULL){
 			foreach($users as $row): 
+			$user_id = $row->id;
 			$pos_id = $row->position_id;
 			$where = ['id' => $pos_id];
-			$position = $this->Crud_model->fetch_tag_row('*','position',$where);	
+			$user_details_where = ['id' => $user_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$where);
+			$user_details = $this->Crud_model->fetch_tag_row('*','user_details',$user_details_where);
+
 			?>
 			<tr>
 				<td><?= $x ?></td>
@@ -78,25 +139,26 @@ class Users extends MY_Controller
 				<td><?= $row->email?></td>
 				<td><?= $position->name ?></td>
 				<td>
-					<?php if($row->status == 1){ ?>
+					<?php if($user_details->status == 1){ ?>
 						Active
 					<?php }else{ ?>
 						Inactive
 					<?php } ?>
 				</td>
 				<td>
-					
 					<div class="dropdown show">
-						<button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn custom-button dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Action
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<?php if($row->status == 1){ ?>
+						<?php if($user_details->status == 1){ ?>
 							<a class="dropdown-item deactivate-user" data-toggle="modal" data-name="<?= $row->firstname.' '.$row->lastname ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#u-d-modal" title="Deactivate" >Deactivate</a>
 						<?php }else{ ?>
 							<a class="dropdown-item activate-user" data-toggle="modal" data-name="<?= $row->firstname.' '.$row->lastname ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#u-a-modal" title="Activate" >Activate</a>
 						<?php } ?>
 							<a class="dropdown-item user_details" href="users/details/<?= secret_url('encrypt',$row->id) ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" id="user_details">Details</a>
+							<hr>
+							<a class="dropdown-item reset-password" data-toggle="modal" data-email="<?= $row->email ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" data-name="<?= $row->firstname.' '.$row->lastname ?>" href="#reset-user-pass">Reset Password</a>
 						</div>
 					</div>
 				</td>
@@ -108,16 +170,28 @@ class Users extends MY_Controller
 		$id = $this->input->post('id');
 		$decrypt_id = secret_url('decrypt',$id);
 		
-		$where = ['id' => $decrypt_id];
+		$where = ['user_id' => $decrypt_id];
 		$update = [
 			'status'    =>    1
 		];
-		$this->Crud_model->update('users',$update,$where);
+		$this->Crud_model->update('user_details',$update,$where);
 
 		$success = [
 			'success'	=> 1,
 			'name'	=> $this->input->post('name')
 		];
+		//position
+		$position_id = $this->user->info('position_id');
+		$pos_where = ['id'  => $position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+		parent::audittrail(
+			'Account Modify',
+			'Activate account of '.$this->input->post('name'),
+			$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			$position->name,
+			$this->input->ip_address()
+		);
+
 		echo json_encode($success);
 	}
 
@@ -125,49 +199,58 @@ class Users extends MY_Controller
 		$id = $this->input->post('id');
 		$decrypt_id = secret_url('decrypt',$id);
 		
-		$where = ['id' => $decrypt_id];
+		$where = ['user_id' => $decrypt_id];
 		$update = [
 			'status'    =>    0
 		];
 		
-		$this->Crud_model->update('users',$update,$where);
+		$this->Crud_model->update('user_details',$update,$where);
 
 		$success = [
 			'success'	=> 1,
 			'name'	=> $this->input->post('name')
 		];
+
+		//position
+		$position_id = $this->user->info('position_id');
+		$pos_where = ['id'  => $position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+		parent::audittrail(
+			'Account Modify',
+			'Deactivate account of '.$this->input->post('name'),
+			$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			$position->name,
+			$this->input->ip_address()
+		);
 		echo json_encode($success);
 	}
 
 
 	public function details($id) {
+
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture';
+		$user_tag = 'id,firstname,lastname,middlename,email,position_id,profile_picture';
 
-		$this->detail_id = $id;
-		//get position
-		$user = $this->Crud_model->fetch_tag_row($tag,'users',$where);
-		$position_where = ['id' => $user->position_id];
+		$user_row = $this->Crud_model->fetch_tag_row($user_tag,'users',$where);
+		$pos_id = $user_row->position_id;
+		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
-		if($position->name == 'Intern') {
-			$where = ['intern.user_id' => $decrypt_id];
-			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,intern.id,intern.user_id,school,birthday,no_of_hrs,course,year,start_date,remaining';
-			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
-			
-		}else{
-			$where = ['employee.user_id' => $decrypt_id];
-			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,
-					employee.id,employee.user_id,sss_no,tin_no,phil_health,start_date';
-			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'employee','users.id = employee.user_id','inner'); //join
-		}
+		
+		$where = ['user_details.user_id' => $decrypt_id];
+		$tag = 'users.*,user_details.*';
+		$user = $this->Crud_model->join_tag_row($tag,'users',$where,'user_details','users.id = user_details.user_id','inner'); //join
+		
+		$shift_where = ['id'	=> $user->shift_id];
+		$shift = $this->Crud_model->fetch_tag_row('*','timekeeping_shift',$shift_where);
 		
 		parent::mainpage('users/details',
 			[
 				'title'	=> $user->firstname .' '. $user->lastname,
 				'pos'	=> $position,
-				'id'	=> $id
+				'id'	=> $id,
+				'shift'	=> $shift
 			]
 		);
 	}
@@ -175,25 +258,26 @@ class Users extends MY_Controller
 	public function get_details($id) {
 		$decrypt_id = secret_url('decrypt',$id);
 		$where = ['id' => $decrypt_id];
-		$tag = 'id,firstname,lastname,middlename,status,email,position_id,profile_picture';
+		$user_tag = 'id,firstname,lastname,middlename,email,position_id,profile_picture';
 
-		$this->detail_id = $id;
 		//get position
-		$user = $this->Crud_model->fetch_tag_row($tag,'users',$where);
-		$position_where = ['id' => $user->position_id];
+		$user_row = $this->Crud_model->fetch_tag_row($user_tag,'users',$where);
+		
+		$pos_id = $user_row->position_id;
+		$position_where = ['id' => $pos_id];
 		$position = $this->Crud_model->fetch_tag_row('*','position',$position_where);
 		
-		if($position->name == 'Intern') {
-			$where = ['intern.user_id' => $decrypt_id];
-			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,intern.id,intern.user_id,school,birthday,no_of_hrs,course,year,start_date,remaining';
-			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
+		// if($position->name == 'Intern') {
+		// 	$where = ['intern.user_id' => $decrypt_id];
+		// 	$tag = 'users.id,firstname,lastname,middlename,status,email,
+		// 			position_id,profile_picture,intern.id,intern.user_id,school,birthday,no_of_hrs,course,year,start_date,remaining';
+		// 	$user = $this->Crud_model->join_tag_row($tag,'users',$where,'intern','users.id = intern.user_id','inner'); //join
 			
-		}else{
-			$where = ['employee.user_id' => $decrypt_id];
-			$tag = 'users.id,firstname,lastname,middlename,status,email,position_id,profile_picture,
-					employee.id,employee.user_id,sss_no,tin_no,phil_health,start_date';
-			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'employee','users.id = employee.user_id','inner'); //join
-		}
+		// }else{
+			$where = ['user_details.user_id' => $decrypt_id];
+			$tag = 'users.*,user_details.*';
+			$user = $this->Crud_model->join_tag_row($tag,'users',$where,'user_details','users.id = user_details.user_id','inner'); //join
+		// }
 		echo json_encode($user);
 	}
 	
@@ -218,7 +302,19 @@ class Users extends MY_Controller
 			$id = $this->input->post('id');
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
-			$this->Crud_model->update('users',$update,$where);
+			$this->Crud_model->update('user_details',$update,$where);
+			
+			//position
+			$position_id = $this->user->info('pos_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update profile picture',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -245,6 +341,17 @@ class Users extends MY_Controller
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$update,$where);
+			//position
+			$position_id = $this->user->info('pos_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update profile picture',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -262,7 +369,7 @@ class Users extends MY_Controller
           $this->form_validation->set_message('handleimage', "You must upload an image!");
           return false;
         endif;
-	}
+	}	
 	
 	public function update_intern_info() {
 		if($this->form_validation->run('edit_info_validate') == FALSE) {
@@ -283,6 +390,17 @@ class Users extends MY_Controller
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('id' => $decrypt_id);
 			$this->Crud_model->update('users',$profile,$where);
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information of '.$profile['firstname'].' '.$profile['lastname'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
@@ -306,13 +424,99 @@ class Users extends MY_Controller
 				'course' => clean_data(ucwords($this->input->post('course'))),
 				'birthday' => clean_data($this->input->post('bday')),
 				'year' => clean_data($this->input->post('year')),
-				'start_date' => clean_data($this->input->post('start_date')),
+				'remaining'	=> clean_data($this->input->post('no_of_hrs')),
+				'start_date'	=> clean_data($this->input->post('start_date'))
 			];
+
 			$id = $this->input->post('id');
 			$decrypt_id = secret_url('decrypt',$id);
 			$where = array('user_id' => $decrypt_id);
-			$this->Crud_model->update('intern',$other_info,$where);
+			$this->Crud_model->update('user_details',$other_info,$where);
+
+			$user_where = ['id'	=> $decrypt_id];
+			$log_user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
+
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information of '.$log_user->firstname.' '.$log_user->lastname,
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
 			echo json_encode("success");
 		}
 	}
+
+	public function update_employee_info() {
+		if($this->form_validation->run('edit_info_validate') == FALSE) {
+			$error = [
+				'e_error'	=> form_error('email'),
+				'f_error'	=> form_error('fname'),
+				'l_error'	=> form_error('lname'),
+				's_error'	=> form_error('shift')
+			];
+
+			echo json_encode($error);
+		}else{
+			$profile = [
+				'firstname' => clean_data(ucwords($this->input->post('fname'))),
+				'lastname' => clean_data(ucwords($this->input->post('lname'))),
+				'email' => clean_data($this->input->post('email')),
+				
+			];
+			$user_detail = [
+				'shift_id'	=> clean_data($this->input->post('shift'))
+			];
+			$id = $this->input->post('id');
+			$decrypt_id = secret_url('decrypt',$id);
+			$where = array('id' => $decrypt_id);
+			$this->Crud_model->update('users',$profile,$where);
+			$this->Crud_model->update('user_details',$user_detail,$where);
+			//position
+			$position_id = $this->user->info('position_id');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Account Modify',
+				'Update information of '.$profile['firstname'].' '.$profile['lastname'],
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
+			echo json_encode("success");
+		}
+	}
+
+	public function update_employee_other_info() {
+		$other_info = [
+			'sss_no' => clean_data($this->input->post('sss')),
+			'tin_no' => clean_data($this->input->post('tin')),
+			'phil_health' => clean_data($this->input->post('philhealth')),
+			'start_date'	=> clean_data($this->input->post('date_start'))
+		];
+		$id = $this->input->post('id');
+		$decrypt_id = secret_url('decrypt',$id);
+		$where = array('user_id' => $decrypt_id);
+		$this->Crud_model->update('user_details',$other_info,$where);
+
+		$user_where = ['id'	=> $decrypt_id];
+		$log_user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
+		//position
+		$position_id = $this->user->info('position_id');
+		$pos_where = ['id'  => $position_id];
+		$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+		parent::audittrail(
+			'Account Modify',
+			'Update information of '.$log_user->firstname.' '.$log_user->lastname,
+			$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			$position->name,
+			$this->input->ip_address()
+		);
+		echo json_encode(1);
+	}
+
 }

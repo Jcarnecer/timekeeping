@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Shift extends MY_Controller {
 
 	public function index() {
-       $get_all_shift = $this->Crud_model->fetch('shift');
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
         parent::mainpage('shift/index',
             [
                 'title' => 'Shift List',
@@ -13,8 +13,46 @@ class Shift extends MY_Controller {
         );
     }
 
+    public function schedule() {
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+
+        # ---------------------------------------------------------------------------------------------------------------
+        
+        $get_all_employee = $this->Crud_model->get_users();
+
+        // print_r($get_all_employee);
+    
+        // $get_all_employee = $this->Crud_model->fetch('users');
+
+        # ---------------------------------------------------------------------------------------------------------------
+        
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Schedule',
+                'all_shift' => $get_all_shift,
+                'all_employee' => $get_all_employee
+            ]
+        );
+    }
+    public function eschedule() {
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+
+        $get_all_employee = $this->Crud_model->fetch('users');
+
+        $get_all_emp_shift = $this->Crud_model->fetch('timekeeping_users_shift');
+
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Schedule',
+                'all_shift' => $get_all_shift,
+                'all_employee' => $get_all_employee,
+                'all_emp_shift' => $get_all_emp_shift
+            ]
+        );
+    }
+
     public function get_shift() {
-		$shift = $this->Crud_model->fetch('shift');
+		$shift = $this->Crud_model->fetch('timekeeping_shift');
         $x = 1;
 
         if(!$shift == NULL){
@@ -27,12 +65,12 @@ class Shift extends MY_Controller {
 				<td><?= $row->end_time ?></td>
 				<td>
 					<div class="dropdown show">
-						<button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn custom-button dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Action
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">	
 							<a class="dropdown-item edit_shift" data-toggle="modal" data-shift="<?= $row->shift_type ?>" data-start="<?= $row->start_time ?>" data-end="<?= $row->end_time ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#e-sh-modal" >Edit</a>
-							<a class="dropdown-item" href="" title="View">Details</a>
+							<!-- <a class="dropdown-item" href="" title="View">Details</a> -->
 						</div>
 					</div>
 				</td>
@@ -56,12 +94,30 @@ class Shift extends MY_Controller {
                 'start_time'    =>    clean_data($this->input->post('start')),
                 'end_time'    =>    clean_data($this->input->post('end'))
             ];
-            $this->Crud_model->update('shift',$update,$where);
+            $this->Crud_model->update('timkeeping_shift',$update,$where);
             $success = [
                 'success'   =>    1,
                 'shift'    => clean_data($this->input->post('shift'))    
             ];
+
+            //position
+			$position_id = $this->user->info('role');
+			$pos_where = ['id'  => $position_id];
+			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			parent::audittrail(
+				'Shift Modify',
+				'Edit '.$success['shift'].' Shift',
+				$this->user->info('firstname') .' '. $this->user->info('lastname'),
+				$position->name,
+				$this->input->ip_address()
+			);
             echo json_encode($success);
         }
+    }
+
+    public function change_shift() {
+        echo json_encode($this->Crud_model->update('timekeeping_users_shift', 
+            ['shift_id' => $this->input->post('shift_id')], 
+            ['users_id' => $this->input->post('user_id')]));
     }
 }
