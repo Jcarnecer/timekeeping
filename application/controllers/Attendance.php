@@ -400,7 +400,7 @@ class Attendance extends MY_Controller {
               <?php if($row->status == 0){ //pending ?>
                 <a class="dropdown-item accept-ot" data-toggle="modal" 
                         data-id="<?= secret_url('encrypt',$row->rid) ?>"
-                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-name="<?= $row->first_name.' '.$row->last_name ?>" 
                         data-datesubmit="<?= $row->date_submitted ?>"
                         data-start="<?= date('g:i a',strtotime($row->start)) ?>"
                         data-end="<?= date('g:i a',strtotime($row->end)) ?>"
@@ -408,7 +408,7 @@ class Attendance extends MY_Controller {
                         data-date="<?= date('F j, Y', strtotime($row->overtime_date)) ?>" href="#accept-overtime-modal" title="Accept" >Accept</a>
                 <a class="dropdown-item reject-ot" data-toggle="modal" 
                         data-id="<?= secret_url('encrypt',$row->rid) ?>"
-                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-name="<?= $row->first_name.' '.$row->last_name ?>" 
                         data-datesubmit="<?= $row->date_submitted ?>"
                         data-start="<?= date('g:i a',strtotime($row->start)) ?>"
                         data-end="<?= date('g:i a',strtotime($row->end)) ?>"
@@ -417,7 +417,7 @@ class Attendance extends MY_Controller {
               <?php }?>
               <a class="dropdown-item details-ot" data-toggle="modal" 
                         data-id="<?= secret_url('encrypt',$row->rid) ?>"
-                        data-name="<?= $row->firstname.' '.$row->lastname ?>" 
+                        data-name="<?= $row->first_name.' '.$row->last_name ?>" 
                         data-datesubmit="<?= $row->date_submitted ?>"
                         data-start="<?= date('g:i a',strtotime($row->start)) ?>"
                         data-end="<?= date('g:i a',strtotime($row->end)) ?>"
