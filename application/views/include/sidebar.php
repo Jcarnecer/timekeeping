@@ -2,7 +2,22 @@
 	  $where_in=array('TK_ADMIN');	
 	  $position = $this->user->info('role');
 	  $where = array('role_id' => $position);
-	  $permission=$this->Crud_model->fetch('roles_permissions',$where,array('TK_ADMIN','TK_EMPLOYEE','TK_INTERN'));
+	  $permission=$this->Crud_model->fetch('roles_permissions',$where);
+	  $privileges=[];
+      $permission_id=null;
+	  foreach($permission as $row){
+		  $privileges[]=$row->permission_id;
+	  	
+	  }
+	  if(in_array('TK_ADMIN',$privileges)){
+		 $permission_id='TK_ADMIN';
+	  }
+	  elseif(in_array('TK_ADMIN',$privileges)){
+		$permission_id='TK_EMPLOYEE';
+	  }
+	  elseif(in_array('TK_INTERN',$privileges)){
+		$permission_id='TK_INTERN';
+	  }
 	//   if(in_array('TK_ADMIN',$permission->$permission_id)){
 	// 	$permission_id='TK_ADMIN';
 	// 	echo $permission_id;s
@@ -11,7 +26,7 @@
 	//   }elseif(in_array('TK_INTERN',$permission)){
 	// 	$permission_id='TK_INTERN';  
 	//   }
-	  $users_position = $this->Crud_model->fetch_tag_row('*','timekeeping_permissions',['permission_id'=>$permission[0]->permission_id]);	
+	  $users_position = $this->Crud_model->fetch_tag_row('*','timekeeping_permissions',['permission_id'=>$permission_id]);	
       $privilege = $users_position->privileges;
 	  $menu = $this->Crud_model->fetch('timekeeping_menu');
       $explode = explode(',',$privilege);

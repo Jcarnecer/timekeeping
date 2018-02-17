@@ -188,7 +188,7 @@ class Attendance extends MY_Controller {
 
         }elseif($this->input->post('wfh')){
             $time = date('H:i:s',strtotime('+8 hour',strtotime($time)));
-            $status = "Work From Home";
+            $status = "Off-Site";
             $insert =[
                 'user_id' => $id,
                 'date' => $date_now,
