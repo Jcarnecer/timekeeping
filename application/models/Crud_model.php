@@ -142,6 +142,7 @@ class Crud_model extends CI_Model{
 		return $this->db->select('*')
 			->from('users')
 			->join('timekeeping_users_shift', 'users.id = timekeeping_users_shift.users_id')
+			->where('company_id', $this->session->user->company_id)
 			->get()
 			->result();
 	}
