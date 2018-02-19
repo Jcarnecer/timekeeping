@@ -1,5 +1,4 @@
 <?php 
-      echo("ads");	
 	  $where_in=array('TK_ADMIN');	
 	  $position = $this->user->info('role');
 	  $where = array('role_id' => $position);
