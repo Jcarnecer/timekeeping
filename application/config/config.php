@@ -25,7 +25,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
-$config["base_url"] = ENVIRONMENT === "production" ? "http://timekeeping.payakapps.com/" : "http://localhost/timekeeping/";
+switch(ENVIRONMENT) {
+
+	case 'production':
+		$config['base_url'] = 'http://timekeeping.payakapps.com/';
+		break;
+	case 'testing':
+		$config['base_url'] = 'http://stage.payakapps.com/';
+		break;
+	default:
+		$config['base_url'] = 'http://localhost/timekeeping/';
+		break;
+}
 
 /*
 |--------------------------------------------------------------------------
