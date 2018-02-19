@@ -18,7 +18,7 @@
 	  elseif(in_array('TK_INTERN',$privileges)){
 		$permission_id='TK_INTERN';
 	  }
-	  echo $privileges;
+	  // echo $privileges;
 	//   if(in_array('TK_ADMIN',$permission->$permission_id)){
 	// 	$permission_id='TK_ADMIN';
 	// 	echo $permission_id;s
