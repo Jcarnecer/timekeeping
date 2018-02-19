@@ -18,6 +18,7 @@
 	  elseif(in_array('TK_INTERN',$privileges)){
 		$permission_id='TK_INTERN';
 	  }
+	  echo $privileges;
 	//   if(in_array('TK_ADMIN',$permission->$permission_id)){
 	// 	$permission_id='TK_ADMIN';
 	// 	echo $permission_id;s
@@ -34,7 +35,7 @@
 	  $sub_privilege = $users_position->privilege_sub_menu;
 	  $submenu = $this->Crud_model->fetch('timekeeping_sub_menu');
 	  $sub_explode = explode(',',$sub_privilege);
-
+    
 	// $position = $this->user->info('role');
 	
 ?>
