@@ -25,22 +25,27 @@ $segment2 = $this->uri->segment(2);
     
 // }
 
-$permission=$this->Crud_model->fetch('roles_permissions',['role_id'=>$this->user->info('role')],array('TK_ADMIN','TK_EMPLOYEE','TK_INTERN'));
+$permission=$this->Crud_model->fetch('roles_permissions',['role_id'=>$this->user->info('role')]);
+$privileges=[];
+$permission_id=null;
+foreach($permission as $row){
+	$privileges[]=$row->permission_id;
+}
 if($segment1=="timesheet"){
-   if($permission[0]->permission_id=='TK_ADMIN'){
+   if(in_array('TK_ADMIN',$privileges)){
         $this->load->view('attendance/admin');
    }
-   elseif($permission[0]->permission_id=='TK_EMPLOYEE'){
+   elseif(in_array('TK_EMPLOYEE',$privileges)){
         $this->load->view('attendance/employee');
    }
-   elseif($permission[0]->permission_id=='TK_INTERN'){
+   elseif(in_array('TK_INTERN',$privileges)){
         $this->load->view('attendance/intern'); 
     }            
 }elseif($segment1=="overtime"){
-    if($permission[0]->permission_id=='TK_ADMIN'){
+    if(in_array('TK_ADMIN',$privileges)){
         $this->load->view('attendance/overtime');
    }
-   elseif($permission[0]->permission_id=='TK_EMPLOYEE'){
+   elseif(in_array('TK_ADMIN',$privileges)){
     $this->load->view('attendance/employee_overtime');
    }
    else{

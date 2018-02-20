@@ -33,7 +33,7 @@ $(document).on('click','.edit_shift',function(){
 })
 
 $(document).ready(function() {
-    if ($('#shiftDock .card-deck').children().length == 0) {
+    if ($('#shiftDock .card-columns').children().length == 0) {
         $('#shiftDock').html(`
             <h1 class="text-white text-center py-3">No Employee</h1>
         `);

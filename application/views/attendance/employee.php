@@ -31,7 +31,7 @@
       <form id="timesheet_WFH" class ="form-timesheet" method="post">
         <input type="hidden" name="userid" value="<?=$this->user->info('id');?>">
         <input type="hidden" name="wfh" value="5">
-        <input type="submit" class="btn custom-button" name="wfh" value="WORK FROM HOME">
+        <input type="submit" class="btn custom-button" name="wfh" value="OFF-SITE">
       </form>
     </div>
   </div>

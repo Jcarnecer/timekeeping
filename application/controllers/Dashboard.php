@@ -10,7 +10,13 @@ class Dashboard extends MY_Controller {
         //         'title' => 'Dashboard',
         //     ]
         // );
-        redirect('http://localhost/timekeeping/timesheet');
-       
+        switch(ENVIRONMENT){
+        case "production":
+        redirect('http://timekeeping.payakapps.com/timesheet');break;
+        case "testing":
+        redirect('http://timekeeping.payakapps.com/timesheet');break;
+        default :
+        redirect('http://localhost/timekeeping/timesheet');break;
+        }
      }
 }
