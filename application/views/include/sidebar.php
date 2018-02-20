@@ -12,7 +12,7 @@
 	  if(in_array('TK_ADMIN',$privileges)){
 		 $permission_id='TK_ADMIN';
 	  }
-	  elseif(in_array('TK_ADMIN',$privileges)){
+	  elseif(in_array('TK_EMPLOYEE',$privileges)){
 		$permission_id='TK_EMPLOYEE';
 	  }
 	  elseif(in_array('TK_INTERN',$privileges)){
