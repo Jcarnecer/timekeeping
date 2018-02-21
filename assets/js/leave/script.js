@@ -98,6 +98,7 @@ $.fn.getLeaveInfo=function(){
             );
 		});
 		$("#table-leaves").DataTable({
+            "retrieve":true,
             "scrollY": "350px",
             "scrollCollapse": true,
         });
