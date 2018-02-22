@@ -34,11 +34,11 @@ $(document).on('click','.edit_shift',function(){
 })
 
 $(document).ready(function() {
-    if ($('#shiftDock .card-columns').children().length == 0) {
-        $('#shiftDock').html(`
-            <h1 class="text-white text-center py-3">No Employee</h1>
-        `);
-    }
+    // if ($('#shiftDock .card-columns').children().length == 0) {
+    //     $('#shiftDock').html(`
+    //         <h1 class="text-white text-center py-3">No Employee</h1>
+    //     `);
+    // }
 
     $("#update-shift-form").on('submit',function(e){
         $.ajax({
@@ -87,6 +87,8 @@ function drag(e) {
 function drop(e) {
     e.preventDefault();
 
+    console.log($(e.target));
+
     var $shiftColumn = $(`#${e.target.id}`);
     var $userCard = $(`#${e.dataTransfer.getData("text")}`);
     // var $data = $(`#${e.dataTransfer.getData("text")}`);
@@ -94,10 +96,13 @@ function drop(e) {
     $shiftColumn.append($userCard);
 
     var data = {
-        user_id: $userCard.data('id'),
-        shift_id: $shiftColumn.closest('.shift-card').data('id')
-    };
+        user_id: $userCard.attr('data-id'),
+        house: $userCard.attr('data-house'),
+        shift_id: $shiftColumn.closest('.shift-card').data('id'),
 
+
+    };
+   console.log(data);
     change_shift(data).done(function(response) {
       
         if(response) {

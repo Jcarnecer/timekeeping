@@ -83,7 +83,8 @@ $route['leaves/file']['POST']='leaves/leave_request';
 $route['get/leaveInfo']['GET']='leaves/get_leave';
 //Shift
 $route['shift'] = 'shift/index';
-$route['schedule'] = 'shift/schedule';
+$route['shift/front'] = 'shift/front_house';
+$route['shift/back']='shift/back_house';
 $route['eschedule'] = 'shift/eschedule';
 // $route['calendar'] = 'attendance/calendar';
 $route['get/emp_attendance'] = 'attendance/get_employee_attendance';

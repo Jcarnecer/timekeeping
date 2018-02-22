@@ -36,7 +36,7 @@ class MY_Controller	extends CI_Controller
 		$this->no_session();
 		$this->load->view('include/header',$data);
 		$this->load->view('include/sidebar');
-		$this->load->view('include/tutorial');
+		// $this->load->view('include/tutorial');
 		$this->load->view('include/topbar');
 
 		$this->load->view($location);

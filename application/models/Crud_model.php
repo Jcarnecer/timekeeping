@@ -138,13 +138,16 @@ class Crud_model extends CI_Model{
 		return $q->row();
 	}
 
-	public function get_users(){
-		return $this->db->select('*')
-			->from('users')
-			->join('timekeeping_users_shift', 'users.id = timekeeping_users_shift.users_id')
-			->where('company_id', $this->session->user->company_id)
-			->get()
-			->result();
+	public function get_users($house){
+		if(!$house==null){
+		    $this->db->where('house',$house);
+		}
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->join('timekeeping_users_shift', 'users.id = timekeeping_users_shift.users_id');
+		$this->db->where('company_id', $this->session->user->company_id);
+		$query=$this->db->get();
+		return	$query->result();
 	}
 
 	public function join_user_record_row($id){

@@ -13,13 +13,13 @@ class Shift extends MY_Controller {
         );
     }
 
-    public function schedule() {
+    public function front_house() {
         $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
 
         # ---------------------------------------------------------------------------------------------------------------
         
-        $get_all_employee = $this->Crud_model->get_users();
-
+        $get_all_sched = $this->Crud_model->get_users('front');
+        $get_employee=$this->Crud_model->get_users('');
         // print_r($get_all_employee);
     
         // $get_all_employee = $this->Crud_model->fetch('users');
@@ -28,11 +28,34 @@ class Shift extends MY_Controller {
         
         parent::mainpage('shift/index',
             [
-                'title' => 'Schedule',
+                'title' => 'Front of the House',
                 'all_shift' => $get_all_shift,
-                'all_employee' => $get_all_employee
+                'all_employee' => $get_all_sched,
+                'employee_nosched'=>$get_employee
             ]
         );
+    }
+
+    public function back_house(){
+        $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
+
+        $get_all_sched = $this->Crud_model->get_users('back');
+        $get_employee=$this->Crud_model->get_users('');
+        // print_r($get_all_employee);
+    
+        // $get_all_employee = $this->Crud_model->fetch('users');
+
+        # ---------------------------------------------------------------------------------------------------------------
+        
+        parent::mainpage('shift/index',
+            [
+                'title' => 'Back of the House',
+                'all_shift' => $get_all_shift,
+                'all_employee' => $get_all_sched,
+                'employee_nosched'=>$get_employee
+            ]
+        );
+    
     }
     public function eschedule() {
         $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
@@ -115,9 +138,14 @@ class Shift extends MY_Controller {
         }
     }
 
-    public function change_shift() {
-        echo json_encode($this->Crud_model->update('timekeeping_users_shift', 
-            ['shift_id' => $this->input->post('shift_id')], 
-            ['users_id' => $this->input->post('user_id')]));
+    public function change_shift() {  
+        // echo json_encode($this->Crud_model->update('timekeeping_users_shift', 
+        //     ['shift_id' => $this->input->post('shift_id')], 
+        //     ['users_id' => $this->input->post('user_id')],
+        //     ['house'=> $this->input->post('house')]));
+
+        $data=['shift_id' => $this->input->post('shift_id'),'house'=> $this->input->post('house')];
+        $where=['users_id' => $this->input->post('user_id')];
+        echo json_encode($this->Crud_model->update('timekeeping_users_shift',$data,$where));
     }
 }
