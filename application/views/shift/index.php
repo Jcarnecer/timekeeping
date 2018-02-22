@@ -3,7 +3,7 @@
 $segment1 = $this->uri->segment(1);
 $segment2=$this->uri->segment(2);
 if($segment2 == 'front'){
-    $this->load->view('shift/admin');
+    $this->load->view('shift/frontHouse');
 }elseif($segment1 == 'eschedule'){
     $this->load->view('shift/employee');
 }elseif($segment2=='back'){
