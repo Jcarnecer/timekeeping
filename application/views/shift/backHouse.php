@@ -1,4 +1,9 @@
-
+<div class="row">
+  <div class="col-md-12">
+      <h3>Back of The House</h3>
+      <hr>
+  </div>
+</div>
 <div class="card-group h-100">
     <?php foreach($all_shift as $shift): ?>
     <div class="shift-card card rounded-0" data-id="<?= $shift->id ?>">
