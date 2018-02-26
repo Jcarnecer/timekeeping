@@ -1,3 +1,4 @@
+
 <div class="card-group h-100">
     <?php foreach($all_shift as $shift): ?>
     <div class="card rounded-0">

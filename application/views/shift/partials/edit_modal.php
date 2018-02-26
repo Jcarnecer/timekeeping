@@ -27,6 +27,16 @@
               <input type="text" name="end" id="end-time" class="form-control">
               <h5 class="text-danger" id="end-error"></h5>
             </div> 
+            <div class=form-group>
+              <label>Front of the House</label>
+              <input type="text" name="front" id="front-house" class="form-control">
+              <h5 class="text-danger" id="end-error"></h5>
+            </div> 
+            <div class=form-group>
+              <label>Back of the House</label>
+              <input type="text" name="back" id="back-house" class="form-control">
+              <h5 class="text-danger" id="end-error"></h5>
+            </div> 
         <br>
         <input type="hidden" id="id" name="id">
       </div>

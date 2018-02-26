@@ -217,6 +217,7 @@ class Attendance extends MY_Controller {
                 echo json_encode($insert);
             }
         }elseif($this->input->post('intern')){
+            $status='Attendance'; 
             $timein  = $this->input->post('intern_time_in');
             $timeout = $this->input->post('intern_time_out');
             $date = $this->input->post('intern_date');
@@ -236,16 +237,16 @@ class Attendance extends MY_Controller {
                     'date' => clean_data($date),
                     'time_in' => clean_data($timein),
                     'time_out' => clean_data($timeout),
-                    'status' => "Intern Attendance",
+                    'status' => "Employee Attendance",
                     'intern_no_hrs' => $no_of_hrs
                 ];
                 $this->Crud_model->insert('timekeeping_record',$insert);
-                $intern_where = ['user_id' => $user_id];
-                $get_intern = $this->Crud_model->fetch_tag_row('*','user_details',$intern_where);
-                $remaining_update = [
-                    'remaining' => $get_intern->remaining - $no_of_hrs
-                ];
-                $this->Crud_model->update('user_details',$remaining_update,$intern_where);
+                // $intern_where = ['user_id' => $user_id];
+                // $get_intern = $this->Crud_model->fetch_tag_row('*','user_details',$intern_where);
+                // $remaining_update = [
+                //     'remaining' => $get_intern->remaining - $no_of_hrs
+                // ];
+                // $this->Crud_model->update('user_details',$remaining_update,$intern_where);
                 echo json_encode($insert);
             }
 

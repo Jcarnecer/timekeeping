@@ -56,7 +56,7 @@ if($segment1=="timesheet"){
     $this->load->view('attendance/employee_leave');
 }
 
-
-$this->load->view('attendance/partials/attendance_modal');
+ 
+$this->load->view('attendance/partials/attendance');
     
 ?>

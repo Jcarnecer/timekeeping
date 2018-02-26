@@ -17,7 +17,8 @@ function change_shift(data) {
     return $.ajax({
         url: 'shift/change_shift',
         type: 'POST',
-        data: data
+        data: data,
+        dataType: 'json'
     });
 }
 
@@ -26,10 +27,13 @@ $(document).on('click','.edit_shift',function(){
     var start = $(this).data('start');
     var end   = $(this).data('end');
     var id    = $(this).data('id');
-
+    var front = $(this).data('front');
+    var back = $(this).data('back');
     $("#shift-type").val(shift);
     $("#start-time").val(start);
     $("#end-time").val(end);
+    $("#front-house").val(front);
+    $("#back-house").val(back);
     $("#id").val(id);
 })
 
@@ -93,7 +97,6 @@ function drop(e) {
     var $userCard = $(`#${e.dataTransfer.getData("text")}`);
     // var $data = $(`#${e.dataTransfer.getData("text")}`);
     // e.target.appendChild(document.getElementById(e.dataTransfer.getData("text")));
-    $shiftColumn.append($userCard);
 
     var data = {
         user_id: $userCard.attr('data-id'),
@@ -102,13 +105,12 @@ function drop(e) {
 
 
     };
-   console.log(data);
+    console.log(data);
     change_shift(data).done(function(response) {
-      
-        if(response) {
-            console.log('Transfer Successful');
-        } else {
-            console.log('Transfer Successful');
-        }
+        console.log(response);
+        console.log(response['message']);
+        bs_notify("<strong>"+response.message+"</strong>","success","top","right");
+        if(response.status)
+            $shiftColumn.append($userCard);
     });
 }

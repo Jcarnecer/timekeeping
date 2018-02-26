@@ -140,7 +140,7 @@ class Crud_model extends CI_Model{
 
 	public function get_users($house){
 		if(!$house==null){
-		    $this->db->where('house',$house);
+		    $this->db->where('timekeeping_users_shift.house',$house);
 		}
 		$this->db->select('*');
 		$this->db->from('users');
@@ -308,6 +308,14 @@ class Crud_model extends CI_Model{
 				return FALSE;
 			}		
 		
+		}
+	
+		public function count($column,$table,$where){
+			$this->db->select($column);
+			$this->db->from($table);
+		    $this->db->where($where);	
+		    $query=$this->db->get();
+		   return $query->num_rows(); 
 		}
 
 		public function is_login(){

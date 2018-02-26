@@ -138,12 +138,12 @@ $(document).ready(function(){
 				$("#attendance-modal").modal('show');
 				fetch_leave();
 				
-			}else if(status == 'Intern Attendance'){
+			}else if(status == 'Employee Attendance'){
 				
-				$("#intern-attendance-modal").modal('hide');
+				$("#attendance-modal").modal('hide');
 				bs_notify("<strong>Successfully have attendance</strong>","success","top","right");
 				
-				fetch_intern_attendance();
+				fetch_attendance();
 			
 			}else{
 				$("#intern-attendance-modal").modal('hide');

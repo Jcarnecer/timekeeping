@@ -18,7 +18,7 @@
 		</nav>
 	</div>
 
-	<?php if($this->uri->segment(2) == 'front' || $this->uri->segment(2)=='back') : ?>
+	<?php if($this->uri->segment(2) == 'front' || $this->uri->segment(2)=='back' ) : ?>
 	<div class="container-fluid" style="height: calc(100% - 56px);">
 	<?php else: ?>
 	<div class="container-fluid">

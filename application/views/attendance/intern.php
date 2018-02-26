@@ -32,4 +32,4 @@
     
 </div>
 
-<?php $this->load->view('attendance/partials/intern_attendance') ?>
+<?php $this->load->view('attendance/partials/attendance') ?>

@@ -12,9 +12,9 @@
             <p class="d-inline-block text-muted m-0"><?= $shift->start_time . ' - ' . $shift->end_time ?></p>
         </div>
         <div id="shift-<?= $shift->id ?>" class="card-body shift-table" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <?php foreach($all_employee as $employee): ?>
-            <?php if($employee->shift_id == $shift->id): ?>
-                <div id="user-<?= $employee->users_id ?>" class="card my-2 custom-card" draggable="true" ondragstart="drag(event)" data-id="<?= $employee->users_id ?>">
+            <?php foreach($all_employee as $employee ): ?>
+            <?php if($employee->shift_id == $shift->id && $employee->house=="back"): ?>
+                <div id="user-<?= $employee->users_id ?>" class="card my-2 custom-card" draggable="true" ondragstart="drag(event)" data-id="<?= $employee->users_id ?>" data-house="back">
                     <div class="card-body">
                         <div class="card-text"><?= $employee->first_name . ' ' . $employee->last_name ?></div>
                     </div>
@@ -29,8 +29,8 @@
 <div id="shiftDock" class="position-fixed mx-auto card card-body w-75" style="overflow-y: auto;">
     <div id="shiftDockColumn" class="card-columns" ondrop="drop(event)" ondragover="allowDrop(event)">
         <?php foreach($employee_nosched as $employee): ?>
-        <?php if($employee->shift_id == null || $employee->house == null): ?>
-            <div id="user-<?= $employee->id ?>" class="card my-2 custom-card" draggable="true" ondragstart="drag(event)" data-id="<?= $employee->users_id ?>"data-house="back">
+        <?php if($employee->shift_id==null || $employee->house==null): ?>
+            <div id="user-<?= $employee->id ?>" class="card my-2 custom-card" draggable="true" ondragstart="drag(event)" data-id="<?= $employee->users_id ?>" data-house="back">
                 <div class="card-body">
                     <div class="card-text"><?= $employee->first_name . ' ' . $employee->last_name ?></div>
                 </div>

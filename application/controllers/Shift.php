@@ -92,7 +92,7 @@ class Shift extends MY_Controller {
 							Action
 						</button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">	
-							<a class="dropdown-item edit_shift" data-toggle="modal" data-shift="<?= $row->shift_type ?>" data-start="<?= $row->start_time ?>" data-end="<?= $row->end_time ?>" data-id="<?= secret_url('encrypt',$row->id) ?>" href="#e-sh-modal" >Edit</a>
+							<a class="dropdown-item edit_shift" data-toggle="modal" data-shift="<?= $row->shift_type ?>" data-start="<?= $row->start_time ?>" data-end="<?= $row->end_time ?>" data-id="<?= secret_url('encrypt',$row->id) ?>"data-front="<?=$row->front?>" data-back="<?=$row->back?>" href="#e-sh-modal" >Edit</a>
 							<!-- <a class="dropdown-item" href="" title="View">Details</a> -->
 						</div>
 					</div>
@@ -115,37 +115,61 @@ class Shift extends MY_Controller {
             $where = ['id' => $decrypt_id];
             $update = [
                 'start_time'    =>    clean_data($this->input->post('start')),
-                'end_time'    =>    clean_data($this->input->post('end'))
+                'end_time'    =>    clean_data($this->input->post('end')),
+                'front'=>  clean_data($this->input->post('front')),
+                'back'=>  clean_data($this->input->post('back')),
             ];
-            $this->Crud_model->update('timkeeping_shift',$update,$where);
+            $this->Crud_model->update('timekeeping_shift',$update,$where);
             $success = [
                 'success'   =>    1,
                 'shift'    => clean_data($this->input->post('shift'))    
             ];
 
             //position
-			$position_id = $this->user->info('role');
-			$pos_where = ['id'  => $position_id];
-			$position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-			parent::audittrail(
-				'Shift Modify',
-				'Edit '.$success['shift'].' Shift',
-				$this->user->info('firstname') .' '. $this->user->info('lastname'),
-				$position->name,
-				$this->input->ip_address()
-			);
+			// $position_id = $this->user->info('role');
+			// $pos_where = ['id'  => $position_id];
+			// $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+			// parent::audittrail(
+			// 	'Shift Modify',
+			// 	'Edit '.$success['shift'].' Shift',
+			// 	$this->user->info('firstname') .' '. $this->user->info('lastname'),
+			// 	$position->name,
+			// 	$this->input->ip_address()
+			// );
             echo json_encode($success);
         }
     }
 
     public function change_shift() {  
-        // echo json_encode($this->Crud_model->update('timekeeping_users_shift', 
-        //     ['shift_id' => $this->input->post('shift_id')], 
-        //     ['users_id' => $this->input->post('user_id')],
-        //     ['house'=> $this->input->post('house')]));
-
-        $data=['shift_id' => $this->input->post('shift_id'),'house'=> $this->input->post('house')];
+        $house=clean_data($this->input->post('house'));
+        $shift=clean_data($this->input->post('shift_id'));
+        $data=['shift_id' => $shift,'house'=> $house];
         $where=['users_id' => $this->input->post('user_id')];
-        echo json_encode($this->Crud_model->update('timekeeping_users_shift',$data,$where));
-    }
+        $count=$this->Crud_model->count('users_id','timekeeping_users_shift',$data);
+        $employees=$this->Crud_model->fetch_tag_row('*','timekeeping_shift',['id'=>$this->input->post('shift_id')]);
+        
+        if($shift==null){
+            $response['status'] = $this->Crud_model->update('timekeeping_users_shift',$data,$where);
+            $response['message'] = "Transfer Successful";
+        }else{
+            $number_employees=strtolower($employees->$house);
+            if($count < $number_employees){
+                $response['status'] = $this->Crud_model->update('timekeeping_users_shift',$data,$where);
+                $response['message'] = "Transfer Successful";
+            }
+            else{
+                $response['status'] = false;
+                $response['message'] = "The limit of this schedule is full please select another schedule";
+            }
+        }   
+
+        echo json_encode($response);
+        // if($count < $employees->$house){
+        //     echo json_encode($this->Crud_model->update('timekeeping_users_shift',$data,$where));
+        // }
+        // else{
+        //     print_r('asd');
+        // } 
+    } 
+       
 }

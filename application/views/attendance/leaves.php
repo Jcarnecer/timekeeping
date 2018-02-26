@@ -3,7 +3,7 @@
       <h3>My Leaves</h3>
       <hr>
       <input type="hidden" name="user_id" id="my_leave" value="<?=$this->user->info('id');?>" data-id="<?=$this->user->info('id');?>">
-      <button class="btn intern-attendance-button" data-toggle="modal" data-target="#file-leave-modal">File Leave</button>
+      <button class="btn-file-leave" data-toggle="modal" data-target="#file-leave-modal">File Leave</button>
   </div>
 </div>
 
