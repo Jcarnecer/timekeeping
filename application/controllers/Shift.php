@@ -60,18 +60,22 @@ class Shift extends MY_Controller {
     public function eschedule() {
         $get_all_shift = $this->Crud_model->fetch('timekeeping_shift');
 
-        $get_all_employee = $this->Crud_model->fetch('users');
-
+        $get_all_employee = $this->Crud_model->fetch('users');                
+        
         $get_all_emp_shift = $this->Crud_model->fetch('timekeeping_users_shift');
-
+        $user=$this->user->info('id');
+        $get_mysched=$this->Crud_model->fetch_tag_row('*','timekeeping_users_shift',['users_id'=>$user]);
         parent::mainpage('shift/index',
             [
                 'title' => 'Schedule',
                 'all_shift' => $get_all_shift,
                 'all_employee' => $get_all_employee,
-                'all_emp_shift' => $get_all_emp_shift
+                'all_emp_shift' => $get_all_emp_shift,
+                'my_sched'=>$get_mysched->house
             ]
         );
+
+    
     }
 
     public function get_shift() {

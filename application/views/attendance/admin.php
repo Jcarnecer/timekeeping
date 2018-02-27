@@ -10,7 +10,7 @@
       <!-- <?php echo $time = date('H:i:s'); ?><br> -->
       <span class="time" id=curTime></span><br>
       <span class="date"><?php echo $date = date('m/d/Y'); ?></span>       
-      <button class="btn intern-attendance-button" data-toggle="modal" data-target="#attendance-modal">Attendance</button> 
+      <button class="btn intern-attendance-button" data-toggle="modal" data-target="#intern-attendance-modal">Attendance</button> 
   </div>
 </div>
  
@@ -41,3 +41,5 @@
   <div class="table-responsive" id="timesheet">
     
   </div>
+  <?php $this->load->view('attendance/partials/attendance') ?>
+

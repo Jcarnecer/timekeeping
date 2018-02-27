@@ -11,17 +11,19 @@
         			$e_shift=null;
         			foreach ($all_emp_shift as $emp_shift)
         				if($employee->id == $emp_shift->users_id) 
-		        			if($shift->id == $emp_shift->shift_id) {
+		        			if($shift->id == $emp_shift->shift_id && $emp_shift->house==$my_sched) {
         	?>
                 <div id="user-<?= $employee->id ?>" class="card my-2 custom-card" draggable="true" ondragstart="drag(event)">
                     <div class="card-body">
-                        <div class="card-text"><?= $employee->first_name . ' ' . $employee->last_name ?></div>
+                        <div class="card-text"><?= $employee->first_name . ' ' . $employee->last_name?> </div>
+                          
                     </div>
                 </div>
             <?php 
 			break;}
             endforeach; ?>
         </div>
+    
     </div>
     <?php endforeach ?>
 </div>

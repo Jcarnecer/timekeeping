@@ -238,9 +238,10 @@ class Attendance extends MY_Controller {
                     'time_in' => clean_data($timein),
                     'time_out' => clean_data($timeout),
                     'status' => "Employee Attendance",
-                    'intern_no_hrs' => $no_of_hrs
+                    'intern_no_hrs' => $no_of_hrs,
                 ];
                 $this->Crud_model->insert('timekeeping_record',$insert);
+               
                 // $intern_where = ['user_id' => $user_id];
                 // $get_intern = $this->Crud_model->fetch_tag_row('*','user_details',$intern_where);
                 // $remaining_update = [
@@ -249,7 +250,7 @@ class Attendance extends MY_Controller {
                 // $this->Crud_model->update('user_details',$remaining_update,$intern_where);
                 echo json_encode($insert);
             }
-
+            
         }
     }
 
@@ -257,8 +258,7 @@ class Attendance extends MY_Controller {
         $order_by = "id desc";
         $user_id = $this->user->info('id');
         $where = ['user_id' => $user_id];
-        $where_in = ['name' => 'status', 'values' => ['4 hours', '8 hours', 'Work From Home']];
-        $timesheet = $this->Crud_model->fetch('timekeeping_record',$where,"","",$order_by, $where_in); ?>
+        $timesheet = $this->Crud_model->fetch('timekeeping_record',$where,"","",$order_by); ?>
         <table class="table table-bordered" id="timesheet-table">
           <thead>
               <tr>
@@ -330,7 +330,7 @@ class Attendance extends MY_Controller {
             foreach ($timesheet as $row) :
         ?>
             <tr>
-                <td><?= $row->email_address?></td>
+                <td><?= $row->first_name ." ".$row->last_name?></td>
                 <td><?= $row->date?></td>
                 <td><?= $row->time_in?></td>
                 <td><?= $row->time_out?></td>
@@ -508,16 +508,16 @@ class Attendance extends MY_Controller {
         $user_where = ['id' => $get_user_id->user_id];
         $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
         //position
-        $position_id = $this->user->info('position_id');
-        $pos_where = ['id'  => $position_id];
-        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-        parent::audittrail(
-            'Approve Overtime',
-            'Approved Overtime of '.$user->firstname.' '.$user->lastname,
-            $this->user->info('firstname') .' '. $this->user->info('lastname'),
-            $position->name,
-            $this->input->ip_address()
-        );
+        // $position_id = $this->user->info('position_id');
+        // $pos_where = ['id'  => $position_id];
+        // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        // parent::audittrail(
+        //     'Approve Overtime',
+        //     'Approved Overtime of '.$user->firstname.' '.$user->lastname,
+        //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+        //     $position->name,
+        //     $this->input->ip_address()
+        // );
     }
 
     public function reject_ot() {  
@@ -533,16 +533,16 @@ class Attendance extends MY_Controller {
         $user_where = ['id' => $get_user_id->user_id];
         $user = $this->Crud_model->fetch_tag_row('*','users',$user_where);
         //position
-        $position_id = $this->user->info('position_id');
-        $pos_where = ['id'  => $position_id];
-        $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
-        parent::audittrail(
-            'Reject Overtime',
-            'Rejected Overtime of '.$user->firstname.' '.$user->lastname,
-            $this->user->info('firstname') .' '. $this->user->info('lastname'),
-            $position->name,
-            $this->input->ip_address()
-        );
+        // $position_id = $this->user->info('position_id');
+        // $pos_where = ['id'  => $position_id];
+        // $position = $this->Crud_model->fetch_tag_row('*','position',$pos_where);
+        // parent::audittrail(
+        //     'Reject Overtime',
+        //     'Rejected Overtime of '.$user->firstname.' '.$user->lastname,
+        //     $this->user->info('firstname') .' '. $this->user->info('lastname'),
+        //     $position->name,
+        //     $this->input->ip_address()
+        // );
     }
 }
 ?>

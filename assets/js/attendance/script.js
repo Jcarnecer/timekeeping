@@ -28,6 +28,22 @@ function fetch_intern_attendance(){
 		  "scrollY":"350px",
 		  "scrollCollapse": true,
 		});
+		// $("#employee-attendance").html(data);
+		// $("#employee-attendance-table").DataTable({
+		// 	// "order": [[ 0, "desc" ]],
+		// 	"order": [[ 0, "desc" ],[ 1, "desc" ]],
+		// 	"retrieve":true,
+		// 	"scrollY":"350px",
+		// 	"scrollCollapse": true,
+		// });
+		// $("#timesheet").html(data);
+		// $("#timesheet-table").DataTable({
+		//   "order": [[ 0, "desc" ],[ 1, "desc" ]],
+		//   "retrieve":true,
+		//   "scrollY":"350px",
+		//   "scrollCollapse": true,
+		// });
+
 	  }
 	})
   }
@@ -122,7 +138,7 @@ $(document).ready(function(){
 
 			var result = JSON.parse(data);
 			var status = result.status;
-		
+		    console.log(result);
 			if(status == 'Work From Home' || status == '8 hours' || status == '4 hours'){
 
 				$("#exist-attendance").html("Your attendance today is <br>" +status+  
@@ -140,9 +156,9 @@ $(document).ready(function(){
 				
 			}else if(status == 'Employee Attendance'){
 				
-				$("#attendance-modal").modal('hide');
+				$("#intern-attendance-modal").modal('hide');
 				bs_notify("<strong>Successfully have attendance</strong>","success","top","right");
-				
+
 				fetch_attendance();
 			
 			}else{
@@ -151,8 +167,10 @@ $(document).ready(function(){
 				$("#exist-attendance").html(result);
 				$("#attendance-modal").modal('show');
 			}
-		}
-
+		},
+		error:function(data){
+			bs_notify("<strong>Error</strong>","danger","top","right");
+		}	
 		})
 		e.preventDefault();
 	})

@@ -57,6 +57,6 @@ if($segment1=="timesheet"){
 }
 
  
-$this->load->view('attendance/partials/attendance');
+$this->load->view('attendance/partials/attendance_modal');
     
 ?>
