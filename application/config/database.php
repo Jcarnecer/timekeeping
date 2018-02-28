@@ -32,7 +32,7 @@ if (ENVIRONMENT === "production" || ENVIRONMENT === "testing") {
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
-		'database' => 'small_apps',
+		'database' => 'payakapps',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
