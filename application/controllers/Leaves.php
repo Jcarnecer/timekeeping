@@ -7,7 +7,7 @@ Class Leaves extends MY_Controller{
         parent::mainpage('leaves/index',
             [
                 'title' => 'Leave Management',
-                'leave'=>$this->Crud_model->fetch('timekeeping_leave'),
+                'leave'=>$this->Crud_model->fetch('timekeeping_leave',['company_id'=>$this->session->user->company_id]),
             ]
         );
       
@@ -35,7 +35,8 @@ Class Leaves extends MY_Controller{
 
            $insert_leave=[
                'leave_name'=>clean_data($this->input->post('leave_name')),
-               'No_of_days'=>clean_data($this->input->post('days'))
+               'No_of_days'=>clean_data($this->input->post('days')),
+               'company_id'=> $this->session->user->company_id
            ];
        
            $leave=$this->Crud_model->last_inserted_row('timekeeping_leave',$insert_leave);
@@ -45,7 +46,8 @@ Class Leaves extends MY_Controller{
            $insert_users_leave=[
                 'user_id'=>$row->id,
                 'leave_id' =>$leave->id,
-                'remaining_leave'=>clean_data($this->input->post('days'))
+                'remaining_leave'=>clean_data($this->input->post('days')),
+                'company_id'=> $this->session->user->company_id
            ];
            $this->Crud_model->insert('timekeeping_users_leave',$insert_users_leave);
         }
@@ -56,7 +58,7 @@ Class Leaves extends MY_Controller{
     }
 
     public function get_leave(){
-        $leave=$this->Crud_model->fetch('timekeeping_leave');
+        $leave=$this->Crud_model->fetch('timekeeping_leave',['company_id'=>$this->session->user->company_id]);
         echo json_encode($leave);
     }
     
@@ -85,7 +87,7 @@ Class Leaves extends MY_Controller{
 
 
                 
-                $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id]);
+                $this->Crud_model->update('timekeeping_leave',$leave,['id'=>$id,'company_id'=>$this->session->user->company_id]);
                 echo json_encode('success');
             }
     }
@@ -93,13 +95,14 @@ Class Leaves extends MY_Controller{
     public function approved_reset(){
      
             $id = $this->input->post('id');
-            $where = ['id' => $id];
+            $where = ['id' => $id,'company_id'=>$this->session->user->company_id];
             $employee_leave = $this->Crud_model->fetch_tag_row('*','timekeeping_leave',$where);
             $leave_name = strtolower(str_replace(' ','_',$employee_leave->leave_name));
             $No_of_days = $employee_leave->No_of_days;
             $update_user = [
                 'leave_id'=>$employee_leave->id,
                 'remaining_leave'=>$No_of_days,
+                'company_id'=>$this->session->user->company_id
             ];
             // $this->Crud_model->update('users',$update_user);
                       
@@ -144,7 +147,8 @@ Class Leaves extends MY_Controller{
                     'end_date'  =>  $this->input->post('end'),
                     'reason'    =>  $this->input->post('reason'),
                     'status'    =>  'Pending',
-                    'duration'  =>  $duration 
+                    'duration'  =>  $duration,
+                    'company_id'=>$this->session->user->company_id
                 ]; 
                 
                 $this->Crud_model->insert('timekeeping_file_leave',$insert_request);
@@ -215,20 +219,20 @@ Class Leaves extends MY_Controller{
 
 
             public function fetch_leave(){
-               $id=$this->user->info('id');
-                echo json_encode($this->Crud_model->fetch_leave(['user_id'=>$id]));
-               
+                 $id=$this->user->info('id');
+                echo json_encode($this->Crud_model->fetch_leave(['user_id'=>$id,'timekeeping_file_leave.company_id'=>$this->session->user->company_id]));
+                
              
             }
 
             public function fetch_leave_request($id=null){
                if(!$id==null){
-                $leave_request=$this->Crud_model->fetch_leave(['timekeeping_file_leave.id'=>$id]);
+                $leave_request=$this->Crud_model->fetch_leave(['timekeeping_file_leave.id'=>$id,'timekeeping_file_leave.company_id'=>$this->session->user->company_id]);
                 echo json_encode($leave_request);
                 
                }
                else if(empty($id)){
-                $leave_request=$this->Crud_model->fetch_leave("");
+                $leave_request=$this->Crud_model->fetch_leave(['timekeeping_file_leave.company_id'=>$this->session->user->company_id]);
                 echo json_encode($leave_request);
                }
                 
@@ -238,18 +242,19 @@ Class Leaves extends MY_Controller{
 
             public function reject_leave($id){
                 $update_status=[
-                    'status'=>'Rejected'
+                    'status'=>'Rejected',
+                    'company_id'=>$this->session->user->company_id
                 ];
-		        $this->Crud_model->update('timekeeping_file_leave',$update_status,['id'=>$id]);
+		        $this->Crud_model->update('timekeeping_file_leave',$update_status,['id'=>$id,'timekeeping_fil_leavee.company_id'=>$this->session->user->company_id]);
                 echo json_encode("success");
             }
             public function approve_leave($id){
                 
                 $result=$this->Crud_model->fetch_tag_row('*','timekeeping_file_leave',['id'=>$id]);
-                $where_leave=['id'=>$result->leave_id];
+                $where_leave=['id'=>$result->leave_id,'company_id'=>$this->session->user->company_id];
                 $leave=$this->Crud_model->fetch_tag_row('*','timekeeping_leave',$where_leave);
                 $leave_name=$leave->id;
-                $where_user=['user_id'=>$result->user_id];
+                $where_user=['user_id'=>$result->user_id,'company_id'=>$this->session->user->company_id];
                 $user= $this->Crud_model->fetch_tag_row('*','timekeeping_users_leave',$where_user);
                 $user_leave=$user->remaining_leave;
 
@@ -267,7 +272,7 @@ Class Leaves extends MY_Controller{
                         $update_status_leave=[ 
                             'status'=>'Approved'
                         ];
-                        $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id]);
+                        $this->Crud_model->update('timekeeping_file_leave',$update_status_leave,['id'=>$id,'company_id'=>$this->session->user->company_id]);
                         $update_status=[
                             'remaining_leave' => $deduct_leave
                         ];
@@ -286,7 +291,8 @@ Class Leaves extends MY_Controller{
                                 'user_id'    => $user->user_id,
                                 'date'       => $date[$key], 
                                 'status'     => $leave->leave_name,
-                                'created_at'     => $date[$key]
+                                'created_at'     => $date[$key],
+                                'company_id' => $this->session->user->company_id
                             
                         ];
                         $this->Crud_model->insert('timekeeping_record',$data);
@@ -303,7 +309,7 @@ Class Leaves extends MY_Controller{
 
             public function validate_leave($id){
                 // $period=date_range($start,$end);
-                $result=$this->Crud_model->check('timekeeping_file_leave',['user_id'=>$id,'status'=>'Pending']);
+                $result=$this->Crud_model->check('timekeeping_file_leave',['user_id'=>$id,'status'=>'Pending','timekeeping_file_leave.company_id'=>$this->session->user->company_id]);
                 if($result){
                     return FALSE;
                 }

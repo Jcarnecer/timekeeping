@@ -84,7 +84,8 @@ class Calendar extends MY_Controller {
             "description" => $desc,
             "start" => $start_date,
             "end" => $end_date,
-            "user_id"   => $this->user->info('id')
+            "user_id"   => $this->user->info('id'),
+            "company_id"=>$this->session->user->company_id
             )
         );
 
@@ -135,6 +136,7 @@ class Calendar extends MY_Controller {
                 "description" => $desc,
                 "start" => $start_date,
                 "end" => $end_date,
+                "company_id"=>$this->session->user->company_id
                 )
             );
             
