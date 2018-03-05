@@ -12,7 +12,7 @@
 			</div>
 			<a class="navbar-brand mr-auto" href="#">Payakapps</a>
 			<!-- <a class="nav-link" href="profile">My Profile</a> -->
-			<a class="nav-text" href="http://localhost/main">Home</a>
+			<a class="nav-text" href="http://payakapps.com">Home</a>
 
 
 		</nav>
