@@ -5,6 +5,7 @@ if($segment1 == 'schedule'){
     $this->load->view('shift/admin');
 }elseif($segment1 == 'shift'){?>
     <h3>Shift Type</h3>
+    <button class="btn custom-button float-right" data-toggle="modal" data-target="#e-sh-modal" id="btn_add_shift">Add Shift</button>
         <br><hr>
         <div class="table-responsive">
             <table class="table table-bordered" id="tktbl">

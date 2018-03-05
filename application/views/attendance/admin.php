@@ -13,7 +13,9 @@
   </div>
 </div>
 
-<div class="row">
+  <button class="btn intern-attendance-button" data-toggle="modal" data-target="#intern-attendance-modal">Attendance</button>
+
+<!-- <div class="row">
   <div class="col-md-12">
     <div class="form-container">
       <form id="timesheet_halfday" class ="form-timesheet" method="post">
@@ -35,8 +37,10 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 
   <div class="table-responsive" id="timesheet">
     
   </div>
+
+    <?php $this->load->view('attendance/partials/attendance') ?>

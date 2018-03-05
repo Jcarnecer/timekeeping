@@ -11,20 +11,20 @@
       </div>
 
       <div class="modal-body">
-        <form id="update-shift-form" method="POST" autocomplete="off">
+        <form id="shift-form" method="POST" autocomplete="off">
             <div class="form-group">
               <label>Shift</label>
-              <input type="text" id="shift-type" readonly name="shift" class="form-control">
+              <input type="text" id="shift-type"  name="shift" class="form-control">
             </div>
             
             <div class=form-group>
               <label>Start Time</label>
-              <input type="text" name="start" id="start-time" class="form-control">
+              <input type="time" name="start" id="start-time" class="form-control">
               <h5 class="text-danger" id="start-error"></h5>
             </div> 
             <div class=form-group>
               <label>End Time</label>
-              <input type="text" name="end" id="end-time" class="form-control">
+              <input type="time" name="end" id="end-time" class="form-control">
               <h5 class="text-danger" id="end-error"></h5>
             </div> 
         <br>
@@ -32,8 +32,11 @@
       </div>
       <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn custom-button">Save</button>
+            <button type="button" class="btn custom-button" data-function='' id="btn-save">Save</button>
           </form>
         </div>
   </div>
 </div>
+
+
+
