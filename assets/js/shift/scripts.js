@@ -6,7 +6,6 @@ function fetch_shift() {
             $("#shiftdata").html(data);
             $("#tktbl").DataTable({
                 "retrieve":true,
-                "scrollY":"350px",
                 "scrollCollapse": true,
             });
         }
@@ -142,23 +141,26 @@ function drag(e) {
 function drop(e) {
     e.preventDefault();
 
-    var $shiftColumn = $(`#${e.target.id}`);
+    console.log($(e.target));
+
+    var $shiftColumn = $(e.target).hasClass('shiftColumn') ? $(e.target) : $(e.target).closest('.shift-table');
     var $userCard = $(`#${e.dataTransfer.getData("text")}`);
     // var $data = $(`#${e.dataTransfer.getData("text")}`);
     // e.target.appendChild(document.getElementById(e.dataTransfer.getData("text")));
-    $shiftColumn.append($userCard);
 
     var data = {
-        user_id: $userCard.data('id'),
-        shift_id: $shiftColumn.closest('.shift-card').data('id')
-    };
+        user_id: $userCard.attr('data-id'),
+        house: $userCard.attr('data-house'),
+        shift_id: $shiftColumn.closest('.shift-card').data('id'),
 
+
+    };
+    console.log(data);
     change_shift(data).done(function(response) {
-      
-        if(response) {
-            console.log('Transfer Successful');
-        } else {
-            console.log('Transfer Successful');
-        }
+        console.log(response);
+        console.log(response['message']);
+        bs_notify("<strong>"+response.message+"</strong>","success","top","right");
+        if(response.status)
+            $shiftColumn.append($userCard);
     });
 }
